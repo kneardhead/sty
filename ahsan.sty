@@ -1,0 +1,274 @@
+\ProvidesPackage{ahsan}
+
+%todo: add a proper article class with sections rather than chapters
+%todo: recheck indexing in macro, because i can't call the macros without having to import
+%indices
+
+\newif\ifahsansetup\ahsansetuptrue
+\newif\ifahsanbangla\ahsanbanglafalse
+\newif\ifahsanbeamer\ahsanbeamerfalse
+\newif\ifahsanfigs\ahsanfigstrue
+\newif\ifahsanfancy\ahsanfancyfalse
+\newif\ifahsanhref\ahsanhreftrue
+\newif\ifahsanhdr\ahsanhdrfalse
+
+\newif\ifahsanauthor\ahsanauthortrue
+\newif\ifahsanindex\ahsanindexfalse
+\newif\ifahsantoc\ahsantocfalse
+\newif\ifahsanaccessories\ahsanaccessoriesfalse
+
+\newif\ifahsanthm\ahsanthmtrue
+\newif\ifahsansecthm\ahsansecthmfalse
+\newif\ifahsanfancythm\ahsanfancythmfalse
+\newif\ifahsanfont\ahsanfonttrue
+\newif\ifahsansans\ahsansanstrue
+
+\DeclareOption{nosetup}{\ahsansetupfalse\ahsanthmfalse}
+\DeclareOption{bangla}{
+    \ahsanbanglatrue\ahsanhreffalse
+}
+\DeclareOption{sexy}{
+    \ahsanfancythmtrue \ahsansecthmtrue \ahsanfancytrue
+    \ahsanindextrue \ahsanaccessoriestrue \ahsantoctrue
+}
+\DeclareOption{article}{\ahsanfancythmtrue\ahsanfancyfalse}
+\DeclareOption{beamer}{
+    \ahsanbeamertrue\ahsanhreffalse\ahsanfontfalse\ahsanaccessoriestrue
+    \ahsanthmfalse
+}
+
+\DeclareOption{noauthor}{\ahsanauthorfalse}
+\DeclareOption{nofig}{\ahsanfigsfalse}
+\DeclareOption{nofont}{\ahsanfontfalse}
+\DeclareOption{sans}{\ahsansanstrue}
+\DeclareOption{serif}{\ahsansansfalse}
+\DeclareOption{acc}{\ahsanaccessoriestrue}
+
+\DeclareOption{thm}{\ahsanthmtrue}
+\DeclareOption{nothm}{\ahsanthmfalse}
+\DeclareOption{secthm}{\ahsansecthmtrue}
+\DeclareOption{nosecthm}{\ahsansecthmfalse}
+\DeclareOption{fancythm}{\ahsanfancythmtrue}
+\DeclareOption{nofancythm}{\ahsanfancythmfalse}
+
+\DeclareOption{fancy}{\ahsanfancytrue}
+\DeclareOption{nofancy}{\ahsanfancyfalse}
+\DeclareOption{hdr}{\ahsanhdrtrue}
+\DeclareOption{nohdr}{\ahsanhdrfalse}
+\DeclareOption{href}{\ahsanhreftrue}
+\DeclareOption{nohref}{\ahsanhreffalse}
+\DeclareOption{index}{\ahsanindextrue}
+\DeclareOption{noindex}{\ahsanindexfalse}
+
+
+\newif\iftheme\themefalse
+\newif\ifdarkbluetheme\darkbluethemefalse
+\newif\ifdarkpinktheme\darkpinkthemefalse
+\newif\iflightbluetheme\lightbluethemefalse
+\newif\iflightpinktheme\lightpinkthemefalse
+\newif\ificmcbtheme\icmcbthemefalse
+\newif\ifmonocolortheme\monocolorthemefalse
+\DeclareOption{darkblue}{\themetrue\darkbluethemetrue}
+\DeclareOption{darkpink}{\themetrue\darkpinkthemetrue}
+\DeclareOption{lightblue}{\themetrue\lightbluethemetrue}
+\DeclareOption{lightpink}{\themetrue\lightpinkthemetrue}
+\DeclareOption{monocolor}{\themetrue\monocolorthemetrue}
+\DeclareOption{icmcb}{\themetrue\icmcbthemetrue}
+\ProcessOptions\relax
+
+
+\iftheme
+    \ifdarkbluetheme \usepackage[darkBlue]{mycolors} \fi    
+    \ifdarkpinktheme \usepackage[darkPink]{mycolors} \fi    
+    \iflightbluetheme \usepackage[lightBlue]{mycolors} \fi    
+    \iflightpinktheme \usepackage[lightPink]{mycolors} \fi
+    \ifmonocolortheme \usepackage[monocolor]{mycolors} \fi
+    \ificmcbtheme \usepackage[icmcb]{mycolors} \fi
+    \pagecolor{pageC}
+    \color{fgC}
+\else
+    \usepackage[plain]{mycolors}
+\fi
+
+\usepackage{amsmath, amssymb, enumitem}
+\usepackage{macros}
+
+\ifahsansetup
+    \ifahsanbeamer
+        \usepackage[english]{babel}
+        \usepackage{metalogo}
+        \usepackage{fontspec}
+
+        \setsansfont{Andika New Basic}
+        \setmainfont{Yanone Kaffeesatz}
+        \setmonofont{Share Tech Mono}
+
+        \ifdarkbluetheme
+            \usetheme{NordDark}
+        \fi
+        \iflightbluetheme
+            \usetheme{NordWhite}
+        \fi
+
+        \AtBeginSection[]
+        { \begin{frame}[c,noframenumbering,plain]
+                \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]
+            \end{frame} }
+
+        \AtBeginSubsection[]
+        { \begin{frame}[c, noframenumbering,plain]
+                \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
+            \end{frame} }
+    \fi
+
+    \ifahsanfancy
+        \usepackage{fancyhdr, titlesec, setspace}
+
+        \titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+        \titlespacing*{\subsection}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+
+        \setlength{\parindent}{0em}
+        \setlength{\parskip}{8pt}
+
+        \setlrmarginsandblock{6em}{6em}{*}
+        \setulmarginsandblock{8em}{8em}{*}
+        \checkandfixthelayout
+
+        \makepagestyle{plain}
+        % \makeevenhead{plain}{\rightmark\leftmark}{}{}
+        \makeoddhead{plain}{
+            \fontsize{10}{12} \selectfont \color{fgC!60!pageC} \leftmark \
+            \bfseries\rightmark
+        } {} {\fontsize{10}{12} \selectfont \thepage}
+        \renewcommand*{\sectionmark}[1]{\markboth{#1}{}}
+        \renewcommand*{\subsectionmark}[1]{\markright{#1}}
+        \pagestyle{plain}
+    \else 
+        \usepackage[a4paper, margin=1in]{geometry}
+    \fi
+
+    % Show/Hide figures
+    \ifahsanfigs
+        \usepackage{graphicx}
+    \else
+        \usepackage[draft]{graphicx}
+    \fi
+
+    \ifahsanaccessories
+        \usepackage{mathtools, float, multicol, subfig}
+        \usepackage{pdfpages, pgf, tikz, pgfplots}
+        \pgfplotsset{compat=1.17}
+    \fi
+
+    % font specs
+    \ifahsanfont
+        \usepackage{fontspec}
+        \usepackage[T1]{fontenc}
+
+        \ifahsansans
+            \usepackage{sansmathfonts}
+        \else
+            \usepackage{mathptmx}
+        \fi
+
+        \setsansfont{CMU Sans Serif}[Scale=MatchLowercase]
+        \setmonofont{Share Tech Mono}[Scale=MatchUppercase]
+        \setmainfont{CMU Serif}[Scale=MatchLowercase]
+        \renewcommand{\familydefault}{\sfdefault}
+        \newfontfamily\Share[Ligatures=TeX, Scale=MatchUppercase]{Share}
+        \newfontfamily\Titillium[Ligatures=TeX, Scale=MatchLowercase]{Titillium Web}
+
+    \else
+        \usepackage[T1]{fontenc}
+        \usepackage{sansmathfonts}
+        \usepackage{inconsolata}
+        \renewcommand*\familydefault{\sfdefault}
+        \ifahsansans
+            % \usepackage[rm, light]{roboto}
+        \else
+            \usepackage{mathptmx}
+        \fi
+
+        \DeclareUnicodeCharacter{2009}{ }
+        \DeclareUnicodeCharacter{2061}{ }
+
+        \newcommand{\Share}{\rmfamily}
+        \newcommand{\Titillium}{\sffamily}
+
+    \fi
+
+    % table of content specs
+    \ifahsantoc
+        \usepackage{tocloft}
+        \setcounter{tocdepth}{4}
+        \setcounter{secnumdepth}{4}
+
+        \usepackage[usehighlevels]{alnumsec}
+        \alnumsectionlevels{1}{chapter,section,subsection,subsubsection,paragraph}
+        \alnumsecstyle{aaaa}
+        \surroundarabic[{.}][]{}{}
+        \otherseparators{1}
+        \alnumsecstyle{aaaa}
+    \fi
+
+    % index making
+    \ifahsanindex
+        \usepackage[original]{imakeidx}
+
+        \makeindex[name=def, title=Definitions, options= -s indStyle.ist]
+        \makeindex[name=prob, title=Problems, options= -s indStyle.ist]
+        \makeindex[name=thm, title=Theorems, options= -s indStyle.ist]
+        \makeindex[name=strat, title=Strategies, options= -s indStyle.ist]
+        % \makeindex[name=cat, title=Categories, options= -s indStyle.ist]
+        \makeindex[title=Misc, options= -s indStyle.ist]
+    \fi
+    \ifahsanauthor
+        \author{M Ahsan Al Mahir}
+		\date{\today}
+    \fi
+
+    % latexbangla support
+    \ifahsanbangla
+        \usepackage{fontspec}
+        % \usepackage{pdfpages}
+        % \usepackage{afterpage}
+        % \usepackage{bookstyle_exp}
+    \else
+    \fi
+
+    % theorem options
+    \ifahsanthm
+        \ifahsanfancythm
+            \ifahsansecthm
+                \usepackage[secthm, fancythm]{tcbs} 
+            \else
+                \usepackage[fancythm]{tcbs}
+            \fi
+        \else
+            \usepackage{tcbs}
+        \fi
+    \else
+        \usepackage[nothm]{tcbs}
+    \fi
+
+    \ifahsanhref
+        \usepackage{hyperref}
+        \hypersetup{
+            colorlinks=true,
+            linkcolor=linkC,
+            filecolor=fileC,      
+            urlcolor=urlC,
+        }
+    \fi
+\fi
+
+\makeatletter
+\DeclareRobustCommand{\signature}{A%
+    \kern-.09em {\setbox0\hbox{T}%
+        \vbox to\ht0{\hbox{%
+            \csname S@\f@size\endcsname\fontsize\sf@size\z@ \math@fontsfalse\selectfont {H\hspace{.55mm}} }%
+        \vss}%
+}\kern-.40em \hbox{S\kern-.1667em\lower.5ex\hbox{A\hspace{-.5mm}}\kern-.125ex{N}}}
+
+%todo: page number on title pages
+%todo: absolute no theorem for bangla

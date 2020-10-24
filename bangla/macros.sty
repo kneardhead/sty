@@ -1,0 +1,39 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{macros}
+
+
+% Uses labels from file name
+\newcommand{\fig}[3]{
+	\begin{figure}[H] 
+		\centering 
+		\includegraphics[width=#1\textwidth]{#2.pdf} 
+		\caption{#3} 
+		\label{#2}
+	\end{figure}
+}
+
+
+% For modified labels
+\newcommand{\figl}[4]{
+	\begin{figure}[H] 
+		\centering 
+		\includegraphics[width=#1\textwidth]{#2.pdf} 
+		\caption{#3} 
+		\label{#4}
+	\end{figure}
+}
+
+
+
+% Old Factorial
+\RequirePackage{rotating}
+\RequirePackage{tkz-berge}
+\RequirePackage{tabu}
+\usetikzlibrary{calc}
+\newcommand{\oldfactorial}[1]{%
+	\tikz[baseline]{%
+		\node[anchor=base,inner sep=0.3ex](mynode){\ensuremath{#1}};
+		\draw(mynode.north west)--(mynode.south west)--(mynode.south east);
+		\path[use as bounding box]($(mynode.south west)+(-0.3ex,-0.3ex)$)rectangle($(mynode.north east)+(0.3ex,0.3ex)$);
+	}
+}
