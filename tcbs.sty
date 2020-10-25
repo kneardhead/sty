@@ -54,7 +54,7 @@
     spacebelow=15pt,
     notebraces={(}{)},
     notefont=\color{thmC}\mdseries\normalfont,
-    bodyfont=\fontfamily{ptm}\selectfont,
+    bodyfont=\Titillium\selectfont,
     ]{theoremBoxstyle}
 
     \declaretheoremstyle[
@@ -326,6 +326,33 @@
             xleftmargin=15pt,
             tabsize=4
         }
+
+        \lstset{
+            language=[LaTeX]Tex,
+            keywordstyle=\color{thmC},
+            texcsstyle=*\color{thmC},
+            basicstyle=\linespread{1.1}\footnotesize\ttfamily,
+            commentstyle=\color{fgC!60}\ttfamily,
+            stringstyle=\rmfamily,
+            numbers=left,
+            numberstyle=\footnotesize\ttfamily\color{fgC!60},
+            stepnumber=1,
+            % numbersep=8pt,
+            showstringspaces=false,
+            breaklines=true,
+            morekeywords={RequirePackage,ProvidesPackage,NeedsTeXFormat},
+            emph={[2]prob, den, thm, lem, thmbox, denbox, color, fig, figdf, proof, solu},
+            emphstyle={[2]\color{thmC}},
+            emph={[3]enumerate, },
+            emphstyle={[3]\color{NordRed}},
+            backgroundcolor=\color{fgC!5!pageC},
+            literate=
+            *{\{}{{\textcolor{NordBlue}{\{}}}{1}
+            {\}}{{\textcolor{NordBlue}{\}}}}{1}
+            {[}{{\textcolor{NordBlue}{[}}}{1}
+            {]}{{\textcolor{NordBlue}{]}}}{1},
+        }
+
 
         % included code style-------------------------
         %
