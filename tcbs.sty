@@ -216,7 +216,7 @@
             before skip=0pt,after skip=25pt,borderline west={.1em}{0pt}{solC},
         }
 
-        \declaretheorem[style=solnDefStyle, numbered=no, name=Definition]{solution_def}
+        \declaretheorem[style=solnDefStyle, numbered=no, name=Definition]{soldef}
         \declaretheorem[style=solnDefStyle, numbered=no, name=Lemma]{sollem}
         \declaretheorem[style=solnDefStyle, numbered=no, name=Claim]{claim}
 
@@ -225,7 +225,7 @@
             before skip=20pt,after skip=20pt,borderline west={.1em}{0pt}{black!80},
         }
 
-        \tcolorboxenvironment{solution_def}{
+        \tcolorboxenvironment{soldef}{
             coltext=solC, blanker, breakable, left=1em,
             before skip=20pt,after skip=20pt,borderline west={.1em}{0pt}{black!80},
         }
@@ -541,7 +541,6 @@
                 \includegraphics[width=#1\textwidth]{#2.png} 
                 \caption{#3} 
             \end{figure}
-            \typeout{Ahsan Section \thesection\ Page \thepage \ Picture #2}
         }
 
         \newcommand{\figdf}[3]{
