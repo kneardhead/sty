@@ -4,98 +4,101 @@
 %todo: recheck indexing in macro, because i can't call the macros without having to import
 %indices
 
-\newif\ifahsansetup\ahsansetuptrue
-\newif\ifahsanbangla\ahsanbanglafalse
-\newif\ifahsanbeamer\ahsanbeamerfalse
-\newif\ifahsanfigs\ahsanfigstrue
-\newif\ifahsanfancy\ahsanfancyfalse
-\newif\ifahsanhref\ahsanhreftrue
-\newif\ifahsanhdr\ahsanhdrfalse
+\newif \ifahsansetup       \ahsansetuptrue
+\newif \ifahsanbangla      \ahsanbanglafalse
+\newif \ifahsanbeamer      \ahsanbeamerfalse
+\newif \ifahsanfigs        \ahsanfigstrue
+\newif \ifahsanfancy       \ahsanfancyfalse
+\newif \ifahsanhref        \ahsanhreftrue
+\newif \ifahsanhdr         \ahsanhdrfalse
+\newif \ifahsanarticle     \ahsanarticlefalse
 
-\newif\ifahsanauthor\ahsanauthortrue
-\newif\ifahsanindex\ahsanindexfalse
-\newif\ifahsantoc\ahsantocfalse
-\newif\ifahsanaccessories\ahsanaccessoriesfalse
+\newif \ifahsanauthor      \ahsanauthortrue
+\newif \ifahsanindex       \ahsanindexfalse
+\newif \ifahsantoc         \ahsantocfalse
+\newif \ifahsanaccessories \ahsanaccessoriesfalse
 
-\newif\ifahsanthm\ahsanthmtrue
-\newif\ifahsansecthm\ahsansecthmfalse
-\newif\ifahsanfancythm\ahsanfancythmfalse
+\newif \ifahsanthm         \ahsanthmtrue
+\newif \ifahsansecthm      \ahsansecthmfalse
+\newif \ifahsanfancythm    \ahsanfancythmfalse
 
-\newif\ifahsanfont\ahsanfonttrue
-\newif\ifahsansans\ahsansanstrue
-\newif\ifahsanmathsans\ahsanmathsansfalse
+\newif \ifahsanfont        \ahsanfonttrue
+\newif \ifahsansans        \ahsansanstrue
+\newif \ifahsanmathsans    \ahsanmathsansfalse
 
 \DeclareOption{nosetup}{\ahsansetupfalse\ahsanthmfalse}
 \DeclareOption{bangla}{
     \ahsanbanglatrue\ahsanhreffalse
 }
 \DeclareOption{book}{
-    \ahsanfancythmtrue \ahsansecthmtrue \ahsanfancytrue
-    \ahsanindextrue \ahsanaccessoriestrue \ahsantoctrue
+    \ahsanfancythmtrue \ahsansecthmtrue      \ahsanfancytrue
+    \ahsanindextrue    \ahsanaccessoriestrue \ahsantoctrue
 }
 \DeclareOption{article}{
-    \ahsanfancythmtrue \ahsanfancyfalse \ahsanindexfalse
+    \ahsanfancythmtrue \ahsanfancytrue
+    \ahsanindexfalse   \ahsanarticletrue
 }
 \DeclareOption{beamer}{
-    \ahsanbeamertrue\ahsanhreffalse\ahsanfontfalse\ahsanaccessoriestrue
-    \ahsanthmfalse
+    \ahsanbeamertrue      \ahsanhreffalse \ahsanfontfalse
+    \ahsanaccessoriestrue \ahsanthmfalse
 }
 
-\DeclareOption{noauthor}{\ahsanauthorfalse}
-\DeclareOption{nofig}{\ahsanfigsfalse}
-\DeclareOption{nofont}{\ahsanfontfalse}
-\DeclareOption{sans}{\ahsansanstrue}
-\DeclareOption{serif}{\ahsansansfalse}
-\DeclareOption{mathsans}{\ahsanmathsanstrue}
-\DeclareOption{acc}{\ahsanaccessoriestrue}
+\DeclareOption {noauthor}   {\ahsanauthorfalse}
+\DeclareOption {nofig}      {\ahsanfigsfalse}
+\DeclareOption {nofont}     {\ahsanfontfalse}
+\DeclareOption {sans}       {\ahsansanstrue}
+\DeclareOption {serif}      {\ahsansansfalse}
+\DeclareOption {mathsans}   {\ahsanmathsanstrue}
+\DeclareOption {acc}        {\ahsanaccessoriestrue}
 
-\DeclareOption{thm}{\ahsanthmtrue}
-\DeclareOption{nothm}{\ahsanthmfalse}
-\DeclareOption{secthm}{\ahsansecthmtrue}
-\DeclareOption{nosecthm}{\ahsansecthmfalse}
-\DeclareOption{fancythm}{\ahsanfancythmtrue}
-\DeclareOption{nofancythm}{\ahsanfancythmfalse}
+\DeclareOption {thm}        {\ahsanthmtrue}
+\DeclareOption {nothm}      {\ahsanthmfalse}
+\DeclareOption {secthm}     {\ahsansecthmtrue}
+\DeclareOption {nosecthm}   {\ahsansecthmfalse}
+\DeclareOption {fancythm}   {\ahsanfancythmtrue}
+\DeclareOption {nofancythm} {\ahsanfancythmfalse}
 
-\DeclareOption{fancy}{\ahsanfancytrue}
-\DeclareOption{nofancy}{\ahsanfancyfalse}
-\DeclareOption{hdr}{\ahsanhdrtrue}
-\DeclareOption{nohdr}{\ahsanhdrfalse}
-\DeclareOption{href}{\ahsanhreftrue}
-\DeclareOption{nohref}{\ahsanhreffalse}
-\DeclareOption{index}{\ahsanindextrue}
-\DeclareOption{noindex}{\ahsanindexfalse}
+\DeclareOption {fancy}      {\ahsanfancytrue}
+\DeclareOption {nofancy}    {\ahsanfancyfalse}
+\DeclareOption {hdr}        {\ahsanhdrtrue}
+\DeclareOption {nohdr}      {\ahsanhdrfalse}
+\DeclareOption {href}       {\ahsanhreftrue}
+\DeclareOption {nohref}     {\ahsanhreffalse}
+\DeclareOption {index}      {\ahsanindextrue}
+\DeclareOption {noindex}    {\ahsanindexfalse}
 
 
-\newif\iftheme\themefalse
-\newif\ifdarkbluetheme\darkbluethemefalse
-\newif\ifdarkpinktheme\darkpinkthemefalse
-\newif\iflightbluetheme\lightbluethemefalse
-\newif\iflightpinktheme\lightpinkthemefalse
-\newif\ificmcbtheme\icmcbthemefalse
-\newif\ifmonocolortheme\monocolorthemefalse
-\DeclareOption{darkblue}{\themetrue\darkbluethemetrue}
-\DeclareOption{darkpink}{\themetrue\darkpinkthemetrue}
-\DeclareOption{lightgreen}{\themetrue\lightbluethemetrue}
-\DeclareOption{lightpink}{\themetrue\lightpinkthemetrue}
-\DeclareOption{monocolor}{\themetrue\monocolorthemetrue}
-\DeclareOption{icmcb}{\themetrue\icmcbthemetrue}
+\newif \iftheme          \themefalse
+\newif \ifdarkbluetheme  \darkbluethemefalse
+\newif \ifdarkpinktheme  \darkpinkthemefalse
+\newif \iflightbluetheme \lightbluethemefalse
+\newif \iflightpinktheme \lightpinkthemefalse
+\newif \ificmcbtheme     \icmcbthemefalse
+\newif \ifmonocolortheme \monocolorthemefalse
+
+\DeclareOption {darkblue}   {\themetrue\darkbluethemetrue}
+\DeclareOption {darkpink}   {\themetrue\darkpinkthemetrue}
+\DeclareOption {lightgreen} {\themetrue\lightbluethemetrue}
+\DeclareOption {lightpink}  {\themetrue\lightpinkthemetrue}
+\DeclareOption {monocolor}  {\themetrue\monocolorthemetrue}
+\DeclareOption {icmcb}      {\themetrue\icmcbthemetrue}
 \ProcessOptions\relax
 
 
 \iftheme
-    \ifdarkbluetheme \usepackage[darkBlue]{mycolors} \fi    
-    \ifdarkpinktheme \usepackage[darkPink]{mycolors} \fi    
-    \iflightbluetheme \usepackage[lightGreen]{mycolors} \fi    
-    \ifmonocolortheme \usepackage[monocolor]{mycolors} \fi
-    \ificmcbtheme \usepackage[icmcb]{mycolors} \fi
-    \pagecolor{pageC}
-    \color{fgC}
+    \ifdarkbluetheme  \usepackage[darkBlue]{mycolors}   \fi
+    \ifdarkpinktheme  \usepackage[darkPink]{mycolors}   \fi
+    \iflightbluetheme \usepackage[lightGreen]{mycolors} \fi
+    \ifmonocolortheme \usepackage[monocolor]{mycolors}  \fi
+    \ificmcbtheme     \usepackage[icmcb]{mycolors}      \fi
+    \pagecolor{pageC} \color{fgC}
 \else
     \usepackage[plain]{mycolors}
 \fi
 
 \usepackage{amsmath, amssymb, enumitem}
 \usepackage{macros}
+\usepackage{titlesec}
 
 \ifahsansetup
     \ifahsanbeamer
@@ -123,16 +126,25 @@
         { \begin{frame}[c, noframenumbering,plain]
                 \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
             \end{frame} }
+
+    \fi
+
+    \setlength\parindent{0pt}
+    \setlength\parskip{10pt}
+
+    \ifahsanarticle
+        \titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
+        \titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+
+        \titlespacing*{\section}{0pt}{6ex plus 1ex minus 1ex}{3ex plus .2ex}
+        \titlespacing*{\subsection}{0pt}{4ex plus 1ex minus 1ex}{1ex plus .2ex}
+    \else
+        \titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+        \titlespacing*{\subsection}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
     \fi
 
     \ifahsanfancy
-        \usepackage{fancyhdr, titlesec, setspace}
-
-        \titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
-        \titlespacing*{\subsection}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
-
-        \setlength{\parindent}{0em}
-        \setlength{\parskip}{8pt}
+        \usepackage{fancyhdr, setspace}
 
         \setlrmarginsandblock{6em}{6em}{*}
         \setulmarginsandblock{8em}{8em}{*}
@@ -159,8 +171,8 @@
     \fi
 
     \ifahsanaccessories
-        \usepackage{mathtools, float, multicol, subfig}
-        \usepackage{pdfpages, pgf, tikz, pgfplots}
+        \usepackage{mathtools , float , multicol , subfig}
+        \usepackage{pdfpages  , pgf   , tikz     , pgfplots}
         \pgfplotsset{compat=1.17}
     \fi
 
@@ -180,12 +192,12 @@
         \usepackage{fontspec}
         \usepackage[T1]{fontenc}
 
-        \setsansfont{CMU Sans Serif}[Scale=MatchLowercase]
-        \setmonofont{Share Tech Mono}[Scale=MatchLowercase]
-        \setmainfont{CMU Serif}[Scale=MatchLowercase]
+        \setsansfont{CMU Sans Serif}  [Scale=MatchLowercase]
+        \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
+        \setmainfont{CMU Serif}       [Scale=MatchLowercase]
 
-        \newfontfamily\Share[Ligatures=TeX, Scale=MatchUppercase]{Share}
-        \newfontfamily\Titillium[Ligatures=TeX, Scale=MatchLowercase]{Titillium Web}
+        \newfontfamily\Share     [Ligatures=TeX, Scale=MatchUppercase]{Share}
+        \newfontfamily\Titillium [Ligatures=TeX, Scale=MatchLowercase]{Titillium Web}
     \else
         \usepackage[T1]{fontenc}
         \usepackage{sansmathfonts}
@@ -217,11 +229,11 @@
     \ifahsanindex
         \usepackage[original]{imakeidx}
 
-        \makeindex[name=def, title=Definitions, options= -s indStyle.ist]
-        \makeindex[name=prob, title=Problems, options= -s indStyle.ist]
-        \makeindex[name=thm, title=Theorems, options= -s indStyle.ist]
-        \makeindex[name=strat, title=Strategies, options= -s indStyle.ist]
-        \makeindex[title=Misc, options= -s indStyle.ist]
+        \makeindex[name=def,   title =Definitions, options = -s indStyle.ist]
+        \makeindex[name=prob,  title =Problems,    options = -s indStyle.ist]
+        \makeindex[name=thm,   title =Theorems,    options = -s indStyle.ist]
+        \makeindex[name=strat, title =Strategies,  options = -s indStyle.ist]
+        \makeindex[            title =Misc,        options = -s indStyle.ist]
         % \makeindex[name=cat, title=Categories, options= -s indStyle.ist]
     \fi
     \ifahsanauthor
