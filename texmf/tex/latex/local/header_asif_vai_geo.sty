@@ -1,0 +1,267 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{header_asif_vai_geo}
+
+\RequirePackage{amssymb, mathtools, amsmath, enumitem, amsfonts, fancyhdr, float, amsthm, chngcntr, mathrsfs}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage[left=3cm,right=3cm,top=3cm,bottom=3cm,headheight=4pt,headsep=10pt]{geometry}
+\RequirePackage{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{color}
+\usepackage{pdfpages}
+\hypersetup{
+	unicode=false,          				% non-Latin characters in Acrobat’s bookmarks
+	pdftoolbar=true,        				% show Acrobat’s toolbar?
+	pdfmenubar=true,        				% show Acrobat’s menu?
+	pdffitwindow=false,     				% window fit to page when opened
+	pdfstartview={FitH},   					% fits the width of the page to the window
+	pdftitle={My title},   					% title
+	pdfauthor={Author},     				% author
+	pdfsubject={Subject},   				% subject of the document
+	pdfcreator={Creator},   				% creator of the document
+	pdfproducer={Producer}, 				% producer of the document
+	pdfkeywords={keyword1, key2, key3}, 	% list of keywords
+	pdfnewwindow=true,      				% links in new PDF window
+	colorlinks=true,       					% false: boxed links; true: colored links
+	linkcolor=black,          				% color of internal links (change box color with linkbordercolor)
+	citecolor=black,        				% color of links to bibliography
+	filecolor=black,      				% color of file links
+	urlcolor=black          					% color of external links
+}
+
+
+
+
+
+
+
+
+%make theorems, propositions, definitions captions bold
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+
+
+
+
+
+
+%define theorems, definitions and remarks
+
+\newtheorem{theorem}{$\blacksquare$ Theorem}[section]
+\newtheorem{corollary}{$\blacksquare$ Corollary}[theorem]
+\newtheorem{lemma}[theorem]{$\blacksquare$ Lemma}
+
+\newtheorem{problem}{Problem}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{generalization}{$\square$ Generalization}[problem]
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{observation}{Observation}
+\newtheorem{identity}{Identity}
+\newtheorem{examples}{Example}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{question}{Question}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{solution}{\sffamily\slshape Solution}
+\newtheorem{open}{Open Question}
+
+\theoremstyle{remark}
+\newtheorem{fact}{Fact}
+\newtheorem{note}{Note}
+\newtheorem{remark}{Remark}
+\newtheorem{hint}{Hint}
+\newtheorem{trick}{Trick}
+
+
+\renewcommand*{\proofname}{$\rhd$}
+
+
+
+
+%numbering
+
+\numberwithin{equation}{section}
+\numberwithin{problem}{section}
+\numberwithin{corollary}{section}
+\numberwithin{theorem}{section}
+\numberwithin{notation}{section}
+\numberwithin{fact}{section}
+\numberwithin{proposition}{section}
+\numberwithin{identity}{section}
+\numberwithin{hint}{section}
+\numberwithin{open}{section}
+\numberwithin{generalization}{section}
+\numberwithin{figure}{theorem}
+
+
+\counterwithin{theorem}{section} 
+\counterwithin{definition}{section}
+\counterwithin{problem}{section} 
+\counterwithin{hint}{section} 
+\counterwithin{corollary}{theorem}
+\counterwithin{generalization}{problem}
+
+
+
+
+
+%undefined macros defined
+
+\newcommand{\g}{\gamma}
+\newcommand{\e}{\epsilon}
+\newcommand{\p}{\phi}
+\newcommand{\s}{\sigma}
+\newcommand{\z}{\zeta}
+\newcommand{\w}{\omega}
+
+\renewcommand{\a}{\alpha}
+\renewcommand{\b}{\beta}
+\renewcommand{\c}{\chi}
+\renewcommand{\d}{\delta}
+\renewcommand{\t}{\theta}
+\renewcommand{\i}{\infty}
+\renewcommand{\k}{\kappa}
+\renewcommand{\l}{\lambda}
+\renewcommand{\o}{\omega}
+\renewcommand{\r}{\rho}
+\renewcommand{\t}{\varphi}
+\renewcommand{\u}{\upsilon}
+\renewcommand{\L}{\Lambda}
+
+
+
+
+%text colors
+
+\definecolor{GReen}{rgb}{128, 0, 0}
+\newcommand{\pb}[1]{{\leavevmode\color{Blue}{#1}}}
+\newcommand{\tc}[1]{{\leavevmode\color{Sepia}{#1}}}
+\newcommand{\tr}[1]{{\leavevmode\color{OliveGreen}{#1}}}
+\newcommand{\hl}[1]{{\leavevmode\color{Red}{#1}}}
+\newcommand{\dec}[1]{{\leavevmode\color{Plum}{#1}}}
+\newcommand{\tg}[1]{{\leavevmode\color{Cyan}{#1}}}
+
+
+
+
+
+%Universal sets
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Co}{\mathbb{C}}
+\renewcommand{\P}{\mathbb{P}}
+
+
+
+
+
+%skips
+
+\newcommand{\faka}{\bigskip \medskip}
+\newcommand{\Faka}{\faka\faka\faka}
+
+
+
+
+
+
+
+
+
+
+%text bodies
+
+\newcommand{\prob}[1]{{\smallskip\medskip\begin{problem}{#1}\end{problem}}}
+\newcommand{\probl}[3]{{\smallskip\medskip\begin{problem}\textbf{\href{#1}{#2}}: {#3}\end{problem}}}
+\newcommand{\gene}[3]{\faka\begin{generalization}\textbf{\href{#1}{#2}}: \pb{#3}\end{generalization}}
+
+
+\newcommand{\theo}[3]{{\faka\begin{theorem}\textbf{\href{#1}{#2}}: \tc{#3}\end{theorem}}}
+\newcommand{\coro}[1]{{\faka\begin{corollary}\tc{#1}\end{corollary}}}
+
+
+\newcommand{\lem}[1]{{\faka\begin{lemma}\tc{#1}\end{lemma}}}
+\newcommand{\nt}[1]{{\faka\begin{note}{#1}\end{note}}}
+\newcommand{\den}[1]{{\faka\begin{definition}\dec{#1}\end{definition}}}
+
+
+\newcommand{\trk}[2]{\faka\begin{trick}\textbf{\pb{#1}} \hl{#2}\end{trick}}
+\newcommand{\idea}[1]{{\begin{proof}{#1}\end{proof}}}
+
+
+\newcommand{\fig}[3]{\begin{figure}[hbtp]
+	\centering
+	\includegraphics[scale=#1]{Pics/#2.png}
+	
+	\caption{#3}
+	\end{figure}}
+\newcommand{\hrf}[2]{\hyperref[#1]{#2}}
+
+
+
+
+
+
+
+
+
+
+%\renewcommand{\theproblem}{\arabic{problem}}%
+
+\newcommand{\lcm}{\mbox{lcm}}
+\newcommand{\ord}{\mbox{ord}}
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+
+
+
+%Signature
+
+\makeatletter
+\DeclareRobustCommand{\signature}{A%
+	\kern-.09em {\setbox0\hbox{T}%
+		\vbox to\ht0{\hbox{%
+				\csname S@\f@size\endcsname\fontsize\sf@size\z@ \math@fontsfalse\selectfont {H\hspace{.55mm}} }%
+			\vss}%
+	}\kern-.40em \hbox{S\kern-.1667em\lower.5ex\hbox{A\hspace{-.5mm}}\kern-.125ex{N}}}
+
+
+
+%line
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+
+
+
+
+\makeatletter
+\def\printtitle{                    
+	{\centering \@title\par}}
+\makeatother 
+
+
+
+
+
+
+

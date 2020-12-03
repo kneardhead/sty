@@ -1,0 +1,345 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{latexbangla_new}[2020/12/31 v0.3 Enhanced LaTeX integration for Bangla]
+\RequirePackage{polyglossia, fontspec, xkeyval, ifxetex}
+\RequireXeTeX
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%    Fonts Support                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fully supported Bangla Fonts
+% Other banglafonts *are* supported but there might be issues with whitespaces.
+\def\@@Kalpurush{Kalpurush}
+\def\@Kalpurush#1{
+	\ifcase#1{Kalpurush}    %name
+	\or{MatchLowercase}     %Scale
+	\or{1.1}                %main WordSpace
+	\or{1.5}                %tt WordSpace
+	\else\fi
+}
+\def\@@SiyamRupali{SiyamRupali}
+\def\@SiyamRupali#1{
+	\ifcase#1{SiyamRupali}  %name
+	\or{0.8}                %Scale
+	\or{1.2}                %main WordSpace
+	\or{1.8}                %tt WordSpace
+	\else\fi
+}
+\def\@@SolaimanLipi{SolaimanLipi}
+\def\@SolaimanLipi#1{
+	\ifcase#1{SolaimanLipi} %name
+	\or{0.9}                %Scale
+	\or{1.5}                %main WordSpace
+	\or{2.1}                %tt WordSpace
+	\else\fi
+}
+\def\@@AdarshaPro{AdarshaPro-regular}
+\def\@AdarshaPro#1{
+	\ifcase#1{AdarshaPro-regular} %name
+	\or{0.6}                %Scale
+	\or{0.6}                %main WordSpace
+	\or{0.6}                %tt WordSpace
+	\else\fi
+}
+
+
+\def\bm@init#1{
+	\ifx#1\@@Kalpurush
+    	\def\bm@scale{\@Kalpurush{1}}
+    	\def\bm@wordspace{\@Kalpurush{2}}
+	\else\ifx#1\@@SiyamRupali
+    	\def\bm@scale{\@SiyamRupali{1}}
+    	\def\bm@wordspace{\@SiyamRupali{2}}
+    \else\ifx#1\@@SolaimanLipi
+    	\def\bm@scale{\@SolaimanLipi{1}}
+    	\def\bm@wordspace{\@SolaimanLipi{2}}
+	\else
+	    \def\bm@scale{MatchLowercase}
+    	\def\bm@wordspace{1}
+    \fi\fi\fi
+}
+\def\btt@init#1{
+	\ifx#1\@@Kalpurush
+    	\def\btt@scale{\@Kalpurush{1}}
+    	\def\btt@wordspace{\@Kalpurush{3}}
+	\else\ifx#1\@@SiyamRupali
+    	\def\btt@scale{\@SiyamRupali{1}}
+    	\def\btt@wordspace{\@SiyamRupali{3}}
+    \else\ifx#1\@@SolaimanLipi
+    	\def\btt@scale{\@SolaimanLipi{1}}
+    	\def\btt@wordspace{\@SolaimanLipi{3}}
+	\else
+		\def\btt@scale{MatchLowercase}
+    	\def\btt@wordspace{1.2}
+    \fi\fi\fi
+}
+
+% default fonts
+\def\bm@name{Kalpurush}
+\def\bm@@name{bmfont}
+\def\btt@name{SiyamRupali}
+\def\btt@@name{bttfont}
+
+% options to override default fonts
+\DeclareOptionX{banglamainfont}{%
+	\if\relax\detokenize{#1}\relax
+		\errmessage{Bangla main font not defined}
+	\else
+		\def\bm@name{#1}
+		\def\bm@@name{bmfont}
+    \fi
+}
+\DeclareOptionX{banglattfont}{%
+	\if\relax\detokenize{#1}\relax
+		\errmessage{Bangla tt font not defined}
+	\else
+		\def\btt@name{#1}
+		\def\btt@@name{bttfont}
+    \fi
+}
+
+% init the fonts
+\bm@init{\bm@name}
+\btt@init{\btt@name}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Features define                             %%
+%%      0: nothing                              %%
+%%      1: basic bangla in english              %%
+%%      2: full bangla support                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\if@none
+\newif\if@basic
+\newif\if@full
+\DeclareOptionX{feature}{
+	\if\relax\detokenize{#1}\relax\fi
+	\ifcase#1
+		\@nonetrue
+        \or
+        \@basictrue
+        \or
+        \@basictrue
+        \@fulltrue
+    \fi
+}
+
+\newif\ifchange@num \change@numtrue
+\DeclareOptionX{changecounternumbering}{
+	\if\relax\detokenize{#1}\relax\fi
+	\ifcase#1
+        \change@numfalse
+    \fi
+}
+
+\ProcessOptionsX\relax
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%    Font and Language Def                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Set defualt language to bangla, else doesnt work
+\ifchange@num
+	\setmainlanguage[changecounternumbering=false, numerals=Bengali]{bengali}
+\else
+	\setmainlanguage{bengali}
+\fi
+
+\newfontfamily\bengalifont[%
+	Script=Bengali,%
+	Scale=\bm@scale,%
+	NFSSFamily=\bm@@name,%
+	WordSpace=\bm@wordspace,%
+	AutoFakeSlant,
+	AutoFakeBold=2.5
+]{[\bm@name]}
+
+\newfontfamily\bengalifonttt[%
+    Script=Bengali,%
+    Scale=\btt@scale,%
+    NFSSFamily=\btt@@name,
+    WordSpace=\btt@wordspace,%
+    AutoFakeSlant,
+    AutoFakeBold
+]{[\btt@name]}
+
+\newenvironment{latin}{\fontencoding{OT1}\ifx\f@family\btt@@name
+\fontfamily{lmtt}\else\fontfamily{lmr}\fi\selectfont}\relax
+
+% Devanagari is required to import Bangla fullstop dari ("0964) 
+\RequirePackage[Latin, Bengali, Devanagari]{ucharclasses}
+\setTransitionsForLatin{\begin{latin}}{\end{latin}}
+
+% sets parindent 0
+\setlength{\parindent}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Features Specification                                              %%
+%%      0: None, defualt                                                %%
+%%          No theorems, no number translation. Just barebone Bangla    %%
+%%          support, without any clashes. Can be used any packages as   %%
+%%          as long as font clashes are avoided. Works with all themes  %%
+%%      1: Just Bangla in english                                       %%
+%%          theorem names are in bangla, defines number translator      %%
+%%          clashes with enumitem and thmtools                          %%
+%%      2: Full Bengali Support                                         %%
+%%          perfect for larger projects like books. conflicts a lot     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% feature=1 BASIC  %%
+%%%%%%%%%%%%%%%%%%%%%%
+
+
+\if@basic
+    \RequirePackage{titlesec, amsthm, xpatch, amsfonts, thmtools}
+    \RequirePackage{amssymb, amsmath, chngcntr, enumerate}
+	
+	%increases gap between lines
+	\linespread{1.15}
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%  Theorem Styles                                  %%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \declaretheoremstyle[
+    headfont=\bfseries,
+    headpunct={.},
+    postheadspace={7pt},
+    spaceabove=12pt,
+    spacebelow=12pt,
+    notebraces={(}{)},
+    notefont=\mdseries\ttfamily,
+    ]{problemstyle}
+
+    \declaretheoremstyle[
+    headfont=\bfseries,
+    headpunct={ \textbf{---} },
+    postheadspace={0pt},
+    spaceabove=20pt,
+    spacebelow=15pt,
+    notebraces={(}{)},
+    notefont=\mdseries\normalfont,
+    ]{theoremstyle}
+    
+    \declaretheoremstyle[
+    headfont=\bfseries,
+    notebraces={[}{]},
+    notefont=\normalfont\sffamily,
+    headpunct={. },
+    spaceabove=10pt,
+    spacebelow=10pt,
+    qed=\qedsymbol,
+    ]{solutionstyle}
+
+    \declaretheoremstyle[
+    headfont=\bfseries,
+    bodyfont=\mdseries,
+    spaceabove=20pt,
+    spacebelow=10pt,
+    headpunct={ --- },
+    ]{definitionstyle}
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%  Theorems                                        %%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    \declaretheorem[style=problemstyle, name=সমস্যা ]{problem}
+    \declaretheorem[style=theoremstyle, name=উপপাদ্য ]{theorem}
+    \declaretheorem[style=solutionstyle, numbered=no, name=সমাধান ]{solution}
+    \declaretheorem[style=solutionstyle, numbered=no, name=প্রমাণ ]{prooof}
+    \declaretheorem[style=problemstyle, name=উদাহরণ ] {exercise}
+    \declaretheorem[style=definitionstyle, numbered=no, name=সংজ্ঞা ]{definition}
+
+	\addto\captionsbengali{\renewcommand\proofname{\bfseries প্রমাণ}}
+    
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %% Counter Translation Engine                       %%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\def\bengaliletters#1{\expandafter\@bengali@letters #1@}
+	\def\@bengali@letters#1{% bengali alphabet generator for counters
+  	    \ifx @#1            % terminate
+        \else
+        \ifcase#1
+            ক\orখ\orগ\orঘ\orঙ\or
+            চ\orছ\orজ\orঝ\orঞ\or
+            ট\orঠ\orড\orঢ\orণ\or
+            ত\orথ\orদ\orধ\orন\or
+            প\orফ\orব\orভ\orম\or
+            য\orর\orল\orশ\orষ\orস\or
+            হ\orৎ\orং\orঃ\orঁ
+        \fi
+      \expandafter\@bengali@letters
+      \fi
+    }
+    \def\bengalialphabet#1{% Takes number
+        \bengaliletters{\number#1}
+    }
+    \def\tobengalialph#1{
+        \expandafter
+        \bengaliletters\csname c@#1
+        \endcsname
+    }
+
+    % bangla alphabetical counter
+    \newcounter{bengalialph}
+    \setcounter{bengalialph}{1}
+    \renewcommand{\thebengalialph}{\tobenglaialph{bengalialph}}
+
+	% defining a \tobangla which converts numbers in any counter to bangla
+	\def\tobangla#1{\expandafter\bengalinumber\csname c@#1\endcsname}
+	\def\numtobangla#1{\bengalinumber#1\@nil}
+
+	% converting all the useful counters not handled by polyglossia to bangla
+    \renewcommand{\theenumi}{\tobangla{enumi}}
+    \renewcommand{\theenumii}{\tobangla{enumii}}
+    \renewcommand{\theenumiii}{\tobangla{enumiii}}
+    \renewcommand{\thefootnote}{\tobangla{footnote}}  
+    \renewcommand{\thepage}{\tobangla{page}}
+
+    \renewcommand{\theproblem}{\tobangla{problem}}
+    \renewcommand{\thetheorem}{\tobangla{theorem}}
+    \renewcommand{\theexercise}{\tobangla{exercise}}
+
+	\counterwithin{equation}{section}
+	\renewcommand{\theequation}{\thesection.\tobangla{equation}}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% feature=2 BOOK   %%
+%%%%%%%%%%%%%%%%%%%%%%
+
+%TODO fix
+
+\if@full
+	\newtheorem{corollary}{\bfseries অনুসিদ্ধান্ত}[section]
+	\newtheorem{property}{\bfseries বৈশিষ্ট্য}[section]
+	\newtheorem*{hint} {\bfseries হিন্ট}
+	\renewcommand{\thecorollary}{\thesection.\tobangla{corollary}}
+	\renewcommand{\theproperty}{\thesection.\tobangla{property}}
+	\addto\captionsbengali{\renewcommand\abstractname{সারসংক্ষেপ}}
+	\addto\captionsbengali{\renewcommand\bibname{\bfseries গ্রন্থসূত্র}}
+	\addto\captionsbengali{\renewcommand{\figurename}{চিত্র}}
+	\newenvironment{motive}{\proof[\bfseries মোটিভেশন]}{\phantom\qedhere\endproof}
+	\def\equationautorefname~#1\null{(#1)\null}
+\fi
+	\addto\captionsbengali{\renewcommand{\figurename}{চিত্র}}
+	
+    
+\endinput

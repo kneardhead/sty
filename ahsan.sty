@@ -1,7 +1,7 @@
 \ProvidesPackage{ahsan}
 
-%todo: add a proper article class with sections rather than chapters
-%todo: recheck indexing in macro, because i can't call the macros without having to import
+%todo add a proper article class with sections rather than chapters
+%todo recheck indexing in macro, because i can't call the macros without having to import
 %indices
 
 \newif \ifahsansetup       \ahsansetuptrue
@@ -96,15 +96,25 @@
     \usepackage[plain]{mycolors}
 \fi
 
-\usepackage{amsmath, amssymb, enumitem}
+\usepackage{amsmath, amssymb}
 \usepackage{macros}
 \usepackage{titlesec}
+
+% latexbangla support
+\ifahsanbangla
+    % \usepackage[fancythm, bangla]{tcbs} 
+    \usepackage[feature=1]{latexbangla_new}
+
+    \ahsanfigstrue 
+    \ahsansetupfalse
+\else
+\usepackage{enumitem}
+\fi
 
 \ifahsansetup
     \ifahsanbeamer
         \usepackage[english]{babel}
         \usepackage{metalogo}
-        \usepackage{fontspec}
 
         \setsansfont{Andika New Basic}
         \setmainfont{Yanone Kaffeesatz}
@@ -192,7 +202,7 @@
         \usepackage{fontspec}
         \usepackage[T1]{fontenc}
 
-        \setsansfont{CMU Sans Serif}  [Scale=MatchLowercase]
+        \setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
         \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
         \setmainfont{CMU Serif}       [Scale=MatchLowercase]
 
@@ -241,15 +251,6 @@
 		\date{\today}
     \fi
 
-    % latexbangla support
-    \ifahsanbangla
-        \usepackage{fontspec}
-        \usepackage{pdfpages}
-        \usepackage{afterpage}
-        \usepackage{bookstyle_exp}
-    \else
-    \fi
-
     % theorem options
     \ifahsanthm
         \ifahsanfancythm
@@ -257,6 +258,13 @@
                 \usepackage[secthm, fancythm]{tcbs} 
             \else
                 \usepackage[fancythm]{tcbs}
+                \newcommand{\mysection}[1]{
+                    \setcounter{problem}{0}
+                    \setcounter{theorem}{0}
+                    \setcounter{lemma}{0}
+                    \setcounter{exercise}{0}
+                    \section{#1}
+                }
             \fi
         \else
             \usepackage{tcbs}
@@ -275,6 +283,7 @@
         }
     \fi
 \fi
+
 
 \makeatletter
 \DeclareRobustCommand{\signature}{A%

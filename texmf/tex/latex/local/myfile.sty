@@ -1,0 +1,516 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{myfile}
+
+
+\RequirePackage{amssymb, mathtools, amsmath, enumitem, amsfonts, fancyhdr, float, amsthm, chngcntr}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage[left=2.5cm, right=2cm, top=3cm, bottom=3cm, headheight=4pt, headsep=10pt]{geometry}
+\RequirePackage{hyperref}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{pdfpages}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage[titles]{tocloft}
+\usepackage{listings}
+\usepackage{xparse, chngcntr}
+\usepackage{thmtools}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{pgf,tikz, pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+
+
+
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=dRed,
+	filecolor=dBlue,      
+	urlcolor=dBlue,
+	bookmarks=true,
+}
+
+
+
+\DeclareUnicodeCharacter{2009}{ }
+
+
+
+
+
+
+
+% bookmark the problems and theorems-------------------------
+
+
+\usepackage{bookmark}
+\bookmarksetup{open,numbered}
+
+\makeatletter
+\newcommand*{\theorembookmark}{%
+  \bookmark[
+    dest=\@currentHref,
+    rellevel=1,
+    keeplevel,
+  ]{%
+    \thmt@thmname\space\csname the\thmt@envname\endcsname
+    \ifx\@currentlabelname\@empty
+    \else
+      \space(\@currentlabelname)%
+    \fi
+  }%
+}
+\makeatother
+
+%============================================================
+
+
+
+
+
+
+
+
+
+% defining colors----------------------------
+
+	\definecolor{liteCream}{RGB}{248, 248, 248}
+
+	\definecolor{dBlue}{RGB}{0, 0, 51}
+	\definecolor{dGreen}{RGB}{0,0.6,0}
+	\definecolor{dRed}{RGB}{128, 0, 0}
+
+	\definecolor{gray}{RGB}{0.5,0.5,0.5}
+	\definecolor{mauve}{RGB}{0.58,0,0.82}
+
+	\definecolor{ffqqqq}{RGB}{1.,0.,0.}
+	\definecolor{qqqqff}{RGB}{0.,0.,1.}
+
+
+
+	\pagecolor{liteCream}
+
+
+%============================================
+
+
+
+
+
+
+
+
+
+
+%ToC-------------------------------------------------------------
+
+	\renewcommand*{\cftsecfont}{\large\bfseries}
+	\renewcommand*{\cftsecpagefont}{\large\bfseries}
+	\renewcommand*{\cftsubsecfont}{\normalsize\bfseries}
+	\renewcommand*{\cftsubsecpagefont}{\normalsize\bfseries}
+	\renewcommand*{\cftparafont}{\small}
+	\renewcommand*{\cftparapagefont}{\small}
+
+
+	\setlength\cftparskip{-4pt}
+	\setlength\cftbeforesecskip{20pt}
+	\setlength\cftbeforesubsecskip{-3pt}
+	\setlength\cftbeforesubsubsecskip{-5pt}
+	\setlength\cftbeforeparaskip{-8pt}
+	\setlength\cftaftertoctitleskip{2pt}
+	\setlength\cftbeforetoctitleskip{-10pt}
+
+
+%=================================================================
+
+
+
+
+
+
+
+
+
+
+
+% make theorems, propositions, definitions captions bold ----
+	
+	\makeatletter
+	\def\th@plain{%
+		\thm@notefont{}% same as heading font
+		\itshape % body font
+	}
+	\def\th@definition{%
+		\thm@notefont{}% same as heading font
+		\normalfont % body font
+	}
+	\makeatother
+	
+%===========================================================	
+
+
+
+
+
+
+
+
+
+% defining theorem styles------------------------
+
+		
+
+	\declaretheoremstyle
+	[
+		spaceabove=6pt, 
+		spacebelow=6pt, 
+		headfont=\normalfont\scshape, 
+		bodyfont = \normalfont,
+		postheadspace=1em, 
+		qed=$\blacksquare$, 
+		headpunct={}
+
+	]{proofStyle}
+	
+	
+	\declaretheoremstyle
+	[
+		spaceabove=6pt, 
+		spacebelow=6pt, 
+		headfont=\normalfont\bfseries,
+		notefont=\mdseries\bfseries, 
+		notebraces={(}{)}, 
+		bodyfont=\normalfont\itshape,
+		postheadspace=1em,
+		headpunct={:}
+
+	]{theoStyle}
+
+	
+	\declaretheoremstyle
+	[
+		spaceabove=6pt, 
+		spacebelow=6pt, 
+		headfont=\normalfont\bfseries,
+		notefont=\mdseries\bfseries, 
+		notebraces={(}{)}, 
+		bodyfont=\normalfont,
+		postheadspace=1em,
+		headpunct={:}
+
+	]{probStyle}
+
+
+	\declaretheoremstyle
+	[
+		spaceabove=6pt, 
+		spacebelow=6pt, 
+		headfont=\normalfont\bfseries, 
+		bodyfont = \normalfont,
+		postheadspace=1em, 
+		headpunct={}
+
+	]{defStyle}
+
+
+
+%================================================
+
+
+
+
+
+
+
+
+
+
+
+% define theorems, definitions and remarks--------------------------------------------------------------------------
+
+
+	\declaretheorem[name={Theorem}, style=theoStyle, numberwithin=subsection, postheadhook=\theorembookmark]{theorem}
+	\declaretheorem[name={Lemma}, style=theoStyle, sibling=theorem, postheadhook=\theorembookmark]{lemma}
+		\declaretheorem[name={Corollary}, style=theoStyle, parent=theorem]{corollary}
+	\declaretheorem[name={Game}, style=theoStyle, sibling=theorem]{game}
+
+	\declaretheorem[name={\texttt{Data Structure}}, style=theoStyle, sibling=theorem]{dstru}
+	
+
+
+	\declaretheorem[name={Idea}, style=proofStyle, unnumbered]{Idea}
+
+
+
+	\declaretheorem[name={Definition}, style=defStyle, numberwithin=subsection]{definition}
+		\declaretheorem[name={$\blacksquare$ \texttt{Algorithm}}, style=theoStyle, parent=definition]{algo}
+
+
+	\declaretheorem[name={Problem}, style=probStyle, numberwithin=subsection, postheadhook=\theorembookmark]{problem}
+		\declaretheorem[name={Generalization}, style=probStyle, parent=problem]{generalization}
+	
+
+%===================================================================================================================
+
+
+
+
+
+
+
+
+
+% making the counter follow section counter, when there is not subsection -------
+
+
+	\usepackage{xpatch}
+	\makeatletter
+	\newif\ifsection
+	\newif\ifsubsection
+	\preto\section{\sectiontrue\subsectionfalse}
+	\preto\subsection{\sectionfalse\subsectiontrue}
+	\patchcmd{\@xsect}% <cmd>
+	{\ignorespaces}% <search>
+	{\ifsection
+		\numberwithin{problem}{section}
+		\numberwithin{theorem}{section}
+		\numberwithin{definition}{section}
+		\numberwithin{lemma}{section}
+		\else
+		\numberwithin{problem}{subsection}
+		\numberwithin{theorem}{subsection}
+		\numberwithin{definition}{subsection}
+		\numberwithin{lemma}{subsection}
+		\fi
+		\setcounter{problem}{0}\relax\ignorespaces}% <replace>
+	{}{}% <success><failure>
+	\makeatother
+
+
+%================================================================================
+
+
+
+
+
+
+
+
+
+
+
+% defines the counter depth------------
+
+	\setcounter{tocdepth}{4}
+	\setcounter{secnumdepth}{4}
+
+%======================================
+
+
+
+
+
+
+
+
+
+
+
+% undefined macros defined---------------------------
+
+	\newcommand{\g}{\gamma}
+	\newcommand{\e}{\epsilon}
+	\newcommand{\p}{\phi}
+	\newcommand{\s}{\sigma}
+	\newcommand{\z}{\zeta}
+	\newcommand{\w}{\omega}
+	
+	\renewcommand{\a}{\alpha}
+	\renewcommand{\b}{\beta}
+	\renewcommand{\c}{\chi}
+	\renewcommand{\d}{\delta}
+	\renewcommand{\t}{\theta}
+	\renewcommand{\i}{\infty}
+	\renewcommand{\k}{\kappa}
+	\renewcommand{\l}{\lambda}
+	\renewcommand{\o}{\omega}
+	\renewcommand{\r}{\rho}
+	\renewcommand{\t}{\varphi}
+	\renewcommand{\u}{\upsilon}
+	\renewcommand{\L}{\Lambda}
+	
+
+	\newcommand{\N}{\mathbb{N}}
+	\newcommand{\R}{\mathbb{R}}
+	\newcommand{\Z}{\mathbb{Z}}
+	\newcommand{\Q}{\mathbb{Q}}
+	\newcommand{\Co}{\mathbb{C}}
+	\renewcommand{\P}{\mathbb{P}}
+
+
+
+	\newcommand{\lcm}{\mbox{lcm}}
+	\newcommand{\ord}{\mbox{ord}}
+
+
+	\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+	\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+	\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+
+
+%===================================================
+
+
+
+
+
+
+
+
+
+
+
+
+%text colors----------------------------------------------------
+
+	\newcommand{\pb}[1]{{\leavevmode\color{Blue}{#1}}}
+	\newcommand{\tc}[1]{{\leavevmode\color{Sepia}{#1}}}
+	\newcommand{\tr}[1]{{\leavevmode\color{OliveGreen}{#1}}}
+	\newcommand{\hl}[1]{{\leavevmode\color{Red}{#1}}}
+	\newcommand{\dec}[1]{{\leavevmode\color{Plum}{#1}}}
+	\newcommand{\tg}[1]{{\leavevmode\color{Cyan}{#1}}}
+
+%=============================================================== 
+
+
+
+
+
+
+
+
+
+
+% skips----------------------------------
+
+	\newcommand{\faka}{\bigskip \medskip}
+	\newcommand{\Faka}{\faka\faka}
+	\newcommand\tab[1][.5cm]{\hspace*{#1}}
+
+%========================================
+
+
+
+
+
+
+
+
+
+% environment macros ---------------------------------------------------------------------------------------------------------------------
+
+	\newcommand{\prob}[2]{\faka\begin{problem} \textbf{#1} {\fontfamily{cmss}\selectfont #2} \end{problem}\medskip}
+	\newcommand{\probl}[4]{\faka\begin{problem} \textbf{\href{#1}{#2}}: \textbf{#3} {\fontfamily{cmss}\selectfont#4} \end{problem}\medskip}
+		\newcommand{\gene}[3]{\faka\begin{generalization} \textbf{\href{#1}{#2}}: {\fontfamily{cmss}\selectfont#3} \end{generalization}\medskip}
+	
+	
+	
+	
+	\newcommand{\theo}[3]{\faka\begin{theorem} \textbf{\href{#1}{#2}}: {\fontfamily{cmss}\selectfont #3} \end{theorem}\medskip}
+		\newcommand{\coro}[1]{\faka\begin{corollary} \tc {\fontfamily{cmss}\selectfont #1} \end{corollary}\medskip}
+	\newcommand{\lem}[1]{\faka\begin{lemma} {\fontfamily{cmss}\selectfont #1} \end{lemma}}
+	\newcommand{\khela}[3]{\faka\begin{game} \textbf{\href{#1}{#2}}: {\fontfamily{cmss}\selectfont #3} \end{game}\medskip}
+		\newcommand{\algorithm}[3]{\faka\begin{algo} \textbf{\href{#1}{#2}}: {\fontfamily{cmss}\selectfont #3} \end{algo}\medskip}
+	\newcommand{\dstruct}[3]{\faka\begin{dstru} \textbf{\href{#1}{#2}}: {\fontfamily{cmss}\selectfont #3} \end{dstru}\medskip}
+	
+	
+	
+	
+	\newcommand{\nt}[1]{\faka\begin{note} #1 \end{note}}
+	\newcommand{\den}[1]{\faka\begin{definition} \dec{#1} \end{definition}}
+	\newcommand{\idea}[1]{\begin{Idea} #1 \end{Idea}}
+	
+	
+	
+	
+	\newcommand{\program}[1]{\begin{verbatim} #1 \end{verbatim}}
+	\newcommand{\fig}[3]{\begin{figure}[H] \centering \includegraphics[scale=#1]{Pics/#2.png} \caption{#3} \end{figure}}
+	\newcommand{\hrf}[2]{\hyperref[#1]{#2}}
+
+
+
+	%\newcommand{\iref}[2]{\item \hrf{#1}{\scriptsize{\ttfamily{#2}}}}
+	
+		\newcommand{\iref}[3]{\item \hrf{#1}{\scriptsize{\ttfamily{#2}}}{ \scriptsize{#3}}}
+
+%===========================================================================================================================================
+
+
+
+
+
+
+
+% Signature--------------------------------------------------------------------------------------------------------
+
+	\makeatletter
+	\DeclareRobustCommand{\signature}{A%
+		\kern-.09em {\setbox0\hbox{T}%
+			\vbox to\ht0{\hbox{%
+					\csname S@\f@size\endcsname\fontsize\sf@size\z@ \math@fontsfalse\selectfont {H\hspace{.55mm}} }%
+				\vss}%
+		}\kern-.40em \hbox{S\kern-.1667em\lower.5ex\hbox{A\hspace{-.5mm}}\kern-.125ex{N}}}
+
+%==================================================================================================================
+
+
+
+
+
+
+
+
+
+% title cenetering-------------------
+
+	\makeatletter
+	\def\printtitle{                    
+		{\centering \@title\par}}
+	\makeatother 
+
+%===============================================
+
+
+
+
+
+
+
+
+
+% included code style-------------------------
+
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dGreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+%=============================================

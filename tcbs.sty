@@ -1,13 +1,18 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{tcbs}
 
+% Todo Article class spacing :/ 
+
 \newif\ifAhsanthm\Ahsanthmtrue
 \newif\ifAhsansecthm\Ahsansecthmfalse
 \newif\ifAhsanfancythm\Ahsanfancythmfalse
+\newif\ifAhsanbangla\Ahsanbanglafalse
+
 
 \DeclareOption{nothm}{\Ahsanthmfalse}
 \DeclareOption{secthm}{\Ahsansecthmtrue}
 \DeclareOption{fancythm}{\Ahsanfancythmtrue}
+\DeclareOption{bangla}{\Ahsanbanglatrue}
 
 \ProcessOptions\relax
 
@@ -15,6 +20,7 @@
 \ifAhsanthm
     \usepackage{amsthm}
 \fi
+
 
 \ifAhsanfancythm
     \usepackage{amsthm} % needed for nothm+fancythm
@@ -25,15 +31,28 @@
 
     \newcommand{\listhack}{$\empty$\vspace{-2em}}
 
-    \declaretheoremstyle[
-    headfont=\bfseries\Share\color{probC},
-    headpunct={.},
-    postheadspace={7pt},
-    spaceabove=30pt,
-    spacebelow=12pt,
-    notebraces={(}{)},
-    notefont=\color{probC}\mdseries\ttfamily,
-    ]{problemstyle}
+
+    \ifAhsanbangla
+        \declaretheoremstyle[
+        headfont=\bfseries\ttfamily\color{probC},
+        headpunct={.},
+        postheadspace={7pt},
+        spaceabove=12pt,
+        spacebelow=12pt,
+        notebraces={(}{)},
+        notefont=\color{probC}\mdseries\ttfamily,
+        ]{problemstyle}
+    \else
+        \declaretheoremstyle[
+        headfont=\bfseries\Share\color{probC},
+        headpunct={.},
+        postheadspace={7pt},
+        spaceabove=12pt,
+        spacebelow=12pt,
+        notebraces={(}{)},
+        notefont=\color{probC}\mdseries\ttfamily,
+        ]{problemstyle}
+    \fi
 
     \declaretheoremstyle[
     headfont=\bfseries\color{thmC},
@@ -55,11 +74,11 @@
     notebraces={(}{)},
     notefont=\color{thmC}\mdseries\normalfont,
     bodyfont=\Titillium\selectfont,
-    ]{theoremBoxstyle}
+    ]{thmboxstyle}
 
     \declaretheoremstyle[
-    headfont=\bfseries\sffamily\color{defC},
-    bodyfont=\normalfont,
+    headfont=\bfseries\color{defC},
+    bodyfont=\mdseries,
     spaceabove=20pt,
     spacebelow=10pt,
     headpunct={--- },
@@ -71,7 +90,7 @@
     notefont=\normalfont\sffamily,
     headpunct={. },
     spaceabove=10pt,
-    spacebelow=15pt,
+    spacebelow=10pt,
     % qed=\qedsymbol,
     % bodyfont=\color{solC!80!pageC},
     ]{solutionstyle}
@@ -99,6 +118,16 @@
 
 \fi
 
+\ifAhsanbangla
+    \declaretheoremstyle[
+    headfont=\bfseries\mdseries\color{defC},
+    bodyfont=\mdseries,
+    spaceabove=20pt,
+    spacebelow=10pt,
+    headpunct={--- },
+    ]{definitionstyle}
+\fi
+
 
 \ifAhsanthm
 
@@ -108,12 +137,14 @@
 
         \ifAhsansecthm
             \declaretheorem[style=theoremstyle,name=Theorem,numberwithin=section]{theorem}
+            \declaretheorem[style=theoremBoxstyle,name=Theorem,numberwithin=section] 
+            {BoxedTheorem}
         \else
             \declaretheorem[style=theoremstyle,name=Theorem]{theorem}
+            \declaretheorem[style=theoremBoxstyle,name=Theorem] {BoxedTheorem}
         \fi
-        \declaretheorem[style=theoremBoxstyle,name=Theorem,%
-        sibling=theorem]{BoxedTheorem}
-        \declaretheorem[style=theoremstyle,name=Lemma,sibling=theorem]{lemma}
+        \declaretheorem[style=theoremstyle,name=Lemma,%
+        sibling=theorem]{lemma}
         \declaretheorem[style=theoremstyle,name=Proposition,sibling=theorem]{proposition}
         \declaretheorem[style=theoremstyle,name=Corollary,sibling=theorem]{corollary}
 
@@ -171,7 +202,7 @@
         \ificmcbtheme
             \tcolorboxenvironment{problem}{
                 tile, breakable,colback=probBgC, colframe=probBgC, coltext=fgC,
-                left=1em,before skip=25pt,after skip=20pt,
+                left=1em,before skip=12pt,after skip=30pt,
             }
         \fi
         
@@ -179,7 +210,7 @@
 
         \declaretheorem[style=definitionstyle, numbered=no]{definition}
         \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{impdefinition}
-        \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure]%
+        \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure]
             {data_structure}
         \declaretheorem[style=definitionstyle, numbered=no, name=Algorithm]{algo}
         \declaretheorem[style=definitionstyle, numbered=no, name=Game]{game}
@@ -195,6 +226,8 @@
     \else
         % \newtheorem{claim}[theorem]{Claim}
         % \newtheorem*{claim*}{Claim}
+        % \newtheorem{problem}{Problem}
+        \newtheorem*{problem*}{Problem}
         \newtheorem*{definition}{Definition}
     \fi
 
@@ -204,11 +237,19 @@
         \declaretheorem[style=solutionstyle, numbered=no]{solution}
         \declaretheorem[style=solutionstyle, numbered=no, name=Proof]{prooof}
 
+        \ifahsanarticle
+        \tcolorboxenvironment{solution}{
+            coltext=solC, tile, breakable, colback=pageC, 
+            top=0pt, left=.7em, right=.7em,
+            before skip=0pt,after skip=35pt,borderline west={.1em}{0pt}{solC},
+        }
+        \else
         \tcolorboxenvironment{solution}{
             coltext=solC!90!pageC, tile, breakable, colback=pageC, 
             top=0pt, left=.7em, right=.7em,
-            before skip=0pt,after skip=25pt,borderline west={.1em}{0pt}{solC},
+            before skip=0pt,after skip=35pt,borderline west={.1em}{0pt}{solC},
         }
+        \fi
 
         \tcolorboxenvironment{prooof}{
             coltext=solC!90!pageC, tile, breakable, colback=pageC, 
@@ -352,7 +393,7 @@
             morekeywords={sudo, echo},
             emph={[2]pacman, pip, yay},
             emphstyle={[2]\color{Cinnabar}},
-            emph={[3]Syu, $conf}, 
+            emph={[3]Syu, conf}, 
             emphstyle={[3]\color{RealGreen}},
             emph={[4]etc, usr, home, bin},
             emphstyle={[4]\color{HotPink}},
