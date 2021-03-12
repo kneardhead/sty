@@ -1,17 +1,61 @@
 \ProvidesPackage{ahsan}
 
-%todo add a proper article class with sections rather than chapters
-%todo recheck indexing in macro, because i can't call the macros without having to import
-%indices
+% todo add a proper article class with sections rather than chapters
+% todo recheck indexing in macro, because i can't call the macros without having to import
+% indices
+
+% todo if structure is pretty confusing. do it like this:
+% option book -> \ahsanbooktrue
+% \ifahsanbook
+%     \ahsansanstrue \ahsanfancytrue \ahsanothers
+% \fi
+% \ifahsansanstrue
+%     here goes code
+% \fi
+
+% TODO so far i can remember these classes
+% Bangla  : has three subclasses
+% Book    : For bigger projects, all features
+% Article : For shorter files, quick compile, light
+% Beamer  : Presnetations
+% Hybrid  : A bit heavier than Article, but not as much as book
+% And of course all the options should be flexible
+
+\newif \ifahsan@bangla      \ahsan@banglafalse
+\newif \ifahsanbeamer      \ahsanbeamerfalse
+\newif \ifahsan@article     \ahsan@articlefalse
+\newif \ifahsanbook        \ahsanbookfalse
+
+\DeclareOption{bangla}{
+    \ahsan@banglatrue
+
+    \ahsanhreffalse
+}
+\DeclareOption{book}{
+    \ahsanbooktrue
+
+    \ahsanfancythmtrue \ahsansecthmtrue      \ahsanfancytrue
+    \ahsanindextrue    \ahsanaccessoriestrue \ahsantoctrue
+}
+\DeclareOption{article}{
+    \ahsan@articletrue
+
+    \ahsanfancythmtrue \ahsanfancytrue
+    \ahsanindexfalse   
+}
+\DeclareOption{beamer}{
+    \ahsanbeamertrue
+
+    \ahsanbeamertrue      \ahsanhreffalse \ahsanfontfalse
+    \ahsanaccessoriestrue \ahsanthmfalse  
+}
+
 
 \newif \ifahsansetup       \ahsansetuptrue
-\newif \ifahsanbangla      \ahsanbanglafalse
-\newif \ifahsanbeamer      \ahsanbeamerfalse
 \newif \ifahsanfigs        \ahsanfigstrue
 \newif \ifahsanfancy       \ahsanfancyfalse
 \newif \ifahsanhref        \ahsanhreftrue
 \newif \ifahsanhdr         \ahsanhdrfalse
-\newif \ifahsanarticle     \ahsanarticlefalse
 
 \newif \ifahsanauthor      \ahsanauthortrue
 \newif \ifahsanindex       \ahsanindexfalse
@@ -26,23 +70,7 @@
 \newif \ifahsansans        \ahsansanstrue
 \newif \ifahsanmathsans    \ahsanmathsansfalse
 
-\DeclareOption{nosetup}{\ahsansetupfalse\ahsanthmfalse}
-\DeclareOption{bangla}{
-    \ahsanbanglatrue\ahsanhreffalse
-}
-\DeclareOption{book}{
-    \ahsanfancythmtrue \ahsansecthmtrue      \ahsanfancytrue
-    \ahsanindextrue    \ahsanaccessoriestrue \ahsantoctrue
-}
-\DeclareOption{article}{
-    \ahsanfancythmtrue \ahsanfancytrue
-    \ahsanindexfalse   \ahsanarticletrue
-}
-\DeclareOption{beamer}{
-    \ahsanbeamertrue      \ahsanhreffalse \ahsanfontfalse
-    \ahsanaccessoriestrue \ahsanthmfalse
-}
-
+\DeclareOption {nosetup}    {\ahsansetupfalse\ahsanthmfalse}
 \DeclareOption {noauthor}   {\ahsanauthorfalse}
 \DeclareOption {nofig}      {\ahsanfigsfalse}
 \DeclareOption {nofont}     {\ahsanfontfalse}
@@ -71,78 +99,90 @@
 \newif \iftheme          \themefalse
 \newif \ifdarkbluetheme  \darkbluethemefalse
 \newif \ifdarkpinktheme  \darkpinkthemefalse
-\newif \iflightbluetheme \lightbluethemefalse
-\newif \iflightpinktheme \lightpinkthemefalse
+\newif \iflightgreentheme \lightgreenthemefalse
 \newif \ificmcbtheme     \icmcbthemefalse
 \newif \ifmonocolortheme \monocolorthemefalse
 
 \DeclareOption {darkblue}   {\themetrue\darkbluethemetrue}
 \DeclareOption {darkpink}   {\themetrue\darkpinkthemetrue}
-\DeclareOption {lightgreen} {\themetrue\lightbluethemetrue}
-\DeclareOption {lightpink}  {\themetrue\lightpinkthemetrue}
+\DeclareOption {lightgreen} {\themetrue\lightgreenthemetrue}
 \DeclareOption {monocolor}  {\themetrue\monocolorthemetrue}
 \DeclareOption {icmcb}      {\themetrue\icmcbthemetrue}
+
 \ProcessOptions\relax
 
 
 \iftheme
     \ifdarkbluetheme  \usepackage[darkBlue]{mycolors}   \fi
     \ifdarkpinktheme  \usepackage[darkPink]{mycolors}   \fi
-    \iflightbluetheme \usepackage[lightGreen]{mycolors} \fi
+    \iflightgreentheme \usepackage[lightGreen]{mycolors} \fi
     \ifmonocolortheme \usepackage[monocolor]{mycolors}  \fi
     \ificmcbtheme     \usepackage[icmcb]{mycolors}      \fi
-    \pagecolor{pageC} \color{fgC}
 \else
     \usepackage[plain]{mycolors}
 \fi
 
 \usepackage{amsmath, amssymb}
 \usepackage{macros}
-\usepackage{titlesec}
 
 % latexbangla support
-\ifahsanbangla
+\ifahsan@bangla
     % \usepackage[fancythm, bangla]{tcbs} 
     \usepackage[feature=1]{latexbangla_new}
 
     \ahsanfigstrue 
     \ahsansetupfalse
-\else
-\usepackage{enumitem}
+\else   
+    \usepackage{enumitem}
 \fi
 
-\ifahsansetup
-    \ifahsanbeamer
-        \usepackage[english]{babel}
-        \usepackage{metalogo}
+\ifahsanbeamer
+    \usepackage[english]{babel}
+    \usepackage{metalogo}
+    \usepackage{fontspec}
 
-        \setsansfont{Andika New Basic}
-        \setmainfont{Yanone Kaffeesatz}
-        \setmonofont{Share Tech Mono}
+    % \setsansfont{Andika New Basic}
+    % \setmainfont{Yanone Kaffeesatz}
+    % \setmonofont{Share Tech Mono}
+    \setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
+    \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
+    \setmainfont{CMU Serif}       [Scale=MatchLowercase]
 
-        \ifdarkbluetheme
-            \usetheme{NordDark}
-        \fi
-        \iflightbluetheme
-            \usetheme{NordWhite}
-        \fi
-
-        \AtBeginSection[]
-        { \begin{frame}[c,noframenumbering,plain]
-                \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]
-            \end{frame} }
-
-        \AtBeginSubsection[]
-        { \begin{frame}[c, noframenumbering,plain]
-                \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
-            \end{frame} }
-
+    \ifdarkbluetheme 
+        \usetheme{NordDark} 
+    \else
+        \usetheme{NordWhite} 
     \fi
 
+    \AtBeginSection[]{ 
+        \begin{frame}[c,noframenumbering,plain]
+            \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]
+        \end{frame} 
+    }
+
+    \AtBeginSubsection[]{ 
+        \begin{frame}[c, noframenumbering,plain]
+            \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
+        \end{frame} 
+    }
+
+    \ahsansetupfalse
+\else
+    \usepackage{titlesec}
+\fi
+
+
+\ifahsan@article
+    
+\fi
+
+
+
+\ifahsansetup
     \setlength\parindent{0pt}
     \setlength\parskip{10pt}
 
-    \ifahsanarticle
+    \ifahsan@article
         \titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
         \titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
 
@@ -170,13 +210,15 @@
         \renewcommand*{\subsectionmark}[1]{\markright{#1}}
         \pagestyle{plain}
     \else 
-        \usepackage[a4paper, margin=1in]{geometry}
+        % \usepackage[a4paper, margin=1in]{geometry}
     \fi
 
     % Show/Hide figures
     \ifahsanfigs
+        \usepackage{float}
         \usepackage{graphicx}
     \else
+        \usepackage{float}
         \usepackage[draft]{graphicx}
     \fi
 
@@ -213,9 +255,6 @@
         \usepackage{sansmathfonts}
         \usepackage{inconsolata}
       
-        \DeclareUnicodeCharacter{2009}{ }
-        \DeclareUnicodeCharacter{2061}{ }
-
         \newcommand{\Share}{\rmfamily}
         \newcommand{\Titillium}{\sffamily}
     \fi

@@ -1,0 +1,393 @@
+\ProvidesPackage{ahsan_new}
+
+% todo add a proper article class with sections rather than chapters
+% todo recheck indexing in macro, because i can't call the macros without having to import
+% indices
+
+% TODO so far i can remember these classes
+% Bangla  : has three subclasses
+% Book    : For bigger projects, all features
+% Article : For shorter files, quick compile, light
+% Beamer  : Presnetations
+% Hybrid  : A bit heavier than Article, but not as much as book
+% And of course all the options should be flexible
+
+% TODO add tikz support
+% \usepackage{pgfplots} 
+% \pgfplotsset{width=8cm,compat=1.9} 
+% \usepgfplotslibrary{external} 
+% % \tikzexternalize 
+
+
+
+\newif \ifahsan@memoir      
+\@ifclassloaded{memoir}{\ahsan@memoirtrue}{\ahsan@memoirfalse}
+\newif \ifahsan@article
+\@ifclassloaded{article}{\ahsan@articletrue}{\ahsan@articlefalse}
+\newif \ifahsan@beamer      
+\@ifclassloaded{beamer}{\ahsan@beamertrue}{\ahsan@beamerfalse}
+
+\newif \ifahsanbook \ahsanbookfalse
+\DeclareOption{book}{\ahsanbooktrue}
+\newif \ifahsan@bangla \ahsan@banglafalse
+\DeclareOption{bangla}{\ahsan@banglatrue}
+\newif \ifahsan@Fullbangla \ahsan@Fullbanglafalse
+\DeclareOption{fullbangla}{\ahsan@banglatrue\ahsan@Fullbanglatrue}
+\newif \ifahsanhybrid \ahsanhybridtrue
+\DeclareOption{hybrid}{\ahsanhybridtrue}
+
+
+
+\newif \ifahsanfont        \ahsanfonttrue
+\newif \ifahsansans        \ahsansanstrue
+\newif \ifahsanmathsans    \ahsanmathsansfalse
+
+\newif \ifahsanfigs        \ahsanfigstrue
+\newif \ifahsanfancyhdr    \ahsanfancyhdrfalse
+\newif \ifahsanhref        \ahsanhreftrue
+
+\newif \ifahsanauthor      \ahsanauthortrue
+\newif \ifahsanindex       \ahsanindexfalse
+\newif \ifahsantoc         \ahsantocfalse
+\newif \ifahsanaccessories \ahsanaccessoriesfalse
+
+\newif \ifahsanthm         \ahsanthmtrue
+\newif \ifahsansecthm      \ahsansecthmfalse
+\newif \ifahsanfancythm    \ahsanfancythmtrue
+
+
+\DeclareOption {noauthor}   {\ahsanauthorfalse}
+\DeclareOption {nofig}      {\ahsanfigsfalse}
+\DeclareOption {nofont}     {\ahsanfontfalse}
+\DeclareOption {sans}       {\ahsansanstrue}
+\DeclareOption {serif}      {\ahsansansfalse}
+\DeclareOption {mathsans}   {\ahsanmathsanstrue}
+\DeclareOption {acc}        {\ahsanaccessoriestrue}
+
+\DeclareOption {thm}        {\ahsanthmtrue}
+\DeclareOption {nothm}      {\ahsanthmfalse}
+\DeclareOption {secthm}     {\ahsansecthmtrue}
+\DeclareOption {nosecthm}   {\ahsansecthmfalse}
+\DeclareOption {fancythm}   {\ahsanfancythmtrue}
+\DeclareOption {nofancythm} {\ahsanfancythmfalse}
+
+\DeclareOption {fancy}      {\ahsanfancyhdrtrue}
+\DeclareOption {nofancy}    {\ahsanfancyhdrfalse}
+\DeclareOption {href}       {\ahsanhreftrue}
+\DeclareOption {nohref}     {\ahsanhreffalse}
+\DeclareOption {index}      {\ahsanindextrue}
+\DeclareOption {noindex}    {\ahsanindexfalse}
+
+
+\newif \ifnotheme         \nothemetrue
+\newif \ifdarkbluetheme   \darkbluethemefalse
+\newif \ifdarkpinktheme   \darkpinkthemefalse
+\newif \iflightgreentheme \lightgreenthemefalse
+\newif \ificmcbtheme      \icmcbthemefalse
+\newif \ifmonocolortheme  \monocolorthemefalse
+
+\DeclareOption {darkblue}   {\nothemefalse\darkbluethemetrue}
+\DeclareOption {darkpink}   {\nothemefalse\darkpinkthemetrue}
+\DeclareOption {lightgreen} {\nothemefalse\lightgreenthemetrue}
+\DeclareOption {monocolor}  {\nothemefalse\monocolorthemetrue}
+\DeclareOption {icmcb}      {\nothemefalse\icmcbthemetrue}
+
+\ProcessOptions\relax
+
+\ifahsanhybrid  
+    \ahsanfancyhdrtrue                      
+\fi
+\ifahsan@article 
+    \ahsanfancyhdrfalse 
+    \ahsan@memoirfalse   
+\fi
+\ifahsan@beamer
+    \ahsanhreffalse 
+    \ahsanfontfalse
+    \ahsanaccessoriestrue 
+    \ahsanthmfalse  
+    \ahsan@memoirfalse
+    \ahsanfancythmfalse   
+\fi
+\ifahsanbook
+    \ahsansecthmtrue 
+    \ahsanfancyhdrtrue
+    \ahsanindextrue  
+    \ahsanaccessoriestrue 
+    \ahsantoctrue
+\fi
+
+
+\usepackage{amsmath, amssymb}
+\usepackage{macros}
+
+\setlength\parindent{0pt}
+\setlength\parskip{10pt}
+
+\ifdarkbluetheme   \usepackage[darkBlue]{mycolors}   \fi
+\ifdarkpinktheme   \usepackage[darkPink]{mycolors}   \fi
+\iflightgreentheme \usepackage[lightGreen]{mycolors} \fi
+\ifmonocolortheme  \usepackage[monocolor]{mycolors}  \fi
+\ificmcbtheme      \usepackage[icmcb]{mycolors}      \fi
+\ifnotheme         \usepackage[plain]{mycolors}      \fi
+
+
+\usepackage{titlesec}
+
+\ifahsan@memoir
+    \titleformat{\chapter}{\normalfont\Huge\bfseries\raggedright}
+        {{\normalfont \LARGE Chapter \bfseries\Huge\thechapter}}{1em}
+        {\thispagestyle{empty}\\[1em]}[\newpage]
+    % \titleformat{\chapter}[display]
+    % {\normalfont\Large\raggedleft}
+    % {\MakeUppercase{\chaptertitlename}%
+    % \rlap{\resizebox{!}{1.5cm}{\thechapter} \rule{15cm}{1.5cm}}}
+    % {11pt}{\bfseries\Huge\raggedleft}
+    % \titlespacing*{\chapter}{0pt}{30pt}{20pt}
+
+    \titleformat{\section}{\color{thmC}\normalfont\Large\bfseries}
+        {\S \thesection}{1em}{}
+    \titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+    \newcommand{\sectionbreak}{\clearpage}
+
+    \titlespacing*{\section}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+    \titlespacing*{\subsection}{0pt}{5.5ex plus 1ex minus .2ex}{4.3ex plus .2ex}
+
+    \setlrmarginsandblock{6em}{6em}{*}
+    \setulmarginsandblock{8em}{8em}{*}
+    \checkandfixthelayout
+\else
+\fi
+
+\ifahsan@article
+    \titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
+    \titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+
+    \titlespacing*{\section}{0pt}{6ex plus 1ex minus 1ex}{3ex plus .2ex}
+    \titlespacing*{\subsection}{0pt}{4ex plus 1ex minus 1ex}{1ex plus .2ex}
+
+    \usepackage[a4paper, margin=1in]{geometry}
+\else
+\fi
+
+% todo write new latexbangla
+\ifahsan@bangla
+    \usepackage{polyglossia}
+    \setmainlanguage[numerals=Bengali]{bengali}
+    \setotherlanguage{english}
+    \RequirePackage[Latin, Bengali, Devanagari]{ucharclasses}
+\else   
+    \usepackage{enumitem}
+\fi
+
+
+\ifahsanfont
+    \usepackage{fontspec}
+    \usepackage[T1]{fontenc}
+    \ifahsan@bangla
+        \newfontfamily\bengalifont[
+        Script=Bengali,
+        Scale=MatchLowercase,
+        WordSpace=1.1,
+        AutoFakeSlant,
+        AutoFakeBold=2.5
+        ]{Kalpurush}
+
+        \newfontfamily\bengalifontsf[
+        Script=Bengali,
+        Scale=MatchLowercase,
+        WordSpace=1.1,
+        AutoFakeSlant,
+        AutoFakeBold=2.5
+        ]{Kalpurush}
+        
+        \newfontfamily\bengalifonttt[
+        Script=Bengali,
+        Scale=0.8,
+        WordSpace=1.2,
+        AutoFakeSlant,
+        AutoFakeBold
+        ]{Siyam Rupali}
+
+        \newfontfamily\englishfontsf[
+        Scale=MatchUppercase
+        ]{CMU Sans Serif}
+
+        \newfontfamily\englishfonttt[
+        Scale=MatchUppercase
+        ]{Share Tech Mono}
+
+        \newfontfamily\englishfontrm[
+        Scale=MatchUppercase
+        ]{CMU Serif}
+
+        \ifahsansans
+            \newcommand\englishfont\englishfontsf
+        \else
+            \newcommand\englishfont\englishfontrm
+        \fi
+
+        \newenvironment{latin}{\fontencoding{OT1}\englishfont\selectfont}\relax
+        \setTransitionsForLatin{\begin{latin}}{\end{latin}}
+
+        \newcommand{\Share}{\rmfamily}
+        \newcommand{\Titillium}{\sffamily}
+    \else
+        \setmonofont{Share Tech Mono} [Scale=MatchUppercase]
+        \newfontfamily\Share[Ligatures=TeX, Scale=MatchUppercase, WordSpace=.9]{Share}
+        \newfontfamily\Titillium[Ligatures=TeX, Scale=MatchLowercase]{Titillium Web}
+
+        \ifahsanmathsans \usepackage{sansmathfonts} \else \usepackage{mathptmx} \fi
+
+        \ifahsansans
+            \renewcommand{\familydefault}{\sfdefault} \fontfamily{cmss}
+        \else
+            \fontfamily{cmr}
+        \fi
+    \fi    
+\else
+    \usepackage[T1]{fontenc}
+    \usepackage{inconsolata}
+
+    \newcommand{\Share}{\rmfamily}
+    \newcommand{\Titillium}{\sffamily}
+\fi
+
+
+
+
+
+
+\ifahsanfancyhdr
+    \usepackage{fancyhdr, setspace}
+
+    \makepagestyle{plain}
+    % \makeevenhead{plain}{\rightmark\leftmark}{}{}
+    \makeoddhead{plain}{
+        \fontsize{10}{12} \selectfont \color{fgC!60!pageC} \leftmark \
+        \bfseries\rightmark
+    }{}{\fontsize{10}{12} \selectfont \thepage}
+
+    \renewcommand*{\sectionmark}[1]{\markboth{#1}{}}
+    \renewcommand*{\subsectionmark}[1]{\markright{#1}}
+    \pagestyle{plain}
+\fi
+
+
+% theorem options
+\ifahsanthm
+    \ifahsanfancythm
+        \ifahsansecthm
+            \usepackage[secthm, fancythm]{tcbs} 
+        \else
+            \usepackage[fancythm]{tcbs}
+        \fi
+        \else
+        \usepackage{tcbs}
+    \fi
+\else
+    \usepackage[nothm]{tcbs}
+\fi
+
+
+
+% Show/Hide figures
+\ifahsanfigs 
+    \usepackage{graphicx} 
+\else 
+    \usepackage[draft]{graphicx} 
+\fi
+
+
+\ifahsanaccessories
+    \usepackage{mathtools, float, multicol, subfig, pdfpages, pgf, tikz, pgfplots}
+    \pgfplotsset{compat=1.17}
+\fi
+
+
+% table of content specs
+\ifahsantoc
+    \usepackage{tocloft}
+    \setcounter{tocdepth}{4}
+    \setcounter{secnumdepth}{4}
+
+    \usepackage[usehighlevels]{alnumsec}
+    \alnumsectionlevels{1}{chapter, section, subsection, subsubsection, paragraph}
+    \alnumsecstyle{aaaa}
+    \surroundarabic[{.}][]{}{}
+    \otherseparators{1}
+    \alnumsecstyle{aaaa}
+\fi
+
+% index making
+\ifahsanindex
+    \usepackage[original]{imakeidx}
+
+    \makeindex[name=def,   title=Definitions, options=-s indStyle.ist]
+    \makeindex[name=prob,  title=Problems,    options=-s indStyle.ist]
+    \makeindex[name=thm,   title=Theorems,    options=-s indStyle.ist]
+    \makeindex[name=strat, title=Strategies,  options=-s indStyle.ist]
+    \makeindex[            title=Misc,        options=-s indStyle.ist]
+    % \makeindex[name=cat, title=Categories, options= -s indStyle.ist]
+\fi
+
+\ifahsanauthor 
+    \author{M Ahsan Al Mahir} 
+    \date{\today} 
+\fi
+
+\ifahsanhref
+    \usepackage{hyperref}
+    \hypersetup{
+        colorlinks=true,
+        linkcolor=linkC,
+        filecolor=fileC,      
+        urlcolor=urlC,
+    }
+\fi
+
+
+\ifahsan@beamer
+    \usepackage[english]{babel}
+    \usepackage{metalogo}
+
+    % \setsansfont{Andika New Basic}
+    % \setmainfont{Yanone Kaffeesatz}
+    % \setmonofont{Share Tech Mono}
+    \setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
+    \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
+    \setmainfont{CMU Serif}       [Scale=MatchLowercase]
+
+    \ifdarkbluetheme 
+        \usetheme{NordDark} 
+    \else
+        \usetheme{NordWhite} 
+    \fi
+
+    \AtBeginSection[]{ 
+        \begin{frame}[c,noframenumbering,plain]
+            \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]
+        \end{frame} 
+    }
+
+    \AtBeginSubsection[]{ 
+        \begin{frame}[c, noframenumbering,plain]
+            \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
+        \end{frame} 
+    }
+
+    \ahsansetupfalse
+\fi
+
+
+
+\makeatletter
+\DeclareRobustCommand{\signature}{A%
+    \kern-.09em {\setbox0\hbox{T}%
+        \vbox to\ht0{\hbox{%
+            \csname S@\f@size\endcsname\fontsize\sf@size\z@ \math@fontsfalse\selectfont {H\hspace{.55mm}} }%
+        \vss}%
+}\kern-.40em \hbox{S\kern-.1667em\lower.5ex\hbox{A\hspace{-.5mm}}\kern-.125ex{N}}}
+
+%todo: page number on title pages

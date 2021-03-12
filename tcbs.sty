@@ -63,7 +63,16 @@
     notebraces={(}{)},
     notefont=\color{thmC}\mdseries\normalfont,
     bodyfont=\Titillium\selectfont,
-    ]{theoremstyle}
+    ]{thmstyle}
+
+    \declaretheoremstyle[
+    headfont=\bfseries\color{thmC},
+    headpunct= ,
+    postheadspace={0pt},
+    spaceabove=20pt,
+    spacebelow=15pt,
+    bodyfont=\Titillium\selectfont,
+    ]{emptythmstyle}
 
     \declaretheoremstyle[
     headfont=\bfseries\color{thmC},
@@ -91,7 +100,7 @@
     headpunct={. },
     spaceabove=10pt,
     spacebelow=10pt,
-    % qed=\qedsymbol,
+    qed=\qedsymbol,
     % bodyfont=\color{solC!80!pageC},
     ]{solutionstyle}
     
@@ -136,22 +145,22 @@
     \ifAhsanfancythm
 
         \ifAhsansecthm
-            \declaretheorem[style=theoremstyle,name=Theorem,numberwithin=section]{theorem}
-            \declaretheorem[style=theoremBoxstyle,name=Theorem,numberwithin=section] 
+            \declaretheorem[style=thmstyle,name=Theorem,numberwithin=section]{theorem}
+            \declaretheorem[style=thmboxstyle,name=Theorem,numberwithin=section] 
             {BoxedTheorem}
         \else
-            \declaretheorem[style=theoremstyle,name=Theorem]{theorem}
-            \declaretheorem[style=theoremBoxstyle,name=Theorem] {BoxedTheorem}
+            \declaretheorem[style=thmstyle,name=Theorem]{theorem}
+            \declaretheorem[style=thmboxstyle,name=Theorem]{BoxedTheorem}
         \fi
-        \declaretheorem[style=theoremstyle,name=Lemma,%
-        sibling=theorem]{lemma}
-        \declaretheorem[style=theoremstyle,name=Proposition,sibling=theorem]{proposition}
-        \declaretheorem[style=theoremstyle,name=Corollary,sibling=theorem]{corollary}
+        \declaretheorem[style=emptythmstyle,name=,numbered=no]{emptythm}
+        \declaretheorem[style=thmstyle,name=Lemma,sibling=theorem]{lemma}
+        \declaretheorem[style=thmstyle,name=Proposition,sibling=theorem]{proposition}
+        \declaretheorem[style=thmstyle,name=Corollary,sibling=theorem]{corollary}
 
-        \declaretheorem[style=theoremstyle,name=Theorem,numbered=no]{theorem*}
-        \declaretheorem[style=theoremstyle,name=Lemma,numbered=no]{lemma*}
-        \declaretheorem[style=theoremstyle,name=Proposition,numbered=no]{proposition*}
-        \declaretheorem[style=theoremstyle,name=Corollary,numbered=no]{corollary*}
+        \declaretheorem[style=thmstyle,name=Theorem,numbered=no]{theorem*}
+        \declaretheorem[style=thmstyle,name=Lemma,numbered=no]{lemma*}
+        \declaretheorem[style=thmstyle,name=Proposition,numbered=no]{proposition*}
+        \declaretheorem[style=thmstyle,name=Corollary,numbered=no]{corollary*}
 
         \tcolorboxenvironment{theorem}{
             blanker, breakable,colback=thmBgC, colframe=thmBgC, coltext=fgC,
@@ -164,6 +173,11 @@
         }
 
         \tcolorboxenvironment{BoxedTheorem}{
+            tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
+            top=5pt, bottom=5pt,
+            left=1em,before skip=30pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+        }
+        \tcolorboxenvironment{emptythm}{
             tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
             top=5pt, bottom=5pt,
             left=1em,before skip=30pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
@@ -237,7 +251,7 @@
         \declaretheorem[style=solutionstyle, numbered=no]{solution}
         \declaretheorem[style=solutionstyle, numbered=no, name=Proof]{prooof}
 
-        \ifahsanarticle
+        \ifahsan@article
         \tcolorboxenvironment{solution}{
             coltext=solC, tile, breakable, colback=pageC, 
             top=0pt, left=.7em, right=.7em,
@@ -606,3 +620,14 @@
         \newcommand\invisiblesection[1]{ \refstepcounter{chapter} \sectionmark{#1} }
     \fi
 \fi
+
+
+\ifahsansecthm
+\else
+    \usepackage{xpatch}
+    \xpretocmd{\section}{\setcounter{problem}{0}}{}{}
+    \xpretocmd{\section}{\setcounter{theorem}{0}}{}{}
+    \xpretocmd{\section}{\setcounter{lemma}{0}}{}{}
+    \xpretocmd{\section}{\setcounter{exercise}{0}}{}{}
+\fi
+

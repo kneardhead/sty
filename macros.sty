@@ -11,6 +11,9 @@
 \newcommand{\ds}{\displaystyle}
 \newcommand{\ud}{\textunderscore}
 
+\renewcommand{\mid}{\ \vert \ }
+\newcommand{\bm}[1]{\mathbf{#1}}
+
 
 \newcommand{\pb}[1]{{\leavevmode\color{Blue}{#1}}}
 \newcommand{\tc}[1]{{\leavevmode\color{Sepia}{#1}}}
@@ -19,6 +22,19 @@
 \newcommand{\dec}[1]{{\leavevmode\color{Plum}{#1}}}
 \newcommand{\tg}[1]{{\leavevmode\color{NordCyan}{#1}}}
 
+% decoument macros
+
+\newcommand{\titlePage}{\maketitle\vfill \thispagestyle{empty}\newpage}
+\newcommand{\toc}{
+    \begingroup
+        {
+            \hypersetup{hidelinks}
+            \tableofcontents
+        }
+        \thispagestyle{empty}
+    \endgroup 
+    \setcounter{page}{0}
+}    
 
 \newcommand{\g}{\gamma}
 \newcommand{\e}{\epsilon}
@@ -56,7 +72,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
-\newcommand{\C}{\mathbb{C}}
+% \newcommand{\C}{\mathbb{C}}
 \renewcommand{\P}{\mathbb{P}}
 
 \newcommand{\cosec}{\mathrm{cosec}\ }
