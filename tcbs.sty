@@ -145,24 +145,24 @@
     \ifAhsanfancythm
 
         \ifAhsansecthm
-            \declaretheorem[style=thmstyle,name=Theorem,numberwithin=section]{theorem}
+            \declaretheorem[style=thmstyle,name=Theorem,numberwithin=section]{theoremBase}
             \declaretheorem[style=thmboxstyle,name=Theorem,numberwithin=section] 
-            {BoxedTheorem}
+            {BoxedTheoremBase}
         \else
-            \declaretheorem[style=thmstyle,name=Theorem]{theorem}
-            \declaretheorem[style=thmboxstyle,name=Theorem]{BoxedTheorem}
+            \declaretheorem[style=thmstyle,name=Theorem]{theoremBase}
+            \declaretheorem[style=thmboxstyle,name=Theorem]{BoxedTheoremBase}
         \fi
         \declaretheorem[style=emptythmstyle,name=,numbered=no]{emptythm}
-        \declaretheorem[style=thmstyle,name=Lemma,sibling=theorem]{lemma}
-        \declaretheorem[style=thmstyle,name=Proposition,sibling=theorem]{proposition}
-        \declaretheorem[style=thmstyle,name=Corollary,sibling=theorem]{corollary}
+        \declaretheorem[style=thmstyle,name=Lemma,sibling=theoremBase]{lemmaBase}
+        \declaretheorem[style=thmstyle,name=Proposition,sibling=theoremBase]{proposition}
+        \declaretheorem[style=thmstyle,name=Corollary,sibling=theoremBase]{corollary}
 
-        \declaretheorem[style=thmstyle,name=Theorem,numbered=no]{theorem*}
-        \declaretheorem[style=thmstyle,name=Lemma,numbered=no]{lemma*}
+        \declaretheorem[style=thmstyle,name=Theorem,numbered=no]{theoremBase*}
+        \declaretheorem[style=thmstyle,name=Lemma,numbered=no]{lemmaBase*}
         \declaretheorem[style=thmstyle,name=Proposition,numbered=no]{proposition*}
         \declaretheorem[style=thmstyle,name=Corollary,numbered=no]{corollary*}
 
-        \tcolorboxenvironment{theorem}{
+        \tcolorboxenvironment{theoremBase}{
             blanker, breakable,colback=thmBgC, colframe=thmBgC, coltext=fgC,
             left=1em,before skip=25pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
         }
@@ -172,7 +172,7 @@
             left=1em,before skip=20pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
         }
 
-        \tcolorboxenvironment{BoxedTheorem}{
+        \tcolorboxenvironment{BoxedTheoremBase}{
             tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
             top=5pt, bottom=5pt,
             left=1em,before skip=30pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
@@ -183,9 +183,40 @@
             left=1em,before skip=30pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
         }
 
-        \tcolorboxenvironment{lemma}{
+        \tcolorboxenvironment{lemmaBase}{
             blanker, breakable, coltext=fgC,
             left=1em,before skip=25pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+        }
+
+        \newenvironment{theorem}[1][]{
+            \ifthenelse{\isempty{#1}}{% 
+                \begin{theoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+            }{% 
+                \begin{theoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+            }%
+        }{%
+            \end{theoremBase}
+        }
+
+
+        \newenvironment{lemma}[1][]{
+            \ifthenelse{\isempty{#1}}{% 
+                \begin{lemmaBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+            }{% 
+                \begin{lemmaBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+            }%
+        }{%
+            \end{lemmaBase}
+        }
+
+        \newenvironment{theorembox}[1][]{
+            \ifthenelse{\isempty{#1}}{% 
+                \begin{BoxedTheoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+            }{% 
+                \begin{BoxedTheoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+            }%
+        }{%
+            \end{BoxedTheoremBase}
         }
 
     \else
@@ -208,34 +239,61 @@
 
     \ifAhsanfancythm
         \ifAhsansecthm
-            \declaretheorem[style=problemstyle, numberwithin=section]{problem}
+            \declaretheorem[style=problemstyle, numberwithin=section]{problemBase}
         \else
-            \declaretheorem[style=problemstyle]{problem}
+            \declaretheorem[style=problemstyle]{problemBase}
         \fi
 
         \ificmcbtheme
-            \tcolorboxenvironment{problem}{
+            \tcolorboxenvironment{problemBase}{
                 tile, breakable,colback=probBgC, colframe=probBgC, coltext=fgC,
                 left=1em,before skip=12pt,after skip=30pt,
             }
         \fi
         
-        \declaretheorem[style=problemstyle, numberwithin=problem]{generalization}
+        \declaretheorem[style=problemstyle, numberwithin=problemBase]{generalization}
 
-        \declaretheorem[style=definitionstyle, numbered=no]{definition}
-        \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{impdefinition}
+        \declaretheorem[style=definitionstyle, numbered=no,
+        name=Definition]{definitionBase}
+        \declaretheorem[style=definitionstyle, numbered=no,
+        name=Definition]{impdefinitionBase}
+
+        \tcolorboxenvironment{impdefinitionBase}{
+            tile, breakable, coltext=fgC, colback=defBgC, colframe=defBgC,
+            left=1em,before skip=30pt,after skip=15pt,borderline west={.15em}{0pt}{defC},
+        }
+
+
         \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure]
             {data_structure}
         \declaretheorem[style=definitionstyle, numbered=no, name=Algorithm]{algo}
         \declaretheorem[style=definitionstyle, numbered=no, name=Game]{game}
         \declaretheorem[style=definitionstyle, name=Construction]{construction}
-        % \declaretheorem[style=definitionstyle, sibling=theorem,%
-        %     name=Claim]{claim}
+        % \declaretheorem[style=definitionstyle, sibling=theoremBase, name=Claim]{claim}
 
-        \tcolorboxenvironment{impdefinition}{
-            tile, breakable, coltext=fgC, colback=defBgC, colframe=defBgC,
-            left=1em,before skip=30pt,after skip=15pt,borderline west={.15em}{0pt}{defC},
+
+        \newenvironment{definition}[1][]{
+            \begin{definitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                }{
+            \end{definitionBase}
         }
+
+        \newenvironment{impdefinition}[1][]{
+            \begin{impdefinitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                }{
+            \end{impdefinitionBase}
+        }
+
+        \newenvironment{problem}[1][]{
+            \ifthenelse{\isempty{#1}}{% 
+                \begin{problemBase}\index[prob]{\Chaptername!\Sectionname!Unknown}
+            }{% 
+                \begin{problemBase}[#1]\index[prob]{\Chaptername!\Sectionname!#1}
+            }%
+        }{%
+            \end{problemBase}
+        }
+        
 
     \else
         % \newtheorem{claim}[theorem]{Claim}
@@ -300,12 +358,12 @@
 
     \theoremstyle{definition}
 
-    \newtheorem{conjecture}[theorem]{Conjecture}
-    \newtheorem{fact}[theorem]{Fact}
-    \newtheorem{answer}[theorem]{Answer}
-    \newtheorem{case}[theorem]{Case}
-    \newtheorem{ques}[theorem]{Question}
-    \newtheorem{exercise}[theorem]{Exercise}
+    \newtheorem{conjecture}[theoremBase]{Conjecture}
+    \newtheorem{fact}[theoremBase]{Fact}
+    \newtheorem{answer}[theoremBase]{Answer}
+    \newtheorem{case}[theoremBase]{Case}
+    \newtheorem{ques}[theoremBase]{Question}
+    \newtheorem{exercise}[theoremBase]{Exercise}
 
     \newtheorem*{conjecture*}{Conjecture}
     \newtheorem*{fact*}{Fact}
@@ -316,7 +374,7 @@
     \newtheorem*{exercise*}{Exercise}
 
     \ifAhsanfancythm
-        \declaretheorem[style=examplestyle,name=Example,sibling=theorem]{example}
+        \declaretheorem[style=examplestyle,name=Example,sibling=theoremBase]{example}
         \declaretheorem[style=examplestyle,name=Example,numbered=no]{example*}
     \else
         \newtheorem{example}[theorem]{Example}
@@ -569,6 +627,7 @@
             \end{definition}
         }
 
+
         \newcommand{\solu}[1]{
             \begin{solution}
                 #1 
@@ -625,9 +684,9 @@
 \ifahsansecthm
 \else
     \usepackage{xpatch}
-    \xpretocmd{\section}{\setcounter{problem}{0}}{}{}
-    \xpretocmd{\section}{\setcounter{theorem}{0}}{}{}
-    \xpretocmd{\section}{\setcounter{lemma}{0}}{}{}
+    \xpretocmd{\section}{\setcounter{problemBase}{0}}{}{}
+    \xpretocmd{\section}{\setcounter{theoremBase}{0}}{}{}
+    \xpretocmd{\section}{\setcounter{lemmaBase}{0}}{}{}
     \xpretocmd{\section}{\setcounter{exercise}{0}}{}{}
 \fi
 

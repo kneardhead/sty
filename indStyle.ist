@@ -1,9 +1,16 @@
 headings_flag 1
 
-heading_prefix "\n\\large\\sffamily%
-\\noindent\\texttt{"heading_suffix "}\\par\\nopagebreak\n"
+heading_prefix "\n\\large\\sffamily\\noindent\\texttt{"
+heading_suffix "}\\par\\nopagebreak\n"
 
-item_0 "\n \\item \\small "
+item_0 "\n \\vspace{.5em} \\item \\normalsize \\ttfamily "
+item_1 "\n \\subitem \\small \\bfseries "
+item_2 "\n \\subsubitem \\footnotesize \\normalfont "
+
+item_x1 "\n \\subitem \\normalfont \\footnotesize \\bfseries "
+item_x2 "\n \\subsubitem \\footnotesize \\normalfont "
+item_01 "\n \\subitem \\footnotesize \\bfseries "
+item_12 "\n \\subsubitem \\footnotesize \\normalfont "
 
 delim_0 " \\hfill "
 delim_1 " \\dotfill "
