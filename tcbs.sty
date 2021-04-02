@@ -155,7 +155,7 @@
         \declaretheorem[style=emptythmstyle,name=,numbered=no]{emptythm}
         \declaretheorem[style=thmstyle,name=Lemma,sibling=theoremBase]{lemmaBase}
         \declaretheorem[style=thmstyle,name=Proposition,sibling=theoremBase]{proposition}
-        \declaretheorem[style=thmstyle,name=Corollary,sibling=theoremBase]{corollary}
+        \declaretheorem[style=thmstyle,name=Corollary,numberwithin=theoremBase]{corollary}
 
         \declaretheorem[style=thmstyle,name=Theorem,numbered=no]{theoremBase*}
         \declaretheorem[style=thmstyle,name=Lemma,numbered=no]{lemmaBase*}
@@ -193,6 +193,7 @@
                 \begin{theoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
             }{% 
                 \begin{theoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+                    % \label{thm:#1}
             }%
         }{%
             \end{theoremBase}
@@ -239,9 +240,10 @@
 
     \ifAhsanfancythm
         \ifAhsansecthm
-            \declaretheorem[style=problemstyle, numberwithin=section]{problemBase}
+            \declaretheorem[style=problemstyle, numberwithin=section,
+            name=Problem]{problemBase}
         \else
-            \declaretheorem[style=problemstyle]{problemBase}
+            \declaretheorem[style=problemstyle, name=Problem]{problemBase}
         \fi
 
         \ificmcbtheme
@@ -251,7 +253,8 @@
             }
         \fi
         
-        \declaretheorem[style=problemstyle, numberwithin=problemBase]{generalization}
+        \declaretheorem[style=problemstyle, numberwithin=problemBase,
+        name=Generalization]{generalization}
 
         \declaretheorem[style=definitionstyle, numbered=no,
         name=Definition]{definitionBase}
@@ -272,27 +275,44 @@
         % \declaretheorem[style=definitionstyle, sibling=theoremBase, name=Claim]{claim}
 
 
-        \newenvironment{definition}[1][]{
-            \begin{definitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
-                }{
-            \end{definitionBase}
-        }
+        \ifahsanindex
+            \newenvironment{definition}[1][]{
+                \begin{definitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                    }{
+                \end{definitionBase}
+            }
 
-        \newenvironment{impdefinition}[1][]{
-            \begin{impdefinitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
-                }{
-            \end{impdefinitionBase}
-        }
+            \newenvironment{impdefinition}[1][]{
+                \begin{impdefinitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                    }{
+                \end{impdefinitionBase}
+            }
 
-        \newenvironment{problem}[1][]{
-            \ifthenelse{\isempty{#1}}{% 
-                \begin{problemBase}\index[prob]{\Chaptername!\Sectionname!Unknown}
-            }{% 
-                \begin{problemBase}[#1]\index[prob]{\Chaptername!\Sectionname!#1}
-            }%
-        }{%
-            \end{problemBase}
-        }
+            \newenvironment{problem}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{problemBase}\index[prob]{\Chaptername!\Sectionname!Unknown}
+                        }{% 
+                        \begin{problemBase}[#1]\index[prob]{\Chaptername!\Sectionname!#1}
+                        }%
+                        }{%
+                    \end{problemBase}
+                }
+        \else
+            \newenvironment{definition}[1][]{
+                \begin{definitionBase}[#1]
+                    }{
+                \end{definitionBase}
+            }
+            \newenvironment{problem}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{problemBase}
+                        }{% 
+                        \begin{problemBase}[#1]
+                        }%
+                        }{%
+                    \end{problemBase}
+                }
+        \fi        
         
 
     \else

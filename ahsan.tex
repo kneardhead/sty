@@ -1,7 +1,20 @@
 \documentclass[a4paper, 11pt]{memoir}
-\usepackage[index]{ahsan_new}
+\usepackage[bangla]{ahsan_new}
 
 \title{\vspace{-3em}\bfseries ahsan\vspace{-1em}}
+
+\makeatletter
+\newcommand{\showfont}{
+  \message{encoding: \f@encoding,
+    family: \f@family,
+    series: \f@series,
+    shape: \f@shape,
+    size: \f@size
+  }
+}
+\makeatother
+
+
 
 \begin{document}
 
@@ -17,12 +30,16 @@
 \begin{lemma}[broh]
     haha
 \end{lemma}
+\texttt{haha}
 
+
+foo \showfont bar
 
 \begin{lemma}
     haha
 \end{lemma}
 
+% \texttt{haha}
 
 \begin{problem}[mabr]
     BoxedTheoremBase
@@ -30,8 +47,7 @@
 
 
 % \Chaptername \ \Sectionname
-
-\printindex[prob]
+% \printindex[prob]
 
 
 \end{document}

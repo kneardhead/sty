@@ -136,52 +136,47 @@
 
 
 
-
-\ifahsan@memoir
-    %%%%% Display Style %%%%%%%%%%
-    % \titleformat{\chapter}[display]
-    % {\normalfont}
-    % {\filright\normalfont \LARGE Chapter \bfseries\Huge\thechapter}
-    % {10pt}
-    % {\filright\Huge\bfseries}[\thispagestyle{empty}\newpage]
-
-    %%%%% Frame Style %%%%%%%%%%
-    \titleformat{\chapter}[frame]
-    {\normalfont}
-    {\filright\small\enspace CHAPTER\enspace\bfseries \LARGE\thechapter\enspace}
-    {10pt}
-    {\Huge\bfseries\filcenter}[\thispagestyle{empty}\newpage]
-
-    %%%%% Fancier Style %%%%%%%%%%
-    % \titleformat{\chapter}[display]
-    % {\normalfont\Large\raggedleft}
-    % {\MakeUppercase{\chaptertitlename}%
-    % \rlap{\resizebox{!}{1.5cm}{\thechapter} \rule{15cm}{1.5cm}}}
-    % {11pt}{\bfseries\Huge\raggedleft}
-    % \titlespacing*{\chapter}{0pt}{30pt}{20pt}
-
-    \titleformat{\section}
-    {\color{thmC}\normalfont\Large\bfseries}
-    {\S \thesection}
-    {1em}
-    {}
-
-    \titleformat{\subsection}
-    {\normalfont\large\bfseries}
-    {\thesubsection}
-    {1em}
-    {}
-
-    \newcommand{\sectionbreak}{\clearpage}
-
-    \titlespacing*{\chapter}{0pt}{2em plus 1em minus .2em}{10em plus 2em}
-    \titlespacing*{\section}{0pt}{2em plus 1em minus .2em}{2em plus .2em}
-    \titlespacing*{\subsection}{0pt}{2.5em plus .5em minus .2em}{1em plus .2em}
-
-    \setlrmarginsandblock{6em}{6em}{*}
-    \setulmarginsandblock{8em}{8em}{*}
-    \checkandfixthelayout
+\ifahsan@bangla
 \else
+    \ifahsan@memoir
+        %%%%% Display Style %%%%%%%%%%
+        % \titleformat{\chapter}[display]
+        % {\normalfont}
+        % {\filright\normalfont \LARGE Chapter \bfseries\Huge\thechapter}
+        % {10pt}
+        % {\filright\Huge\bfseries}[\thispagestyle{empty}\newpage]
+
+        %%%%% Frame Style %%%%%%%%%%
+        \titleformat{\chapter}[frame]
+        {\normalfont}
+        {\filright\small\enspace CHAPTER\enspace\bfseries \LARGE\thechapter\enspace}
+        {10pt}
+        {\Huge\bfseries\filcenter}[\thispagestyle{empty}\newpage]
+
+
+        \titleformat{\section}
+        {\color{thmC}\normalfont\Large\bfseries}
+        {\S \thesection}
+        {1em}
+        {}
+
+        \titleformat{\subsection}
+        {\normalfont\large\bfseries}
+        {\thesubsection}
+        {1em}
+        {}
+
+        \newcommand{\sectionbreak}{\clearpage}
+
+        \titlespacing*{\chapter}{0pt}{2em plus 1em minus .2em}{10em plus 2em}
+        \titlespacing*{\section}{0pt}{2em plus 1em minus .2em}{2em plus .2em}
+        \titlespacing*{\subsection}{0pt}{2.5em plus .5em minus .2em}{1em plus .2em}
+
+        \setlrmarginsandblock{6em}{6em}{*}
+        \setulmarginsandblock{8em}{8em}{*}
+        \checkandfixthelayout
+    \else
+    \fi
 \fi
 
 
@@ -258,6 +253,10 @@
 
         \newenvironment{latin}{\fontencoding{OT1}\englishfont\selectfont}\relax
         \setTransitionsForLatin{\begin{latin}}{\end{latin}}
+
+        % \newenvironment{latin}{\fontencoding{OT1}\ifx\f@family\ttfamily
+        % \englishfonttt\else\englishfont\fi\selectfont}\relax
+        % \setTransitionsForLatin{\begin{latin}}{\end{latin}}
 
         \newcommand{\Share}{\rmfamily}
         \newcommand{\Titillium}{\sffamily}
@@ -413,18 +412,24 @@
     \ahsansetupfalse
 \fi
 
+\ifahsanindex
+    \let\Chaptermark\chaptermark
+    \def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
+    \let\Sectionmark\sectionmark
+    \def\sectionmark#1{\def\Sectionname{#1}\Sectionmark{#1}}
+    \let\Subsectionmark\subsectionmark
+    \def\subsectionmark#1{\def\Subsectionname{#1}\Subsectionmark{#1}}
+    \let\Subsubsectionmark\subsubsectionmark
+    \def\subsubsectionmark#1{\def\Subsubsectionname{#1}\Subsubsectionmark{#1}}
+\fi
 
-\let\Chaptermark\chaptermark
-\def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
-\let\Sectionmark\sectionmark
-\def\sectionmark#1{\def\Sectionname{#1}\Sectionmark{#1}}
-\let\Subsectionmark\subsectionmark
-\def\subsectionmark#1{\def\Subsectionname{#1}\Subsectionmark{#1}}
-\let\Subsubsectionmark\subsubsectionmark
-\def\subsubsectionmark#1{\def\Subsubsectionname{#1}\Subsubsectionmark{#1}}
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = linkC,
+    filecolor  = fileC,
+    urlcolor   = urlC,
+}
 
-
-\makeatletter
 \DeclareRobustCommand{\signature}{A%
     \kern-.09em {\setbox0\hbox{T}%
         \vbox to\ht0{\hbox{%
