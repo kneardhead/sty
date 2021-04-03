@@ -146,11 +146,12 @@
 
         \ifAhsansecthm
             \declaretheorem[style=thmstyle,name=Theorem,numberwithin=section]{theoremBase}
-            \declaretheorem[style=thmboxstyle,name=Theorem,numberwithin=section] 
+            \declaretheorem[style=thmboxstyle,name=Theorem,sibling=theoremBase] 
             {BoxedTheoremBase}
         \else
             \declaretheorem[style=thmstyle,name=Theorem]{theoremBase}
-            \declaretheorem[style=thmboxstyle,name=Theorem]{BoxedTheoremBase}
+            \declaretheorem[style=thmboxstyle,name=Theorem,
+            sibling=theoremBase]{BoxedTheoremBase}
         \fi
         \declaretheorem[style=emptythmstyle,name=,numbered=no]{emptythm}
         \declaretheorem[style=thmstyle,name=Lemma,sibling=theoremBase]{lemmaBase}
