@@ -105,7 +105,8 @@
     ]{solutionstyle}
     
     \declaretheoremstyle[
-    headfont=\itshape\rmfamily\bfseries\color{solC},
+    headpunct={ \color{thmC}\textbf{---} },
+    headfont=\itshape\rmfamily\bfseries\color{thmC},
     spaceabove=15pt,
     headpunct={--- },
     bodyfont=\color{solC},
@@ -165,6 +166,7 @@
 
         \tcolorboxenvironment{theoremBase}{
             blanker, breakable,colback=thmBgC, colframe=thmBgC, coltext=fgC,
+            top=3pt, bottom=3pt,
             left=1em,before skip=25pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
         }
 
@@ -186,40 +188,75 @@
 
         \tcolorboxenvironment{lemmaBase}{
             blanker, breakable, coltext=fgC,
-            left=1em,before skip=25pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+            top=3pt, bottom=3pt,
+            left=1em,before skip=15pt,after skip=5pt,borderline west={.15em}{0pt}{thmC},
         }
 
-        \newenvironment{theorem}[1][]{
-            \ifthenelse{\isempty{#1}}{% 
-                \begin{theoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
-            }{% 
-                \begin{theoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
-                    % \label{thm:#1}
-            }%
-        }{%
-            \end{theoremBase}
-        }
+        \ifahsanindex
+            \newenvironment{theorem}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{theoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+                }{% 
+                    \begin{theoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+                }%
+            }{%
+                \end{theoremBase}
+            }
 
 
-        \newenvironment{lemma}[1][]{
-            \ifthenelse{\isempty{#1}}{% 
-                \begin{lemmaBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
-            }{% 
-                \begin{lemmaBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
-            }%
-        }{%
-            \end{lemmaBase}
-        }
+            \newenvironment{lemma}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{lemmaBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+                }{% 
+                    \begin{lemmaBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+                }%
+            }{%
+                \end{lemmaBase}
+            }
 
-        \newenvironment{theorembox}[1][]{
-            \ifthenelse{\isempty{#1}}{% 
-                \begin{BoxedTheoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
-            }{% 
-                \begin{BoxedTheoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
-            }%
-        }{%
-            \end{BoxedTheoremBase}
-        }
+            \newenvironment{theorembox}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{BoxedTheoremBase}
+                        \index[thm]{\Chaptername!\Sectionname!Unnamed}
+                }{% 
+                    \begin{BoxedTheoremBase}[#1]
+                        \index[thm]{\Chaptername!\Sectionname!#1}
+                }%
+            }{%
+                \end{BoxedTheoremBase}
+            }
+
+        \else
+            \newenvironment{theorem}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{theoremBase}
+                }{% 
+                    \begin{theoremBase}[#1]
+                }%
+            }{%
+                \end{theoremBase}
+            }
+
+            \newenvironment{lemma}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{lemmaBase}
+                }{% 
+                    \begin{lemmaBase}[#1]
+                }%
+            }{%
+                \end{lemmaBase}
+            }
+
+            \newenvironment{theorembox}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{BoxedTheoremBase}
+                }{% 
+                    \begin{BoxedTheoremBase}[#1]
+                }%
+            }{%
+                \end{BoxedTheoremBase}
+            }
+        \fi
 
     \else
         \ifAhsansecthm
@@ -243,19 +280,35 @@
         \ifAhsansecthm
             \declaretheorem[style=problemstyle, numberwithin=section,
             name=Problem]{problemBase}
+            \declaretheorem[style=problemstyle, numberwithin=section,
+            name=Example]{exampleBase}
         \else
             \declaretheorem[style=problemstyle, name=Problem]{problemBase}
+            \declaretheorem[style=problemstyle, name=Problem]{ProblemBase}
+            \declaretheorem[style=problemstyle, name=Example]{exampleBase}
         \fi
+
+        \tcolorboxenvironment{ProblemBase}{
+            breakable, colback=thmBgC, colframe=probC, coltext=fgC,
+            left=1em, before skip=12pt, after skip=30pt, 
+            arc=0pt, boxrule=1pt,
+        }
 
         \ificmcbtheme
             \tcolorboxenvironment{problemBase}{
-                tile, breakable,colback=probBgC, colframe=probBgC, coltext=fgC,
-                left=1em,before skip=12pt,after skip=30pt,
+                breakable, colback=thmBgC, colframe=probC, coltext=fgC,
+                left=1em, before skip=12pt, after skip=30pt, 
+                arc=0pt, boxrule=1pt,
             }
         \fi
         
         \declaretheorem[style=problemstyle, numberwithin=problemBase,
         name=Generalization]{generalization}
+        \tcolorboxenvironment{exampleBase}{
+            breakable, colback=thmBgC, colframe=probC, coltext=fgC,
+            left=1em, before skip=12pt, after skip=30pt, 
+            arc=0pt, boxrule=1pt,
+        }
 
         \declaretheorem[style=definitionstyle, numbered=no,
         name=Definition]{definitionBase}
@@ -298,28 +351,64 @@
                         }{%
                     \end{problemBase}
                 }
+            \newenvironment{Problem}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{ProblemBase}\index[prob]{\Chaptername!\Sectionname!Unknown}
+                        }{% 
+                        \begin{ProblemBase}[#1]\index[prob]{\Chaptername!\Sectionname!#1}
+                        }%
+                        }{%
+                    \end{ProblemBase}
+                }
+            \newenvironment{example}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{exampleBase}\index[prob]{\Chaptername!\Sectionname!Unknown}
+                        }{% 
+                        \begin{exampleBase}[#1]\index[prob]{\Chaptername!\Sectionname!#1}
+                        }%
+                        }{%
+                    \end{exampleBase}
+                }
         \else
             \newenvironment{definition}[1][]{
                 \begin{definitionBase}[#1]
-                    }{
+            }{
                 \end{definitionBase}
+            }
+            \newenvironment{impdefinition}[1][]{
+                \begin{impdefinitionBase}[#1]
+                    }{
+                \end{impdefinitionBase}
             }
             \newenvironment{problem}[1][]{
                 \ifthenelse{\isempty{#1}}{% 
                     \begin{problemBase}
-                        }{% 
+                }{% 
                         \begin{problemBase}[#1]
-                        }%
-                        }{%
+                }%
+            }{%
                     \end{problemBase}
-                }
+            }
+            \newenvironment{Problem}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{ProblemBase}
+                }{% 
+                        \begin{ProblemBase}[#1]
+                }%
+            }{%
+                    \end{ProblemBase}
+            }
+            \newenvironment{example}[1][]{
+                \ifthenelse{\isempty{#1}}{% 
+                    \begin{exampleBase}
+                }{% 
+                        \begin{exampleBase}[#1]
+                }%
+            }{%
+                    \end{exampleBase}
+            }
         \fi        
-        
-
     \else
-        % \newtheorem{claim}[theorem]{Claim}
-        % \newtheorem*{claim*}{Claim}
-        % \newtheorem{problem}{Problem}
         \newtheorem*{problem*}{Problem}
         \newtheorem*{definition}{Definition}
     \fi
@@ -328,26 +417,27 @@
     \theoremstyle{plain}
     \ifAhsanfancythm
         \declaretheorem[style=solutionstyle, numbered=no]{solution}
+        \declaretheorem[style=solutionstyle, numbered=no, name=Partial Solution]{partsoln}
         \declaretheorem[style=solutionstyle, numbered=no, name=Proof]{prooof}
 
         \ifahsan@article
         \tcolorboxenvironment{solution}{
             coltext=solC, tile, breakable, colback=pageC, 
             top=0pt, left=.7em, right=.7em,
-            before skip=0pt,after skip=35pt,borderline west={.1em}{0pt}{solC},
+            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
         }
         \else
         \tcolorboxenvironment{solution}{
             coltext=solC!90!pageC, tile, breakable, colback=pageC, 
             top=0pt, left=.7em, right=.7em,
-            before skip=0pt,after skip=35pt,borderline west={.1em}{0pt}{solC},
+            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
         }
         \fi
 
         \tcolorboxenvironment{prooof}{
-            coltext=solC!90!pageC, tile, breakable, colback=pageC, 
+            coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
             top=0pt, left=.7em, right=.7em,
-            before skip=0pt,after skip=25pt,borderline west={.1em}{0pt}{solC},
+            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
         }
 
         \declaretheorem[style=solnDefStyle, numbered=no, name=Definition]{soldef}
@@ -356,7 +446,7 @@
 
         \tcolorboxenvironment{sollem}{
             coltext=solC, blanker, breakable, left=1em,
-            before skip=20pt,after skip=20pt,borderline west={.1em}{0pt}{black!80},
+            before skip=20pt,after skip=20pt,borderline west={.2em}{1pt}{thmC!80},
         }
 
         \tcolorboxenvironment{soldef}{
@@ -366,13 +456,17 @@
 
         \declaretheorem[style=remarkstyle, numbered=no]{Remark}
         \declaretheorem[style=remarkstyle, numbered=no]{note}
+        \let\origquote=\quote
+        \def\quote{\origquote\itshape}
         
     \else
         \newtheorem*{solution}{Solution}
         \newtheorem*{remark}{Remark}
         \newtheorem*{note}{Note}
-        \newtheorem{abuse}[theorem]{Abuse of Notation}
+        \newtheorem{abuse}[theoremBase]{Abuse of Notation}
         \newtheorem*{abuse*}{Abuse of Notation}
+        \newtheorem{example}[problemBase]{Example}
+        \newtheorem*{example*}{Example}
     \fi
 
 
@@ -394,13 +488,6 @@
     \newtheorem*{ques*}{Question}
     \newtheorem*{exercise*}{Exercise}
 
-    \ifAhsanfancythm
-        \declaretheorem[style=examplestyle,name=Example,sibling=theoremBase]{example}
-        \declaretheorem[style=examplestyle,name=Example,numbered=no]{example*}
-    \else
-        \newtheorem{example}[theorem]{Example}
-        \newtheorem*{example*}{Example}
-    \fi
 
     \ifAhsanfancythm
         \newenvironment{myitemize}{\begin{itemize}}{\end{itemize}}
@@ -525,23 +612,23 @@
         \newcommand{\prob}[4]{
             \ifthenelse{\isempty{#1}}{% 
                 \ifthenelse{\isempty{#2}}{% 
-                    \begin{problem}
+                    \begin{problemBase}
                         \index[prob]{unknown source}
                         #4
-                    \end{problem} 
+                    \end{problemBase} 
                 }{% 
-                    \begin{problem}[#2]
+                    \begin{problemBase}[#2]
                         \index[prob]{#2}
                         \label{problem:#2}
                         #4
-                    \end{problem} 
+                    \end{problemBase} 
                 }%
             }{% 
-                \begin{problem}[\href{#1}{#2}]
+                \begin{problemBase}[\href{#1}{#2}]
                     \index[prob]{#2}
                     \label{problem:#2}
                     #4
-                \end{problem} 
+                \end{problemBase} 
             }%
         }
 

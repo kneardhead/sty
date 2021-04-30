@@ -1,0 +1,191 @@
+\ProvidesPackage{bdmo_camp}
+
+\usepackage{fontspec}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem, graphicx, xcolor, float}
+\usepackage{amsthm, thmtools}
+\usepackage[most]{tcolorbox}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{hyperref, multicol}
+
+\setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
+% \setmonofont{[ShareTechMono-Regular.ttf]}
+\setmainfont{CMU Serif}       [Scale=MatchLowercase]
+
+% \newfontfamily{\share}{Share}[Extension = .ttf, UprightFont = *-Regular, BoldFont= *-bold]
+
+\usepackage{amsmath, amssymb}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{titlesec}
+
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+
+\titlespacing*{\section}{0pt}{6ex plus 1ex minus 1ex}{3ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{4ex plus 1ex minus 1ex}{1ex plus .2ex}
+
+\date{\today}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+% \setlrmarginsandblock{6em}{6em}{*}
+% \setulmarginsandblock{8em}{8em}{*}
+% \checkandfixthelayout
+
+
+
+
+\definecolor{NordBlack}       {HTML} {3B4252} % nord1
+\definecolor{NavyBlue}   {HTML} {05445e}
+\definecolor{BlueGrotto} {HTML} {189ab4}
+\definecolor{BabyBlue}   {HTML} {d4f1f4}
+\definecolor{NordGreen}       {HTML} {A3BE8C} % nord14
+\definecolor{NordWhite}       {HTML} {E5E9F0} % nord5
+\definecolor{Teal}       {HTML} {29a0b1}
+\definecolor{TealGreen}  {HTML} {167d7f}
+\definecolor{NordBrightBlue}  {HTML} {5E81AC} % nord10
+
+\colorlet{pageC}{white}
+\colorlet{fgC}{black}
+
+\colorlet{thmC}{NavyBlue}
+\colorlet{probC}{NordBlack}
+\colorlet{defC}{BlueGrotto}
+\colorlet{solC}{fgC}
+
+\colorlet{thmBgC}{NordWhite!95!BabyBlue}
+\colorlet{probBgC}{pageC}
+\colorlet{defBgC}{NordWhite!95!NordGreen}
+
+\colorlet{urlC}{TealGreen}
+\colorlet{linkC}{Teal}
+\colorlet{fileC}{TealGreen}
+\colorlet{impC}{NordBrightBlue!80!fgC}
+
+\pagecolor{pageC} \color{fgC}
+
+
+\newcommand{\ds}{\displaystyle}
+
+\declaretheoremstyle[
+headfont=\share\bfseries\color{probC},
+headpunct={.},
+postheadspace={7pt},
+spaceabove=10pt,
+spacebelow=10pt,
+notebraces={(}{)},
+notefont=\color{probC}\share,
+]{problemstyle}
+
+\declaretheoremstyle[
+headfont=\bfseries\color{thmC},
+headpunct={ \color{thmC}\textbf{---} },
+postheadspace={0pt},
+spaceabove=10pt,
+spacebelow=20pt,
+notebraces={(}{)},
+notefont=\color{thmC}\mdseries\normalfont,
+bodyfont=\rmfamily\selectfont,
+]{theoremstyle}
+
+
+\declaretheoremstyle[
+headfont=\bfseries\color{defC},
+bodyfont=\mdseries,
+spaceabove=10pt,
+spacebelow=10pt,
+headpunct={--- },
+]{definitionstyle}
+
+\declaretheoremstyle[
+headfont=\bfseries\color{solC},
+notebraces={[}{]},
+notefont=\normalfont\sffamily,
+headpunct={. },
+spaceabove=10pt,
+spacebelow=10pt,
+qed=\qedsymbol,
+% bodyfont=\color{solC!80!pageC},
+]{solutionstyle}
+
+\declaretheoremstyle[
+headfont=\bfseries,
+spaceabove=10pt,
+spacebelow=10pt,
+headpunct={. },
+]{remarkstyle}
+
+
+\declaretheorem[style=theoremstyle,name=Theorem,numberwithin=section]{theorem}
+\declaretheorem[style=theoremstyle,name=Lemma,sibling=theorem]{lemma}
+\declaretheorem[style=theoremstyle,name=Theorem,numbered=no]{theorem*}
+\declaretheorem[style=theoremstyle,name=Lemma,numbered=no]{lemma*}
+
+% \tcolorboxenvironment{theorem}{
+%     tile, breakable,colback=thmBgC, colframe=thmBgC, coltext=fgC,
+%     left=1em,before skip=10pt,after skip=10pt,borderline west={.15em}{0pt}{thmC},
+% }
+\tcolorboxenvironment{theorem}{
+    blanker, breakable, coltext=fgC,
+    left=1em,before skip=10pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+}
+
+\tcolorboxenvironment{lemma}{
+    blanker, breakable, coltext=fgC,
+    left=1em,before skip=10pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+}
+
+\declaretheorem[style=problemstyle, numberwithin=section]{problem}
+\declaretheorem[style=problemstyle, numberwithin=problem]{generalization}
+
+\declaretheorem[style=definitionstyle, numbered=no]{definition}
+\declaretheorem[style=definitionstyle, numbered=no, name=Definition]{impdefinition}
+\declaretheorem[style=definitionstyle, numbered=no, name=Data Structure]
+{data_structure}
+\declaretheorem[style=definitionstyle, numbered=no, name=Algorithm]{algo}
+\declaretheorem[style=definitionstyle, numbered=no, name=Game]{game}
+\declaretheorem[style=definitionstyle, name=Construction]{construction}
+
+\declaretheorem[style=solutionstyle, numbered=no]{solution}
+\declaretheorem[style=solutionstyle, numbered=no, name=Proof]{prooof}
+
+
+\tcolorboxenvironment{solution}{
+    coltext=solC, blanker, breakable,
+    top=0pt, left=.7em, right=.7em,
+    before skip=0pt,after skip=16pt,borderline west={.1em}{0pt}{solC},
+}
+
+\tcolorboxenvironment{prooof}{
+    coltext=solC!90!pageC, tile, breakable, colback=pageC, 
+    top=0pt, left=.7em, right=.7em,
+    before skip=0pt,after skip=16pt,borderline west={.1em}{0pt}{solC},
+}
+
+\renewenvironment{proof}{\begin{prooof}}{\end{prooof}}
+
+\declaretheorem[style=remarkstyle, numbered=no]{Remark}
+\declaretheorem[style=remarkstyle, numbered=no]{note}
+\declaretheorem[style=remarkstyle, numbered=no]{hint}
+\newcommand{\prob}[2]{
+    
+    \begin{problem}[#1]
+    #2
+    \end{problem}
+}
+
+\newcommand{\theo}[2]{
+    
+    \begin{theorem}[#1]
+    #2
+\end{theorem}
+}
+
+\newcommand{\figdf}[3]{
+    \begin{figure}[H] 
+        \centering 
+        \includegraphics[width=#1\textwidth]{#2.pdf} 
+        \caption{#3} 
+    \end{figure}
+}
+

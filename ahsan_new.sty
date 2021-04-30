@@ -73,6 +73,7 @@
 
 \DeclareOption {fancy}      {\ahsanfancyhdrtrue}
 \DeclareOption {nofancy}    {\ahsanfancyhdrfalse}
+% \DeclareOption {toc}        {\ahsantoctrue}
 \DeclareOption {href}       {\ahsanhreftrue}
 \DeclareOption {nohref}     {\ahsanhreffalse}
 \DeclareOption {index}      {\ahsanindextrue}
@@ -83,12 +84,14 @@
 \newif \ifdarkbluetheme   \darkbluethemefalse
 \newif \ifdarkpinktheme   \darkpinkthemefalse
 \newif \iflightgreentheme \lightgreenthemefalse
+\newif \ifwhitegreentheme \whitegreenthemefalse
 \newif \ificmcbtheme      \icmcbthemefalse
 \newif \ifmonocolortheme  \monocolorthemefalse
 
 \DeclareOption {darkblue}   {\nothemefalse\darkbluethemetrue}
 \DeclareOption {darkpink}   {\nothemefalse\darkpinkthemetrue}
 \DeclareOption {lightgreen} {\nothemefalse\lightgreenthemetrue}
+\DeclareOption {whitegreen} {\nothemefalse\whitegreenthemetrue}
 \DeclareOption {monocolor}  {\nothemefalse\monocolorthemetrue}
 \DeclareOption {icmcb}      {\nothemefalse\icmcbthemetrue}
 
@@ -127,6 +130,7 @@
 \ifdarkbluetheme   \usepackage[darkBlue]{mycolors}   \fi
 \ifdarkpinktheme   \usepackage[darkPink]{mycolors}   \fi
 \iflightgreentheme \usepackage[lightGreen]{mycolors} \fi
+\ifwhitegreentheme \usepackage[whiteGreen]{mycolors} \fi
 \ifmonocolortheme  \usepackage[monocolor]{mycolors}  \fi
 \ificmcbtheme      \usepackage[icmcb]{mycolors}      \fi
 \ifnotheme         \usepackage[plain]{mycolors}      \fi
@@ -161,7 +165,7 @@
         {}
 
         \titleformat{\subsection}
-        {\normalfont\large\bfseries}
+        {\color{thmC!90!pageC}\normalfont\large\bfseries}
         {\thesubsection}
         {1em}
         {}
@@ -170,7 +174,7 @@
 
         \titlespacing*{\chapter}{0pt}{2em plus 1em minus .2em}{10em plus 2em}
         \titlespacing*{\section}{0pt}{2em plus 1em minus .2em}{2em plus .2em}
-        \titlespacing*{\subsection}{0pt}{2.5em plus .5em minus .2em}{1em plus .2em}
+        \titlespacing*{\subsection}{0pt}{4em plus .5em minus .2em}{1em plus .2em}
 
         \setlrmarginsandblock{6em}{6em}{*}
         \setulmarginsandblock{8em}{8em}{*}
@@ -178,7 +182,7 @@
     \fi
     \ifahsan@article
         \titleformat{\section}
-        {\color{thmC}\normalfont\large\bfseries}
+        {\color{thmC}\normalfont\Large\bfseries}
         {\S \thesection}
         {.5em}
         {}
@@ -417,6 +421,9 @@
 \fi
 
 \ifahsanindex
+    \def\Chaptername{No Chpater}
+    \def\Sectionname{No Section}
+    \def\Subsectionname{No Subsection}
     \let\Chaptermark\chaptermark
     \def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
     \let\Sectionmark\sectionmark
