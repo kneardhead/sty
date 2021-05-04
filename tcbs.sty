@@ -419,6 +419,7 @@
         \declaretheorem[style=solutionstyle, numbered=no]{solution}
         \declaretheorem[style=solutionstyle, numbered=no, name=Partial Solution]{partsoln}
         \declaretheorem[style=solutionstyle, numbered=no, name=Proof]{prooof}
+        
 
         \ifahsan@article
         \tcolorboxenvironment{solution}{
@@ -434,9 +435,14 @@
         }
         \fi
 
-        \tcolorboxenvironment{prooof}{
+        \newtcolorbox{idea}{
             coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
             top=0pt, left=.7em, right=.7em,
+            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
+        }
+        \tcolorboxenvironment{prooof}{
+            coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
+            top=2pt, bottom=2pt, left=.7em, right=.7em,
             before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
         }
 
