@@ -49,11 +49,13 @@
 \newif \ifahsanauthor      \ahsanauthortrue
 \newif \ifahsanindex       \ahsanindexfalse
 \newif \ifahsantoc         \ahsantocfalse
+\newif \ifahsanhint        \ahsanhintfalse
 \newif \ifahsanaccessories \ahsanaccessoriesfalse
 
 \newif \ifahsanthm         \ahsanthmtrue
 \newif \ifahsansecthm      \ahsansecthmfalse
 \newif \ifahsanfancythm    \ahsanfancythmtrue
+\newif \ifahsanimpprob     \ahsanimpprobfalse
 
 
 \DeclareOption {noauthor}   {\ahsanauthorfalse}
@@ -63,6 +65,7 @@
 \DeclareOption {serif}      {\ahsansansfalse}
 \DeclareOption {mathsans}   {\ahsanmathsanstrue}
 \DeclareOption {acc}        {\ahsanaccessoriestrue}
+\DeclareOption {impprob}    {\ahsanimpprobtrue}
 
 \DeclareOption {thm}        {\ahsanthmtrue}
 \DeclareOption {nothm}      {\ahsanthmfalse}
@@ -73,7 +76,8 @@
 
 \DeclareOption {fancy}      {\ahsanfancyhdrtrue}
 \DeclareOption {nofancy}    {\ahsanfancyhdrfalse}
-% \DeclareOption {toc}        {\ahsantoctrue}
+\DeclareOption {toc}        {\ahsantoctrue}
+\DeclareOption {hint}       {\ahsanhinttrue}
 \DeclareOption {href}       {\ahsanhreftrue}
 \DeclareOption {nohref}     {\ahsanhreffalse}
 \DeclareOption {index}      {\ahsanindextrue}
@@ -271,7 +275,7 @@
     \else
         \setmonofont{Share Tech Mono} [Scale=MatchUppercase]
         \newfontfamily\Share[Ligatures=TeX, Scale=MatchUppercase, WordSpace=.9]{Share}
-        \newfontfamily\Titillium[Ligatures=TeX, Scale=MatchLowercase]{Titillium Web}
+        \newfontfamily\Titillium[Ligatures=TeX, Scale=.9]{Titillium Web}
 
         \ifahsanmathsans \usepackage{sansmathfonts} \else \usepackage{mathptmx} \fi
 
@@ -353,6 +357,19 @@
     \surroundarabic[{.}][]{}{}
     \otherseparators{1}
     \alnumsecstyle{aaaa}
+\fi
+
+\ifahsanhint
+    \usepackage{answers}
+    \Newassociation{hinted}{Hint}{hints}
+    \AtBeginDocument{\Opensolutionfile{hints}[hints]}
+    \AtEndDocument{
+        \Closesolutionfile{hints}
+        \newpage
+        \section{Hints}
+        \renewenvironment{Hint}[1]{\begin{hint}{\textbf{#1 }}}{\end{hint}}
+        \input{hints}
+    }
 \fi
 
 
