@@ -324,6 +324,8 @@
             breakable, colback=thmBgC, colframe=probC, coltext=fgC,
             left=1em, before skip=20pt, after skip=12pt, 
             arc=0pt, boxrule=1pt,
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.5em}}
         }
 
         \declaretheorem[style=definitionstyle, numbered=no,
@@ -439,15 +441,19 @@
 
         \ifahsan@article
         \tcolorboxenvironment{solution}{
-            coltext=solC, tile, breakable, colback=pageC, opacityback=0,
-            top=0pt, left=.7em, right=.7em, 
+            coltext=solC, blanker, breakable, colback=pageC, 
+            top=2pt, bottom=2pt, left=.7em, right=.7em,
             before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.5em}}
         }
         \else
         \tcolorboxenvironment{solution}{
-            coltext=solC!90!pageC, breakable, colback=pageC, opacityback=0,
-            top=0pt, left=.7em, right=.7em, tile,
-            before skip=10pt, after skip=20pt, borderline west={.1em}{0pt}{solC},
+            coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
+            top=2pt, bottom=2pt, left=.7em, right=.7em,
+            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.5em}}
         }
         \fi
 
