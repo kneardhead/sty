@@ -58,8 +58,8 @@
     headfont=\bfseries\color{thmC},
     headpunct={ \color{thmC}\textbf{---} },
     postheadspace={0pt},
-    spaceabove=20pt,
-    spacebelow=15pt,
+    spaceabove=10pt,
+    spacebelow=10pt,
     notebraces={(}{)},
     notefont=\color{thmC}\mdseries\normalfont,
     bodyfont=\Titillium\selectfont,
@@ -175,29 +175,29 @@
         \tcolorboxenvironment{theoremBase}{
             blanker, breakable,colback=thmBgC, colframe=thmBgC, coltext=fgC,
             top=3pt, bottom=3pt,
-            left=1em,before skip=25pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
         }
 
         \tcolorboxenvironment{corollary}{
             blanker, breakable, coltext=fgC,
-            left=1em,before skip=20pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
         }
 
         \tcolorboxenvironment{BoxedTheoremBase}{
             tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
             top=5pt, bottom=5pt,
-            left=1em,before skip=30pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+            left=1em,before skip=15pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
         }
         \tcolorboxenvironment{emptythm}{
             tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
             top=5pt, bottom=5pt,
-            left=1em,before skip=30pt,after skip=20pt,borderline west={.15em}{0pt}{thmC},
+            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
         }
 
         \tcolorboxenvironment{lemmaBase}{
             blanker, breakable, coltext=fgC,
             top=3pt, bottom=3pt,
-            left=1em,before skip=15pt,after skip=5pt,borderline west={.15em}{0pt}{thmC},
+            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
         }
 
         \ifahsanindex
@@ -335,7 +335,7 @@
 
         \tcolorboxenvironment{impdefinitionBase}{
             tile, breakable, coltext=fgC, colback=defBgC, colframe=defBgC,
-            left=1em,before skip=30pt,after skip=15pt,borderline west={.15em}{0pt}{defC},
+            left=1em,before skip=20pt,after skip=15pt,borderline west={.15em}{0pt}{defC},
         }
 
 
@@ -475,6 +475,8 @@
             coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
             top=2pt, bottom=2pt, left=.7em, right=.7em,
             before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.5em}}
         }
 
         \declaretheorem[style=solnDefStyle, numbered=no, name=Definition]{soldef}
@@ -797,7 +799,7 @@
         \newcommand{\impeq}[1]{
             \tcboxmath[
                 colback=thmBgC, colframe=thmBgC, 
-                left=5pt, right=5pt, top=5pt, bottom=5pt
+                left=6pt, right=6pt, top=3pt, bottom=3pt
             ]{#1}
         }
 
