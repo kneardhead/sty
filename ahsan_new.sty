@@ -334,25 +334,45 @@
 % Show/Hide figures
 \ifahsanfigs 
     \usepackage{graphicx} 
+    \usepackage{import}
+    \usepackage{xifthen}
+    \usepackage{pdfpages}
+    \usepackage{transparent}
+
+    \newcommand{\incfig}[2][1]{%
+        \fontsize{8}{9}\selectfont
+        \def\svgwidth{#1\columnwidth}
+        \import{./figs/}{#2.pdf_tex}
+        \fontsize{8}{11}\selectfont
+    }
+    
 \else 
     \usepackage[draft]{graphicx} 
 \fi
 
 
 \ifahsanaccessories
-    \usepackage{mathtools, float, multicol, subfig, pdfpages, pgf, tikz, pgfplots}
+    \usepackage{mathtools, float, multicol, subfig, pgf, tikz, pgfplots}
     \pgfplotsset{compat=1.17}
 \fi
 
 
 % table of content specs
 \ifahsantoc
-    \usepackage{tocloft}
-    \setcounter{tocdepth}{4}
-    \setcounter{secnumdepth}{4}
-
     \usepackage[usehighlevels]{alnumsec}
-    \alnumsectionlevels{1}{chapter, section, subsection, subsubsection, paragraph}
+    \ifahsan@memoir
+        \usepackage{tocloft}
+        \setcounter{tocdepth}{4}
+        \setcounter{secnumdepth}{4}
+        \alnumsectionlevels{1}{chapter, section, subsection, subsubsection, paragraph}
+    \else
+        \ifahsan@article
+            \usepackage[subfigure]{tocloft}
+            \setcounter{tocdepth}{3}
+            \setcounter{secnumdepth}{3}
+            \alnumsectionlevels{1}{section, subsection, subsubsection, paragraph}
+        \fi
+    \fi
     \alnumsecstyle{aaaa}
     \surroundarabic[{.}][]{}{}
     \otherseparators{1}
