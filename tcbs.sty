@@ -17,6 +17,10 @@
 \ProcessOptions\relax
 
 
+\newlength{\envskip}
+\setlength{\envskip}{12pt}
+
+
 \ifAhsanthm
     \usepackage{amsthm}
 \fi
@@ -88,8 +92,8 @@
     \declaretheoremstyle[
     headfont=\bfseries\color{defC},
     bodyfont=\mdseries,
-    spaceabove=20pt,
-    spacebelow=10pt,
+    spaceabove=1.3\envskip,
+    spacebelow=\envskip,
     headpunct={--- },
     ]{definitionstyle}
 
@@ -140,8 +144,8 @@
     \declaretheoremstyle[
     headfont=\bfseries\mdseries\color{defC},
     bodyfont=\mdseries,
-    spaceabove=20pt,
-    spacebelow=10pt,
+    spaceabove=1.3\envskip,
+    spacebelow=\envskip,
     headpunct={--- },
     ]{definitionstyle}
 \fi
@@ -174,30 +178,40 @@
 
         \tcolorboxenvironment{theoremBase}{
             blanker, breakable,colback=thmBgC, colframe=thmBgC, coltext=fgC,
-            top=3pt, bottom=3pt,
-            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
+            top=.2\envskip, bottom=.2\envskip, left=.8em,
+            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.7em}}
         }
 
         \tcolorboxenvironment{corollary}{
             blanker, breakable, coltext=fgC,
             left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.7em}}
         }
 
         \tcolorboxenvironment{BoxedTheoremBase}{
             tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
-            top=5pt, bottom=5pt,
-            left=1em,before skip=15pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
+            top=.3\envskip, bottom=.3\envskip, left=.6em,
+            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.7em}}
         }
         \tcolorboxenvironment{emptythm}{
             tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
-            top=5pt, bottom=5pt,
-            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
+            top=.3\envskip, bottom=.3\envskip, left=.8em,
+            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.7em}}
         }
 
         \tcolorboxenvironment{lemmaBase}{
             blanker, breakable, coltext=fgC,
-            top=3pt, bottom=3pt,
-            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
+            top=.2\envskip, bottom=.2\envskip, left=.8em,
+            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.7em}}
         }
 
         \ifahsanindex
@@ -335,7 +349,9 @@
 
         \tcolorboxenvironment{impdefinitionBase}{
             tile, breakable, coltext=fgC, colback=defBgC, colframe=defBgC,
-            left=1em,before skip=20pt,after skip=15pt,borderline west={.15em}{0pt}{defC},
+            left=.8em,before skip=1.3\envskip,after skip=\envskip,borderline west={.15em}{0pt}{defC},
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+            \vspace{-.5em}}
         }
 
 
@@ -561,24 +577,24 @@
         }
 
         \lstdefinestyle{fonts}{
-            basicstyle=\linespread{1.1}\footnotesize\ttfamily,
+            basicstyle=\linespread{1.1}\small\ttfamily,
             commentstyle=\color{fgC!60!pageC}\ttfamily,
             stringstyle=\footnotesize\color{NordBrightBlue},
             showstringspaces=false,
-            breaklines=true,
+            % breaklines=true,
         }
 
         \lstdefinestyle{colors}{
             keywordstyle=\color{thmC},
-            backgroundcolor=\color{fgC!5!pageC},
+            backgroundcolor=\color{pageC},
             % texcsstyle=*\color{thmC},
-            literate=
-                {(}{{\textcolor{NordGreen}{(}}}{1}
-                {)}{{\textcolor{NordGreen}{)}}}{1}
-                {\{}{{\textcolor{NordBlue}{\{}}}{1}
-                {\}}{{\textcolor{NordBlue}{\}}}}{1}
-                {[}{{\textcolor{NordBlue}{[}}}{1}
-                {]}{{\textcolor{NordBlue}{]}}}{1},
+            literate=*
+                {(}{{\textcolor{fgC!40!pageC}{(}}}{1}
+                {)}{{\textcolor{fgC!40!pageC}{)}}}{1}
+                {\{}{{\textcolor{thmC}{\{}}}{1}
+                {\}}{{\textcolor{thmC}{\}}}}{1}
+                {[}{{\textcolor{thmC}{[}}}{1}
+                {]}{{\textcolor{thmC}{]}}}{1},
         }
 
         % adds coloring of ) to lstlisting
@@ -595,6 +611,22 @@
             emphstyle={[2]\color{thmC}},
             emph={[3]enumerate},
             emphstyle={[3]\color{NordRed}},
+        }
+
+        \lstdefinestyle{myhaskell}{
+            language=Haskell,
+            style=numbers,
+            style=fonts,
+            style=colors,
+            basewidth={0.6em,0.4em},
+            morekeywords={fold, unfold, scan},
+            keywordstyle=\color{thmC},
+            % emph={[2]xs, ys, zs},
+            % emphstyle={[2]\color{}},
+            emph={[3]f, g, h, c, s},
+            emphstyle={[3]\color{probC}},
+            emph={[4]x, y, z},
+            emphstyle={[4]\color{fgC!80}},
         }
 
         \lstdefinestyle{mypy}{
@@ -794,6 +826,12 @@
             \begin{prooof}
                 #1 
             \end{prooof}
+        }
+        \newcommand{\impex}[1]{
+            \tcboxmath[
+                colback=thmBgC, colframe=thmBgC, 
+                left=0pt, right=0pt, top=0pt, bottom=0pt
+            ]{#1}
         }
 
         \newcommand{\impeq}[1]{

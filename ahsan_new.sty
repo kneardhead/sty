@@ -214,6 +214,8 @@
     \RequirePackage[Latin, Bengali, Devanagari]{ucharclasses}
 \else   
     \usepackage{enumitem}
+    \setlist[enumerate]{topsep=0pt, itemsep=0pt}
+    \setlist[itemize]{topsep=0pt, itemsep=0pt}
 \fi
 
 
@@ -263,8 +265,12 @@
             \newcommand\englishfont\englishfontrm
         \fi
 
-        \newenvironment{latin}{\fontencoding{OT1}\englishfont\selectfont}\relax
-        \setTransitionsForLatin{\begin{latin}}{\end{latin}}
+        \newenvironment{latintt}{
+            \fontencoding{OT1}\englishfonttt\selectfont
+        }\relax
+        \setTransitionsFor{Bengali}{\begingroup\bengalifontsf}{\endgroup}
+        % \newenvironment{latin}{\fontencoding{OT1}\englishfont\selectfont}\relax
+        % \setTransitionsForLatin{\begin{latin}}{\end{latin}}
 
         % \newenvironment{latin}{\fontencoding{OT1}\ifx\f@family\ttfamily
         % \englishfonttt\else\englishfont\fi\selectfont}\relax

@@ -21,6 +21,16 @@
 
 % \newcommand{\iff}{\text{ if and only if }}
 % \newcommand{\if}{\text{ if }}
+\newcommand{\blank}{\textcolor{pageC}{haha}}
+
+\usepackage{array}
+
+\newlength\Origarrayrulewidth
+\newcommand{\Cline}[1]{%
+  \noalign{\global\setlength\Origarrayrulewidth{\arrayrulewidth}}%
+  \noalign{\global\setlength\arrayrulewidth{2pt}}\cline{#1}%
+  \noalign{\global\setlength\arrayrulewidth{\Origarrayrulewidth}}%
+}
 
 
 \newcommand{\pb}[1]{{\leavevmode\color{Blue}{#1}}}
@@ -59,7 +69,7 @@
 \renewcommand{\b}{\beta}
 \renewcommand{\c}{\chi}
 \renewcommand{\t}{\theta}
-\renewcommand{\i}{\infty}
+% \renewcommand{\i}{\infty}
 \renewcommand{\k}{\kappa}
 \renewcommand{\l}{\lambda}
 \renewcommand{\r}{\rho}
@@ -112,18 +122,19 @@
 %For use in author command
 \newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
 \newcommand{\plusemail}[1]{\\ \normalfont \texttt{\mailto{#1}}}
-\newcommand{\bracu}[1]{
+\newcommand{\ox}[1]{
     \author{\textbf{M Ahsan Al Mahir}\\
-    BuX ID: 20216007\\
-    Email: ahsan.al.mahir@g.bracu.ac.bd}
+    Email: ahsan.almahir@sjc.ox.ac.uk}
 }
 
 %More commands and math operators
 \DeclareMathOperator{\cis}{cis}
 \DeclareMathOperator*{\lcm}{lcm}
 \DeclareMathOperator*{\argmin}{arg min}
+% \DeclareMathOperator*{\arg}{arg}
 \DeclareMathOperator*{\argmax}{arg max}
 \renewcommand{\span}{\operatorname{span}}
+\newcommand{\hcf}{\operatorname{hcf}}
 
 %Inequalities
 \newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
@@ -164,8 +175,8 @@
 \newcommand{\surjto}{\twoheadrightarrow}
 \newcommand{\injto}{\hookrightarrow}
 \newcommand{\On}{\mathrm{On}} % ordinals
-\DeclareMathOperator{\img}{im} % Image
-\DeclareMathOperator{\Img}{Im} % Image
+\DeclareMathOperator{\img}{Im} % Image
+\DeclareMathOperator{\Img}{im} % Image
 \DeclareMathOperator{\coker}{coker} % Cokernel
 \DeclareMathOperator{\Coker}{Coker} % Cokernel
 \DeclareMathOperator{\Ker}{Ker} % Kernel
