@@ -655,20 +655,15 @@
             \ifthenelse{\isempty{#1}}{% 
                 \ifthenelse{\isempty{#2}}{% 
                     \begin{problemBase}
-                        \index[prob]{unknown source}
                         #4
                     \end{problemBase} 
                 }{% 
                     \begin{problemBase}[#2]
-                        \index[prob]{#2}
-                        \label{problem:#2}
                         #4
                     \end{problemBase} 
                 }%
             }{% 
                 \begin{problemBase}[\href{#1}{#2}]
-                    \index[prob]{#2}
-                    \label{problem:#2}
                     #4
                 \end{problemBase} 
             }%
