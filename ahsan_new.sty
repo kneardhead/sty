@@ -88,6 +88,7 @@
 \newif \ifdarkbluetheme   \darkbluethemefalse
 \newif \ifdarkpinktheme   \darkpinkthemefalse
 \newif \iflightgreentheme \lightgreenthemefalse
+\newif \iflightpinktheme  \lightpinkthemefalse
 \newif \ifwhitegreentheme \whitegreenthemefalse
 \newif \ificmcbtheme      \icmcbthemefalse
 \newif \ifmonocolortheme  \monocolorthemefalse
@@ -95,6 +96,7 @@
 \DeclareOption {darkblue}   {\nothemefalse\darkbluethemetrue}
 \DeclareOption {darkpink}   {\nothemefalse\darkpinkthemetrue}
 \DeclareOption {lightgreen} {\nothemefalse\lightgreenthemetrue}
+\DeclareOption {lightpink} {\nothemefalse\lightpinkthemetrue}
 \DeclareOption {whitegreen} {\nothemefalse\whitegreenthemetrue}
 \DeclareOption {monocolor}  {\nothemefalse\monocolorthemetrue}
 \DeclareOption {icmcb}      {\nothemefalse\icmcbthemetrue}
@@ -134,6 +136,7 @@
 \ifdarkbluetheme   \usepackage[darkBlue]{mycolors}   \fi
 \ifdarkpinktheme   \usepackage[darkPink]{mycolors}   \fi
 \iflightgreentheme \usepackage[lightGreen]{mycolors} \fi
+\iflightgreentheme \usepackage[lightPink]{mycolors} \fi
 \ifwhitegreentheme \usepackage[whiteGreen]{mycolors} \fi
 \ifmonocolortheme  \usepackage[monocolor]{mycolors}  \fi
 \ificmcbtheme      \usepackage[icmcb]{mycolors}      \fi
@@ -435,12 +438,12 @@
     \usepackage[english]{babel}
     \usepackage{metalogo}
 
-    % \setsansfont{Andika New Basic}
-    % \setmainfont{Yanone Kaffeesatz}
-    % \setmonofont{Share Tech Mono}
-    \setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
-    \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
-    \setmainfont{CMU Serif}       [Scale=MatchLowercase]
+    \setsansfont{Andika New Basic}
+    \setmainfont{Yanone Kaffeesatz}
+    \setmonofont{Share Tech Mono}
+    % \setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
+    % \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
+    % \setmainfont{CMU Serif}       [Scale=MatchLowercase]
 
     \ifdarkbluetheme 
         \usetheme{NordDark} 
