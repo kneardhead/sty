@@ -589,7 +589,7 @@
 
         \lstdefinestyle{colors}{
             keywordstyle=\color{thmC},
-            backgroundcolor=\color{pageC},
+            backgroundcolor=\color{defBgC!50!white},
             % texcsstyle=*\color{thmC},
             literate=*
                 {(}{{\textcolor{fgC!40!pageC}{(}}}{1}
@@ -597,11 +597,45 @@
                 {\{}{{\textcolor{thmC}{\{}}}{1}
                 {\}}{{\textcolor{thmC}{\}}}}{1}
                 {[}{{\textcolor{thmC}{[}}}{1}
+                {;}{{\textcolor{fgC!60!pageC}{;}}}{1}
                 {]}{{\textcolor{thmC}{]}}}{1},
         }
 
         % adds coloring of ) to lstlisting
         \patchcmd{\lsthk@SelectCharTable}{`)}{``}{}{}
+
+        \lstset{identifierstyle=\idstyle}
+
+        \makeatletter
+        \newcommand*\idstyle{%
+            \expandafter\id@style\the\lst@token\relax
+        }
+        \def\id@style#1#2\relax{%
+            \ifcat#1\relax
+            \else
+                \ifnum`#1=\uccode`#1%
+                    \ifx#2\empty
+                    \else
+                        \idstylet{#2}%
+                    \fi
+                \fi
+            \fi
+        }
+        %todo: word starting with capital letter followed by two of the same lower case letterss
+        % i.e. Assume, Array produces umeAssume and ayArray.
+
+        \newcommand*\idstylet[1]{%
+            \id@stylet#1\relax%
+        }
+        \def\id@stylet#1#2\relax{%
+            \ifcat#1\relax\else
+                \ifnum`#1=\uccode`#1%
+                    \color{NordBrightBlue}
+                \fi
+            \fi
+        }
+
+        \makeatother
 
 
         \lstdefinestyle{mytex}{
@@ -616,6 +650,89 @@
             emphstyle={[3]\color{NordRed}},
         }
 
+        \lstdefinestyle{myjava}{
+            language=Java,
+            alsoletter={<>=-+},
+            style=numbers,
+            style=colors,
+            style=fonts,
+            keywordstyle=\color{impC},
+            basewidth={0.6em,0.4em},
+            morekeywords={require},
+            emph={[2]var, val, true, false, null},
+            emphstyle={[2]\color{defC}},
+            emph={[3]int, Comparable},
+            emphstyle={[3]\color{NordBrightBlue}},
+            emph={[4]next, toString},
+            emphstyle={[4]\color{NordMagenta}},
+            escapeinside={(*}{*)},
+        }
+
+        \lstdefinestyle{myscala}{
+            language=Scala,
+            alsoletter={<>=-+},
+            style=numbers,
+            style=colors,
+            style=fonts,
+            keywordstyle=\color{impC},
+            basewidth={0.6em,0.4em},
+            morekeywords={require},
+            emph={[2]var, val, true, false, null},
+            emphstyle={[2]\color{defC}},
+            emph={[3]Int, Integer, Double, Array, String, Unit, Boolean, Set, List, A, Node, Tree},
+            emphstyle={[3]\color{NordBrightBlue}},
+            emph={[4]next, toString},
+            emphstyle={[4]\color{NordMagenta}},
+            escapeinside={(*}{*)},
+        }
+
+        \lstdefinelanguage{algo}{
+            morekeywords={Input, Output, for, input, output, return, 
+                          datatype, function, to, if, else, foreach, while, begin,
+                          end, downto},
+            sensitive=false,
+            morecomment=[l]{//},
+            morecomment=[s]{/*}{*/},
+            morestring=[b]",
+        }
+
+        \lstdefinestyle{myalgo}{
+            language=algo,
+            style=numbers,
+            style=colors,
+            style=fonts,
+            mathescape=true,
+            commentstyle=\color{fgC!60!pageC}\ttfamily,
+            keywordstyle=\color{impC},
+            basewidth={0.6em,0.4em},
+            emph={[2]var, val, true, false, null},
+            emphstyle={[2]\color{defC}},
+        }
+
+        \usepackage{caption}
+        \newcounter{nalg}[section] % defines algorithm counter for chapter-level
+        \renewcommand{\thenalg}{\thesection.\arabic{nalg}} %defines appearance of the algorithm counter
+        \DeclareCaptionLabelFormat{algocaption}{Algorithm \thenalg} % defines a new caption label as Algorithm x.y
+
+        \lstnewenvironment{algorithm}[1][] %defines the algorithm listing environment
+        {   
+            \refstepcounter{nalg} %increments algorithm number
+            \captionsetup{labelformat=algocaption,labelsep=colon} %defines the caption setup for: it ises label format as the declared caption label above and makes label and caption text to be separated by a ':'
+            \lstset{ %this is the stype
+                mathescape=true,
+                texcl=true,
+                frame=tB,
+                numbers=left, 
+                numberstyle=\tiny,
+                basicstyle=\scriptsize, 
+                keywordstyle=\color{black}\bfseries\em,
+                numbers=left,
+                xleftmargin=.04\textwidth,
+                #1 % this is to add specific settings to an usage of this environment (for instnce, the caption and referable label)
+            }
+        }
+        {}
+
         \lstdefinestyle{myhaskell}{
             language=Haskell,
             style=numbers,
@@ -623,7 +740,6 @@
             style=colors,
             basewidth={0.6em,0.4em},
             morekeywords={fold, unfold, scan},
-            keywordstyle=\color{thmC},
             % emph={[2]xs, ys, zs},
             % emphstyle={[2]\color{}},
             emph={[3]f, g, h, c, s},
@@ -774,11 +890,11 @@
             \end{game}
         }
 
-        \newcommand{\algorithm}[3]{
-            \begin{algo}[\href{#1}{#2}]
-                #3
-            \end{algo}
-        }
+        % \newcommand{\algorithm}[3]{
+        %     \begin{algo}[\href{#1}{#2}]
+        %         #3
+        %     \end{algo}
+        % }
 
         \newcommand{\dstruct}[3]{
             \begin{data_structure}[\href{#1}{#2}]
