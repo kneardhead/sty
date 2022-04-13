@@ -220,9 +220,17 @@
         \ifahsanindex
             \newenvironment{theorem}[1][]{
                 \ifthenelse{\isempty{#1}}{% 
-                    \begin{theoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+                    \ifahsan@article
+                        \begin{theoremBase}\index[thm]{\Sectionname!Unnamed}
+                    \else
+                        \begin{theoremBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+                    \fi
                 }{% 
-                    \begin{theoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+                    \ifahsan@article
+                        \begin{theoremBase}[#1]\index[thm]{\Sectionname!#1}
+                    \else
+                        \begin{theoremBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+                    \fi
                 }%
             }{%
                 \end{theoremBase}
@@ -231,9 +239,17 @@
 
             \newenvironment{lemma}[1][]{
                 \ifthenelse{\isempty{#1}}{% 
-                    \begin{lemmaBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+                    \ifahsan@article
+                        \begin{lemmaBase}\index[thm]{\Sectionname!Unnamed}
+                    \else
+                        \begin{lemmaBase}\index[thm]{\Chaptername!\Sectionname!Unnamed}
+                    \fi
                 }{% 
-                    \begin{lemmaBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+                    \ifahsan@article
+                        \begin{lemmaBase}[#1]\index[thm]{\Sectionname!#1}
+                    \else
+                        \begin{lemmaBase}[#1]\index[thm]{\Chaptername!\Sectionname!#1}
+                    \fi
                 }%
             }{%
                 \end{lemmaBase}
@@ -241,11 +257,21 @@
 
             \newenvironment{theorembox}[1][]{
                 \ifthenelse{\isempty{#1}}{% 
-                    \begin{BoxedTheoremBase}
-                        \index[thm]{\Chaptername!\Sectionname!Unnamed}
+                    \ifahsan@article
+                        \begin{BoxedTheoremBase}
+                            \index[thm]{\Sectionname!Unnamed}
+                    \else
+                        \begin{BoxedTheoremBase}
+                            \index[thm]{\Chaptername!\Sectionname!Unnamed}
+                    \fi
                 }{% 
-                    \begin{BoxedTheoremBase}[#1]
-                        \index[thm]{\Chaptername!\Sectionname!#1}
+                    \ifahsan@article
+                        \begin{BoxedTheoremBase}
+                            \index[thm]{\Sectionname!#1}
+                    \else
+                        \begin{BoxedTheoremBase}
+                            \index[thm]{\Chaptername!\Sectionname!#1}
+                    \fi
                 }%
             }{%
                 \end{BoxedTheoremBase}
@@ -368,13 +394,21 @@
 
         \ifahsanindex
             \newenvironment{definition}[1][]{
-                \begin{definitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                \ifahsan@article
+                    \begin{definitionBase}[#1]\index[def]{\Sectionname!#1}
+                \else
+                    \begin{definitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                \fi
                     }{
                 \end{definitionBase}
             }
 
             \newenvironment{impdefinition}[1][]{
-                \begin{impdefinitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                \ifahsan@article
+                    \begin{impdefinitionBase}[#1]\index[def]{\Sectionname!#1}
+                \else
+                    \begin{impdefinitionBase}[#1]\index[def]{\Chaptername!\Sectionname!#1}
+                \fi
                     }{
                 \end{impdefinitionBase}
             }
@@ -687,10 +721,10 @@
         }
 
         \lstdefinelanguage{algo}{
-            morekeywords={Input, Output, for, input, output, return, 
+            sensitive=false,
+            morekeywords={for, return, 
                           datatype, function, to, if, else, foreach, while, begin,
                           end, downto},
-            sensitive=false,
             morecomment=[l]{//},
             morecomment=[s]{/*}{*/},
             morestring=[b]",
@@ -705,8 +739,10 @@
             commentstyle=\color{fgC!60!pageC}\ttfamily,
             keywordstyle=\color{impC},
             basewidth={0.6em,0.4em},
-            emph={[2]var, val, true, false, null},
-            emphstyle={[2]\color{defC}},
+            emph={[2]Input, Output, Task, Subproblems, Recursion},
+            emphstyle={[2]\sffamily\bfseries\color{defC}},
+            emph={[3]Stack, Queue, Bag, PriorityQueue},
+            emphstyle={[3]\color{NordBrightBlue}},
         }
 
         \usepackage{caption}
