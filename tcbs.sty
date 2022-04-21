@@ -2,6 +2,7 @@
 \ProvidesPackage{tcbs}
 
 % Todo Article class spacing :/ 
+% Todo make a tcblisting environment of algorithm
 
 \newif\ifAhsanthm\Ahsanthmtrue
 \newif\ifAhsansecthm\Ahsansecthmfalse
@@ -104,7 +105,7 @@
     headpunct={. },
     spaceabove=10pt,
     spacebelow=10pt,
-    qed=\qedsymbol,
+    % qed=\qedsymbol,
     % bodyfont=\color{solC!80!pageC},
     ]{solutionstyle}
     
@@ -266,10 +267,10 @@
                     \fi
                 }{% 
                     \ifahsan@article
-                        \begin{BoxedTheoremBase}
+                        \begin{BoxedTheoremBase}[#1]
                             \index[thm]{\Sectionname!#1}
                     \else
-                        \begin{BoxedTheoremBase}
+                        \begin{BoxedTheoremBase}[#1]
                             \index[thm]{\Chaptername!\Sectionname!#1}
                     \fi
                 }%
@@ -628,11 +629,11 @@
             literate=*
                 {(}{{\textcolor{fgC!40!pageC}{(}}}{1}
                 {)}{{\textcolor{fgC!40!pageC}{)}}}{1}
-                {\{}{{\textcolor{thmC}{\{}}}{1}
-                {\}}{{\textcolor{thmC}{\}}}}{1}
-                {[}{{\textcolor{thmC}{[}}}{1}
+                {[}{{\textcolor{fgC!40!pageC}{[}}}{1}
+                {]}{{\textcolor{fgC!40!pageC}{]}}}{1}
                 {;}{{\textcolor{fgC!60!pageC}{;}}}{1}
-                {]}{{\textcolor{thmC}{]}}}{1},
+                {\{}{{\textcolor{thmC}{\{}}}{1}
+                {\}}{{\textcolor{thmC}{\}}}}{1},
         }
 
         % adds coloring of ) to lstlisting
@@ -664,7 +665,7 @@
         \def\id@stylet#1#2\relax{%
             \ifcat#1\relax\else
                 \ifnum`#1=\uccode`#1%
-                    \color{NordBrightBlue}
+                    \color{defC}
                 \fi
             \fi
         }
@@ -722,7 +723,7 @@
 
         \lstdefinelanguage{algo}{
             sensitive=false,
-            morekeywords={for, return, 
+            morekeywords={for, return, true, false,
                           datatype, function, to, if, else, foreach, while, begin,
                           end, downto},
             morecomment=[l]{//},
@@ -739,10 +740,10 @@
             commentstyle=\color{fgC!60!pageC}\ttfamily,
             keywordstyle=\color{impC},
             basewidth={0.6em,0.4em},
-            emph={[2]Input, Output, Task, Subproblems, Recursion},
+            emph={[2]Input, Output, Task, Subproblems, Recursion, Runtime},
             emphstyle={[2]\sffamily\bfseries\color{defC}},
-            emph={[3]Stack, Queue, Bag, PriorityQueue},
-            emphstyle={[3]\color{NordBrightBlue}},
+            emph={[3]Stack, Queue, Bag, PriorityQueue, UnionFind, uf},
+            emphstyle={[3]\color{NordViolet}},
         }
 
         \usepackage{caption}
@@ -753,18 +754,24 @@
         \lstnewenvironment{algorithm}[1][] %defines the algorithm listing environment
         {   
             \refstepcounter{nalg} %increments algorithm number
-            \captionsetup{labelformat=algocaption,labelsep=colon} %defines the caption setup for: it ises label format as the declared caption label above and makes label and caption text to be separated by a ':'
+            % defines the caption setup for: it ises label format as the 
+            % declared caption label above and makes label and caption text to be separated by a ':'
+            \captionsetup{labelformat=algocaption,labelsep=colon} 
             \lstset{ %this is the stype
+                language=algo,
+                style=numbers,
+                style=colors,
+                style=fonts,
                 mathescape=true,
-                texcl=true,
-                frame=tB,
-                numbers=left, 
-                numberstyle=\tiny,
-                basicstyle=\scriptsize, 
-                keywordstyle=\color{black}\bfseries\em,
-                numbers=left,
-                xleftmargin=.04\textwidth,
-                #1 % this is to add specific settings to an usage of this environment (for instnce, the caption and referable label)
+                commentstyle=\color{fgC!60!pageC}\ttfamily,
+                keywordstyle=\color{impC},
+                basewidth={0.6em,0.4em},
+                emph={[2]Input, Output, Task, Subproblems, Recursion, Runtime},
+                emphstyle={[2]\sffamily\bfseries\color{defC}},
+                emph={[3]Stack, Queue, Bag, PriorityQueue, UnionFind, uf},
+                emphstyle={[3]\color{NordViolet}},
+                caption=\textbf{#1} % this is to add specific settings to an usage of 
+                           % this environment (for instnce, the caption and referable label)
             }
         }
         {}

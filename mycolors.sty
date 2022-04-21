@@ -23,6 +23,7 @@
 \definecolor{NordYellow}      {HTML} {EBCB8B} % nord13
 \definecolor{NordGreen}       {HTML} {A3BE8C} % nord14
 \definecolor{NordMagenta}     {HTML} {B48EAD} % nord15
+\definecolor{NordViolet}      {HTML} {786FA0}
 
 \definecolor{BestBlack}       {HTML} {17171c}
 \definecolor{GunaBlack}       {HTML} {161c23}
@@ -67,11 +68,14 @@
 
 % Greens
 \definecolor{RealGreen}    {HTML} {59981a}
+\definecolor{RealGreenBG}  {HTML} {eaf5da}
 \definecolor{RealGreenLite}{HTML} {4d9109}
 \definecolor{Yellow Green} {HTML} {ecf87f}
 \definecolor{Lime Green}   {HTML} {81b622}
 \definecolor{Olive Green}  {HTML} {3d550c}
 \definecolor{Forest Green} {HTML} {1a4314}
+\definecolor{Forest Green BG} {HTML} {efffe3}
+
 
 \DeclareOption{monocolor}{
     \colorlet{pageC}{white}
@@ -82,9 +86,9 @@
     \colorlet{defC}{Black2}
     \colorlet{solC}{fgC}
 
-    \colorlet{thmBgC}{LightGray!40!white}
+    \colorlet{thmBgC}{LightGray!20!white}
     \colorlet{probBgC}{pageC}
-    \colorlet{defBgC}{LightGray}
+    \colorlet{defBgC}{LightGray!20!white}
 
     \colorlet{urlC}{SlateGray}
     \colorlet{linkC}{SlateGray}
@@ -96,7 +100,7 @@
 
 \DeclareOption{darkBlue}{
     \colorlet{pageC}{BestBlack}
-    \colorlet{fgC}{white}
+    \colorlet{fgC}{NordWhite}
 
     \colorlet{thmC}{BabyBlue}
     \colorlet{probC}{Teal}
@@ -145,9 +149,9 @@
     \colorlet{defC}{RealGreen}
     \colorlet{solC}{fgC}
 
-    \colorlet{thmBgC}{RealGreenLite!10!white}
+    \colorlet{thmBgC}{Forest Green BG}
     \colorlet{probBgC}{pageC}
-    \colorlet{defBgC}{RealGreen!7}
+    \colorlet{defBgC}{RealGreenBG}
 
     \colorlet{urlC}{Lime Green}
     \colorlet{linkC}{Lime Green}
@@ -168,7 +172,7 @@
 
     \colorlet{thmBgC}{RealGreenLite!10!white}
     \colorlet{probBgC}{pageC}
-    \colorlet{defBgC}{RealGreen!7}
+    \colorlet{defBgC}{RealGreen!7!pageC}
 
     \colorlet{urlC}{Lime Green}
     \colorlet{linkC}{Lime Green}
