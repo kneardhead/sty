@@ -666,6 +666,8 @@
             keywordstyle=\color{thmC},
             backgroundcolor=\color{defBgC!50!white},
             % texcsstyle=*\color{thmC},
+            frame=tb,
+            rulecolor=\color{defC},
             literate=*
                 {(}{{\textcolor{fgC!40!pageC}{(}}}{1}
                 {)}{{\textcolor{fgC!40!pageC}{)}}}{1}
@@ -708,7 +710,26 @@
             \fi
         }
 
+        \newcommand*\singleUpperCase{%
+                \expandafter\id@singleUpperCase\the\lst@token\relax
+        }
+        \def\id@singleUpperCase#1#2\relax{%
+            \ifcat#1\relax
+            \else
+                \ifcat#1\string_%
+                    \ifnum`#1=\uccode`#1%
+                        \color{NordBrightBlue}%
+                    \fi%
+                \fi
+            \fi
+        }
         \makeatother
+
+        \let\Section\section
+        \def\section{\addtocontents{lol}{\protect\addvspace{16pt}}\Section}
+        \let\Subsection\subsection
+        \def\subsection{\addtocontents{lol}{\protect\addvspace{14pt}}\Subsection}
+
 
         \makeatletter
         \AtBeginDocument{%
@@ -719,6 +740,7 @@
           \tableofcontents \egroup}
         }
         \makeatother
+
 
 
         \lstdefinestyle{mytex}{
@@ -755,8 +777,6 @@
             style=numbers,
             style=colors,
             style=fonts,
-            frame=tb,
-            rulecolor=\color{defC},
             keywordstyle=\color{impC},
             basewidth={0.6em,0.4em},
             morekeywords={require},
@@ -794,49 +814,25 @@
             emphstyle={[3]\color{NordViolet}},
         }
 
-        \usepackage{caption}
-        \newcounter{nalg}[section] % defines algorithm counter for chapter-level
-        \renewcommand{\thenalg}{\thesection.\arabic{nalg}} %defines appearance of the algorithm counter
-        \DeclareCaptionLabelFormat{algocaption}{Algorithm \thenalg} % defines a new caption label as Algorithm x.y
-
-        \lstnewenvironment{algorithm}[1][]{   
-            \refstepcounter{nalg}
-            \captionsetup{labelformat=algocaption,labelsep=colon} 
-            \lstset{style=myalgo, caption=\textbf{#1}}
-            % \index[code][#1]
-        }{}
-
-        \DeclareCaptionLabelFormat{scalacaption}{Scala code \thenalg} 
-
-        \lstnewenvironment{scala}[1][]{   
-            \refstepcounter{nalg}
-            \captionsetup{labelformat=scalacaption,labelsep=colon} 
-            \lstset{style=myscala, caption=\textbf{#1}}
-            % \index[code][#1]
-        }{}
-
-        \DeclareCaptionLabelFormat{javacaption}{Java code \thenalg} 
-
-        \lstnewenvironment{java}[1][]{   
-            \refstepcounter{nalg}
-            \captionsetup{labelformat=javacaption,labelsep=colon} 
-            \lstset{style=myjava, caption=\textbf{#1}}
-            % \index[code][#1]
-        }{}
-
         \lstdefinestyle{myhaskell}{
             language=Haskell,
             style=numbers,
             style=fonts,
             style=colors,
+            identifierstyle=\singleUpperCase,
+            mathescape=true,
             basewidth={0.6em,0.4em},
-            morekeywords={fold, unfold, scan},
-            % emph={[2]xs, ys, zs},
-            % emphstyle={[2]\color{}},
-            emph={[3]f, g, h, c, s},
-            emphstyle={[3]\color{probC}},
-            emph={[4]x, y, z},
-            emphstyle={[4]\color{fgC!80}},
+            morekeywords={fold, unfold, scan, Parser, Expr},
+            commentstyle=\color{fgC!60!pageC}\ttfamily,
+            % keywordstyle=\color{NordBrightBlue},
+            morecomment=[s]{-\{}{-\}},
+            morecomment=[l]{--},
+            emph={[3]f, g},
+            emphstyle={[3]\color{NordBrightBlue}},
+            emph={[4]h, t},
+            emphstyle={[4]\color{defC}},
+            emph={[5]p, c, s},
+            emphstyle={[5]\color{thmC}},
         }
 
         \lstdefinestyle{mypy}{
@@ -866,6 +862,42 @@
                 {>}{{\textcolor{SlateGray}{>}}}{1}
                 {/}{{\textcolor{SlateGray!60!LightGray}{/}}}{1},
         }
+
+
+        \usepackage{caption}
+        \newcounter{nalg}[section] % defines algorithm counter for chapter-level
+        \renewcommand{\thenalg}{\thesection.\arabic{nalg}} %defines appearance of the algorithm counter
+        \DeclareCaptionLabelFormat{algocaption}{Algorithm \thenalg} % defines a new caption label as Algorithm x.y
+
+        \lstnewenvironment{algorithm}[1][]{   
+            \refstepcounter{nalg}
+            \captionsetup{labelformat=algocaption,labelsep=colon} 
+            \lstset{style=myalgo, caption=\textbf{#1}}
+        }{}
+
+        \DeclareCaptionLabelFormat{scalacaption}{Scala \thenalg} 
+
+        \lstnewenvironment{scala}[1][]{   
+            \refstepcounter{nalg}
+            \captionsetup{labelformat=scalacaption,labelsep=colon} 
+            \lstset{style=myscala, caption=\textbf{#1}}
+        }{}
+
+        \DeclareCaptionLabelFormat{javacaption}{Java \thenalg} 
+
+        \lstnewenvironment{java}[1][]{   
+            \refstepcounter{nalg}
+            \captionsetup{labelformat=javacaption,labelsep=colon} 
+            \lstset{style=myjava, caption=\textbf{#1}}
+        }{}
+
+        \DeclareCaptionLabelFormat{haskellcaption}{Haskell \thenalg} 
+
+        \lstnewenvironment{haskell}[1][]{   
+            \refstepcounter{nalg}
+            \captionsetup{labelformat=haskellcaption,labelsep=colon} 
+            \lstset{style=myhaskell, caption=\textbf{#1}}
+        }{}
 
 
 
