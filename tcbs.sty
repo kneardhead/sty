@@ -104,8 +104,8 @@
     \declaretheoremstyle[
     headfont=\bfseries\color{defC},
     bodyfont=\mdseries,
-    spaceabove=1.3\envskip,
-    spacebelow=\envskip,
+    spaceabove=1.2\envskip,
+    spacebelow=.9\envskip,
     headpunct={--- },
     ]{definitionstyle}
 
@@ -156,7 +156,7 @@
     \declaretheoremstyle[
     headfont=\bfseries\mdseries\color{defC},
     bodyfont=\mdseries,
-    spaceabove=1.3\envskip,
+    spaceabove=1.2\envskip,
     spacebelow=\envskip,
     headpunct={--- },
     ]{definitionstyle}
@@ -168,14 +168,13 @@
     \theoremstyle{plain}
 
     \ifAhsanfancythm
-
         \ifAhsansecthm
             \declaretheorem[style=thmstyle,name=Theorem,numberwithin=section]{theoremBase}
         \else
             \declaretheorem[style=thmstyle,name=Theorem]{theoremBase}
         \fi
         \declaretheorem[style=thmboxstyle,name=Theorem,sibling=theoremBase]{BoxedTheoremBase}
-        \declaretheorem[style=impthmboxstyle,name=Theorem,sibling=theoremBase]{ImpBoxedTheoremBase}
+        \declaretheorem[style=thmboxstyle,name=Theorem,sibling=theoremBase]{ImpBoxedTheoremBase}
 
         \declaretheorem[style=emptythmstyle,name=,numbered=no]{emptythm}
         \declaretheorem[style=thmstyle,name=Lemma,sibling=theoremBase]{lemmaBase}
@@ -187,51 +186,38 @@
         \declaretheorem[style=thmstyle,name=Proposition,numbered=no]{proposition*}
         \declaretheorem[style=thmstyle,name=Corollary,numbered=no]{corollary*}
 
-        \tcolorboxenvironment{theoremBase}{
-            blanker, breakable,colback=thmBgC, colframe=thmBgC, coltext=fgC,
-            top=.2\envskip, bottom=.2\envskip, left=.8em,
-            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.7em}}
+        \tcbset{
+            theoremColors/.style={
+                blanker, breakable, colback=thmBgC, colframe=thmBgC, coltext=fgC,
+            },
+            theoremFancyColors/.style={
+                tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
+            },
+            theoremOuterSpacing/.style={
+                before skip=#1\envskip, after skip=#1\envskip, 
+                borderline west={.15em}{0pt}{thmC},
+            },
+            theoremInnerSpacing/.style={
+                top=.2\envskip, bottom=.2\envskip, left=.8em,
+                before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
+                \vspace{-.7em}}
+            },
         }
 
-        \tcolorboxenvironment{corollary}{
-            blanker, breakable, coltext=fgC,
-            left=1em,before skip=12pt,after skip=12pt,borderline west={.15em}{0pt}{thmC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.7em}}
-        }
+        \tcolorboxenvironment{theoremBase}{ theoremColors, theoremOuterSpacing=1.2,
+        theoremInnerSpacing }
+        \tcolorboxenvironment{corollary}  { theoremColors, theoremOuterSpacing=1,
+        theoremInnerSpacing }
+        \tcolorboxenvironment{lemmaBase}  { theoremColors, theoremOuterSpacing=1.1,
+        theoremInnerSpacing }
 
-        \tcolorboxenvironment{BoxedTheoremBase}{
-            tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
-            top=.3\envskip, bottom=.3\envskip, left=.6em,
-            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.7em}}
-        }
-
-        \tcolorboxenvironment{ImpBoxedTheoremBase}{
-            tile, breakable, sharp corners, colback=thmBgC,
-            top=.3\envskip, bottom=.3\envskip, left=.6em,
-            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{impC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.7em}}
-        }
-        \tcolorboxenvironment{emptythm}{
-            tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
-            top=.3\envskip, bottom=.3\envskip, left=.8em,
-            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.7em}}
-        }
-
-        \tcolorboxenvironment{lemmaBase}{
-            blanker, breakable, coltext=fgC,
-            top=.2\envskip, bottom=.2\envskip, left=.8em,
-            before skip=1.2\envskip,after skip=1.2\envskip,borderline west={.15em}{0pt}{thmC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.7em}}
-        }
+        \tcolorboxenvironment{BoxedTheoremBase}   { theoremFancyColors,
+        theoremOuterSpacing=1.3, theoremInnerSpacing }
+        \tcolorboxenvironment{ImpBoxedTheoremBase}{ theoremFancyColors,
+            theoremOuterSpacing=1.3, theoremInnerSpacing,
+        borderline={.05em}{0pt}{thmC}, top=.5\envskip }
+        \tcolorboxenvironment{emptythm}           { theoremFancyColors,
+        theoremOuterSpacing,     theoremInnerSpacing }
 
         % todo: refine this section to add more flexibility with the lable
         % see https://tex.stackexchange.com/questions/476070/environment-with-two-optional-arguments for inspiration
@@ -351,14 +337,20 @@
         \fi
 
     \else
+        \theoremstyle{theorem}
+
         \ifAhsansecthm
             \newtheorem{theorem}{Theorem}[section]
         \else
             \newtheorem{theorem}{Theorem}
         \fi
+
+
         \newtheorem{lemma}[theorem]{Lemma}
         \newtheorem{proposition}[theorem]{Proposition}
         \newtheorem{corollary}[theorem]{Corollary}
+        \newtheorem{example}{Example}[chapter]
+        \newtheorem*{emptythm}{Question}
 
         \newtheorem*{theorem*}{Theorem}
         \newtheorem*{lemma*}{Lemma}
@@ -380,53 +372,43 @@
             \declaretheorem[style=problemstyle, name=Example]{exampleBase}
         \fi
 
-        \tcolorboxenvironment{ProblemBase}{
-            breakable, colback=thmBgC, colframe=probC, coltext=fgC,
-            left=1em, before skip=12pt, after skip=30pt, 
-            arc=0pt, boxrule=1pt,
+        \tcbset{
+            probColors/.style={
+                breakable, colback=thmBgC, colframe=probC, coltext=fgC,
+            },
+            defColors/.style={
+                tile, breakable, coltext=fgC, colback=defBgC, colframe=defBgC,
+            },
+            probSpacing/.style={
+                left=1em, before skip=\envskip, after skip=\envskip, 
+                arc=0pt, boxrule=1pt,
+            },
+            defSpacing/.style={
+                top=.1em, left=.8em, 
+                before skip=1.3\envskip, after skip=\envskip, borderline west={.15em}{0pt}{defC},
+                before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt \vspace{-.5em}}
+            },
         }
 
+        \tcolorboxenvironment{ProblemBase}{ probColors, probSpacing, }
         \ificmcbtheme
-            \tcolorboxenvironment{problemBase}{
-                breakable, colback=thmBgC, colframe=probC, coltext=fgC,
-                left=1em, before skip=12pt, after skip=30pt, 
-                arc=0pt, boxrule=1pt,
-            }
+            \tcolorboxenvironment{problemBase}{ probColors, probSpacing, }
         \fi
         \ifahsanimpprob
-            \tcolorboxenvironment{problemBase}{
-                breakable, colback=thmBgC, colframe=probC, coltext=fgC,
-                left=1em, before skip=12pt, after skip=15pt, 
-                arc=0pt, boxrule=1pt,
-            }
+            \tcolorboxenvironment{problemBase}{ probColors, probSpacing, }
         \fi
         
-        
-        \declaretheorem[style=problemstyle, numberwithin=problemBase,
-        name=Generalization]{generalization}
+        \declaretheorem[style=problemstyle, numberwithin=problemBase, name=Generalization]{generalization}
         \tcolorboxenvironment{exampleBase}{
-            breakable, colback=thmBgC, colframe=probC, coltext=fgC,
-            left=1em, before skip=20pt, after skip=12pt, 
-            arc=0pt, boxrule=1pt,
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.5em}}
+            probColors, probSpacing,
+            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt \vspace{-.5em}}
         }
 
-        \declaretheorem[style=definitionstyle, numbered=no,
-        name=Definition]{definitionBase}
-        \declaretheorem[style=definitionstyle, numbered=no,
-        name=Definition]{impdefinitionBase}
+        \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{definitionBase}
+        \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{impdefinitionBase}
+        \tcolorboxenvironment{impdefinitionBase}{ defColors, defSpacing }
 
-        \tcolorboxenvironment{impdefinitionBase}{
-            tile, breakable, coltext=fgC, colback=defBgC, colframe=defBgC,
-            top=.1em,left=.8em,before skip=1.3\envskip,after skip=\envskip,borderline west={.15em}{0pt}{defC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.5em}}
-        }
-
-
-        \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure]
-            {data_structure}
+        \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure] {data_structure}
         \declaretheorem[style=definitionstyle, numbered=no, name=Algorithm]{algo}
         \declaretheorem[style=definitionstyle, numbered=no, name=Game]{game}
         \declaretheorem[style=definitionstyle, name=Construction]{construction}
@@ -521,6 +503,7 @@
             }
         \fi        
     \else
+        \theoremstyle{definition}
         \newtheorem*{problem*}{Problem}
         \newtheorem*{definition}{Definition}
     \fi
@@ -533,45 +516,26 @@
         \declaretheorem[style=solutionstyle, numbered=no, name=Proof]{prooof}
         
 
+        \tcbset{
+            solnColors/.style={
+                coltext=#1, blanker, breakable, colback=pageC, 
+            },
+            solnSpacing/.style={
+                top=2pt, bottom=2pt, left=.7em, right=.7em,
+                before skip=.7\envskip,after skip=1.5\envskip,borderline west={.1em}{0pt}{solC},
+                before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt \vspace{-.5em}}
+            },
+        }
+
         \ifahsan@article
-        \tcolorboxenvironment{solution}{
-            coltext=solC, blanker, breakable, colback=pageC, 
-            top=2pt, bottom=2pt, left=.7em, right=.7em,
-            before skip=.7\envskip,after skip=1.5\envskip,borderline west={.1em}{0pt}{solC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.5em}}
-        }
+            \tcolorboxenvironment{solution}{ solnColors=solC, solnSpacing }
         \else
-        \tcolorboxenvironment{solution}{
-            coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
-            top=2pt, bottom=2pt, left=.7em, right=.7em,
-            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.5em}}
-        }
+            \tcolorboxenvironment{solution}{ solnColors=solC!90!pageC, solnSpacing }
         \fi
 
-        \newtcolorbox{idea}{
-            coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
-            top=0pt, left=.7em, right=.7em,
-            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
-        }
-
-        \newtcolorbox{emptysoln}[1][]{
-            coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
-            top=2pt, bottom=2pt, left=.7em, right=.7em,
-            before skip=10pt,after skip=20pt,borderline west={.1em}{0pt}{solC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.3em}}, #1
-        }
-
-        \tcolorboxenvironment{prooof}{
-            coltext=solC!90!pageC, blanker, breakable, colback=pageC, 
-            top=2pt, bottom=2pt, left=.7em, right=.7em,
-            before skip=.7\envskip,after skip=1.5\envskip,borderline west={.1em}{0pt}{solC},
-            before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt
-            \vspace{-.5em}}
-        }
+        \newtcolorbox{idea}{ solnColors=solC!90!pageC, solnSpacing, top=0pt, }
+        \newtcolorbox{emptysoln}[1][]{ solnColors=solC!90!pageC, solnSpacing, #1 }
+        \tcolorboxenvironment{prooof}{ solnColors=solC!90!pageC, solnSpacing}
 
         \declaretheorem[style=solnDefStyle, numbered=no, name=Definition]{soldef}
         \declaretheorem[style=solnDefStyle, numbered=no, name=Lemma]{sollem}
@@ -581,7 +545,6 @@
             coltext=solC, blanker, breakable, left=1em,
             before skip=20pt,after skip=20pt,borderline west={.2em}{1pt}{thmC!80},
         }
-
         \tcolorboxenvironment{soldef}{
             coltext=solC, blanker, breakable, left=1em,
             before skip=20pt,after skip=20pt,borderline west={.1em}{0pt}{black!80},
@@ -596,12 +559,13 @@
         \def\quote{\origquote\itshape}
         
     \else
-        \newtheorem*{solution}{SNolution}
+        \theoremstyle{remark}
+        \newtheorem*{solution}{Solution}
+        \newenvironment{prooof}{\paragraph{Proof:}}{\hfill$\square$}
         \newtheorem*{remark}{Remark}
+        \newtheorem*{Remark}{Remark}
         \newtheorem*{note}{Note}
-        \newtheorem{abuse}[theoremBase]{Abuse of Notation}
         \newtheorem*{abuse*}{Abuse of Notation}
-        \newtheorem{example}[problemBase]{Example}
         \newtheorem*{example*}{Example}
     \fi
 
@@ -609,12 +573,12 @@
 
     \theoremstyle{definition}
 
-    \newtheorem{conjecture}[theoremBase]{Conjecture}
-    \newtheorem{fact}[theoremBase]{Fact}
-    \newtheorem{answer}[theoremBase]{Answer}
-    \newtheorem{case}[theoremBase]{Case}
-    \newtheorem{ques}[theoremBase]{Question}
-    \newtheorem{exercise}[theoremBase]{Exercise}
+    \newtheorem{conjecture}{Conjecture}
+    \newtheorem{fact}[conjecture]{Fact}
+    \newtheorem{answer}[conjecture]{Answer}
+    \newtheorem{case}[conjecture]{Case}
+    \newtheorem{ques}[conjecture]{Question}
+    \newtheorem{exercise}[conjecture]{Exercise}
 
     \newtheorem*{conjecture*}{Conjecture}
     \newtheorem*{fact*}{Fact}
@@ -655,15 +619,15 @@
         }
 
         \lstdefinestyle{fonts}{
-            basicstyle=\linespread{1.1}\small\ttfamily,
-            commentstyle=\color{fgC!60!pageC}\ttfamily,
+            basicstyle=\linespread{1}\small\ttfamily,
+            commentstyle=\color{fgC!70!pageC!80!thmC}\ttfamily,
             stringstyle=\footnotesize\color{NordBrightBlue},
             showstringspaces=false,
             % breaklines=true,
         }
 
         \lstdefinestyle{colors}{
-            keywordstyle=\color{thmC},
+            keywordstyle=\color{thmC}\bfseries,
             backgroundcolor=\color{defBgC!50!white},
             % texcsstyle=*\color{thmC},
             frame=tb,
@@ -674,6 +638,7 @@
                 {[}{{\textcolor{fgC!40!pageC}{[}}}{1}
                 {]}{{\textcolor{fgC!40!pageC}{]}}}{1}
                 {;}{{\textcolor{fgC!60!pageC}{;}}}{1}
+                {=>}{{\textcolor{fgC!60!pageC}{=>}}}{2}
                 {\{}{{\textcolor{thmC}{\{}}}{1}
                 {\}}{{\textcolor{thmC}{\}}}}{1},
         }
@@ -725,23 +690,6 @@
         }
         \makeatother
 
-        \let\Section\section
-        \def\section{\addtocontents{lol}{\protect\addvspace{16pt}}\Section}
-        \let\Subsection\subsection
-        \def\subsection{\addtocontents{lol}{\protect\addvspace{14pt}}\Subsection}
-
-
-        \makeatletter
-        \AtBeginDocument{%
-        \renewcommand\lstlistoflistings{\bgroup
-          \let\contentsname\lstlistlistingname
-          \def\l@lstlisting##1##2{\@dottedtocline{1}{0em}{2em}{\small ##1}{\small\textnormal{##2}}}
-          \let\lst@temp\@starttoc \def\@starttoc##1{\lst@temp{lol}}%
-          \tableofcontents \egroup}
-        }
-        \makeatother
-
-
 
         \lstdefinestyle{mytex}{
             language=[LaTeX]Tex,
@@ -778,6 +726,7 @@
             style=colors,
             style=fonts,
             keywordstyle=\color{impC},
+            identifierstyle=\singleUpperCase,
             basewidth={0.6em,0.4em},
             morekeywords={require},
             emph={[2]var, val, true, false, null},
@@ -809,7 +758,7 @@
             keywordstyle=\color{impC},
             basewidth={0.6em,0.4em},
             emph={[2]Input, Output, Task, Subproblems, Recursion, Runtime},
-            emphstyle={[2]\sffamily\bfseries\color{defC}},
+            emphstyle={[2]\sffamily\small\color{defC}},
             emph={[3]Stack, Queue, Bag, PriorityQueue, UnionFind, uf},
             emphstyle={[3]\color{NordViolet}},
         }
@@ -825,7 +774,7 @@
             morekeywords={fold, unfold, scan, Parser, Expr},
             commentstyle=\color{fgC!60!pageC}\ttfamily,
             % keywordstyle=\color{NordBrightBlue},
-            morecomment=[s]{-\{}{-\}},
+            moredelim=[s][\color{fgC!60!pageC}\Share\bfseries\small]{-\{}{-\}},
             morecomment=[l]{--},
             emph={[3]f, g},
             emphstyle={[3]\color{NordBrightBlue}},
@@ -867,60 +816,47 @@
         \usepackage{caption}
         \newcounter{nalg}[section] % defines algorithm counter for chapter-level
         \renewcommand{\thenalg}{\thesection.\arabic{nalg}} %defines appearance of the algorithm counter
-        \DeclareCaptionLabelFormat{algocaption}{Algorithm \thenalg} % defines a new caption label as Algorithm x.y
 
+        \DeclareCaptionLabelFormat{algocaption}{Algorithm \thenalg} % defines a new caption label as Algorithm x.y
         \lstnewenvironment{algorithm}[1][]{   
             \refstepcounter{nalg}
             \captionsetup{labelformat=algocaption,labelsep=colon} 
-            \lstset{style=myalgo, caption=\textbf{#1}}
+            \lstset{style=myalgo, caption={[\texttt{#1}]\textbf{#1}}}
         }{}
 
         \DeclareCaptionLabelFormat{scalacaption}{Scala \thenalg} 
-
         \lstnewenvironment{scala}[1][]{   
             \refstepcounter{nalg}
             \captionsetup{labelformat=scalacaption,labelsep=colon} 
-            \lstset{style=myscala, caption=\textbf{#1}}
+            \lstset{style=myscala, caption={[\texttt{#1}]\textbf{#1}}}
         }{}
 
         \DeclareCaptionLabelFormat{javacaption}{Java \thenalg} 
-
         \lstnewenvironment{java}[1][]{   
             \refstepcounter{nalg}
             \captionsetup{labelformat=javacaption,labelsep=colon} 
-            \lstset{style=myjava, caption=\textbf{#1}}
+            \lstset{style=myjava, caption={[\texttt{#1}]\textbf{#1}}}
         }{}
 
         \DeclareCaptionLabelFormat{haskellcaption}{Haskell \thenalg} 
-
         \lstnewenvironment{haskell}[1][]{   
             \refstepcounter{nalg}
             \captionsetup{labelformat=haskellcaption,labelsep=colon} 
-            \lstset{style=myhaskell, caption=\textbf{#1}}
+            \lstset{style=myhaskell, caption={[\texttt{#1}]\textbf{#1}}}
         }{}
 
+        \newcommand\Section[1]{\addtocontents{lol}{\protect\addvspace{2pt}}\addcontentsline{lol}{section}{{\textbf{#1}}}\section{#1}}
+        \newcommand\subSection[1]{\addtocontents{lol}{\protect\addvspace{2pt}}\addcontentsline{lol}{subsection}{\textbf{#1}}\subsection{#1}}
 
-
-        % included code style-------------------------
-        %
-        %\lstset{frame=tb,
-        %	language=Java,
-        %	aboveskip=3mm,
-        %	belowskip=3mm,
-        %	showstringspaces=false,
-        %	columns=flexible,
-        %	basicstyle={\small\ttfamily},
-        %	numbers=none,
-        %	numberstyle=\tiny\color{gray},
-        %	keywordstyle=\color{blue},
-        %	commentstyle=\color{dGreen},
-        %	stringstyle=\color{mauve},
-        %	breaklines=true,
-        %	breakatwhitespace=true,
-        %	tabsize=3
-        %}
-        %
-        %%=============================================
+        \makeatletter
+        \AtBeginDocument{%
+        \renewcommand\lstlistoflistings{\bgroup
+          \let\contentsname\lstlistlistingname
+          \def\l@lstlisting##1##2{\@dottedtocline{1}{0em}{2em}{\small \texttt{##1}}{\small##2}\vspace{-.7em}}
+          \let\lst@temp\@starttoc \def\@starttoc##1{\lst@temp{lol}}%
+          \tableofcontents \egroup}
+        }
+        \makeatother
     \fi
 
     \ifAhsanfancythm
@@ -1084,34 +1020,36 @@
             \end{verbatim}
         }
 
-        \newcommand{\fig}[3]{
-            \begin{figure}[H] 
-                \centering 
-                \includegraphics[width=#1\textwidth]{#2.png} 
-                \caption{#3} 
-            \end{figure}
-        }
-
-        \newcommand{\figdf}[3]{
-            \begin{figure}[H] 
-                \centering 
-                \includegraphics[width=#1\textwidth]{#2.pdf} 
-                \caption{#3} 
-            \end{figure}
-        }
-
         % Invisible Section
         \newcommand\invisiblesection[1]{ \refstepcounter{chapter} \sectionmark{#1} }
     \fi
+
+    \newcommand{\fig}[3]{
+        \begin{figure}[H] 
+            \centering 
+            \includegraphics[width=#1\textwidth]{#2.png} 
+            \caption{#3} 
+        \end{figure}
+    }
+
+    \newcommand{\figdf}[3]{
+        \begin{figure}[h] 
+            \centering 
+            \includegraphics[width=#1\textwidth]{#2.pdf} 
+            \caption{#3} 
+        \end{figure}
+    }
 \fi
 
 
 \ifahsansecthm
 \else
     \usepackage{xpatch}
-    \xpretocmd{\section}{\setcounter{problemBase}{0}}{}{}
-    \xpretocmd{\section}{\setcounter{theoremBase}{0}}{}{}
-    \xpretocmd{\section}{\setcounter{lemmaBase}{0}}{}{}
-    \xpretocmd{\section}{\setcounter{exercise}{0}}{}{}
+    \ifahsanfancythm
+        \xpretocmd{\section}{\setcounter{problemBase}{0}}{}{}
+        \xpretocmd{\section}{\setcounter{theoremBase}{0}}{}{}
+        \xpretocmd{\section}{\setcounter{lemmaBase}{0}}{}{}
+        \xpretocmd{\section}{\setcounter{exercise}{0}}{}{}
+    \fi
 \fi
 

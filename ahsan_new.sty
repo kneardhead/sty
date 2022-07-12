@@ -18,6 +18,8 @@
 % \usepgfplotslibrary{external} 
 % % \tikzexternalize 
 
+% TODO add variables to control fonts inside environments centrally
+% TODO add more color variables for the lstlistings
 
 
 \newif \ifahsan@memoir      
@@ -40,6 +42,7 @@
 
 \newif \ifahsanfont        \ahsanfonttrue
 \newif \ifahsansans        \ahsansanstrue
+\newif \ifahsanshare       \ahsansharefalse
 \newif \ifahsanmathsans    \ahsanmathsansfalse
 
 \newif \ifahsanfigs        \ahsanfigstrue
@@ -63,6 +66,7 @@
 \DeclareOption {nofont}     {\ahsanfontfalse}
 \DeclareOption {sans}       {\ahsansanstrue}
 \DeclareOption {serif}      {\ahsansansfalse}
+\DeclareOption {share}      {\ahsansharetrue}
 \DeclareOption {mathsans}   {\ahsanmathsanstrue}
 \DeclareOption {acc}        {\ahsanaccessoriestrue}
 \DeclareOption {impprob}    {\ahsanimpprobtrue}
@@ -216,7 +220,7 @@
     \setotherlanguage{english}
     \RequirePackage[Latin, Bengali, Devanagari]{ucharclasses}
 \else   
-    \usepackage{enumitem}
+    \usepackage[inline]{enumitem}
     \setlist[enumerate]{topsep=0pt, itemsep=0pt}
     \setlist[itemize]{topsep=0pt, itemsep=0pt}
 \fi
@@ -282,7 +286,7 @@
         \newcommand{\Share}{\rmfamily}
         \newcommand{\Titillium}{\sffamily}
     \else
-        \setmonofont{Share Tech Mono} [Scale=MatchUppercase]
+        \setmonofont{Share Tech Mono} [Scale=MatchUppercase, Scale=.9]
         \newfontfamily\Share[Ligatures=TeX, Scale=MatchUppercase, WordSpace=.9]{Share}
         \newfontfamily\Titillium[Ligatures=TeX, Scale=.9]{Titillium Web}
 
@@ -293,6 +297,12 @@
         \else
             \fontfamily{cmr}
         \fi
+
+        \ifahsanshare
+            \setsansfont{Share}[Scale=MatchUppercase]
+            % \newfontfamily\Titillium[Ligatures=TeX, Scale=MatchUppercase, WordSpacce=.9]{Share}
+        \fi
+
     \fi    
 \else
     \usepackage[T1]{fontenc}
@@ -430,6 +440,7 @@
         linkcolor=linkC,
         filecolor=fileC,      
         urlcolor=urlC,
+        citecolor = defC,
     }
 \fi
 
