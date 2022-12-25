@@ -58,7 +58,9 @@
 \newif \ifahsanthm         \ahsanthmtrue
 \newif \ifahsansecthm      \ahsansecthmfalse
 \newif \ifahsanfancythm    \ahsanfancythmtrue
+\newif \ifahsanfancysoln   \ahsanfancysolnfalse
 \newif \ifahsanimpprob     \ahsanimpprobfalse
+\newif \ifahsansoul        \ahsansoulfalse
 
 
 \DeclareOption {noauthor}   {\ahsanauthorfalse}
@@ -76,7 +78,8 @@
 \DeclareOption {secthm}     {\ahsansecthmtrue}
 \DeclareOption {nosecthm}   {\ahsansecthmfalse}
 \DeclareOption {fancythm}   {\ahsanfancythmtrue}
-\DeclareOption {nofancythm} {\ahsanfancythmfalse}
+\DeclareOption {nofancysoln}{\ahsanfancysolnfalse}
+\DeclareOption {nofancythm} {\ahsanfancythmfalse \ahsanfancysolnfalse}
 
 \DeclareOption {fancy}      {\ahsanfancyhdrtrue}
 \DeclareOption {nofancy}    {\ahsanfancyhdrfalse}
@@ -86,6 +89,7 @@
 \DeclareOption {nohref}     {\ahsanhreffalse}
 \DeclareOption {index}      {\ahsanindextrue}
 \DeclareOption {noindex}    {\ahsanindexfalse}
+\DeclareOption {soul}       {\ahsansoultrue}
 
 
 \newif \ifnotheme         \nothemetrue
@@ -131,7 +135,8 @@
 \fi
 
 
-\usepackage{amsmath, amssymb, nicefrac}
+\usepackage{amsmath} 
+\usepackage{amssymb, nicefrac}
 \usepackage{macros}
 
 \setlength\parindent{0pt}
@@ -147,7 +152,10 @@
 \ifnotheme         \usepackage[plain]{mycolors}      \fi
 
 
+\ifahsan@beamer
+\else
 \usepackage{titlesec}
+\fi
 
 
 
@@ -170,24 +178,24 @@
 
 
         \titleformat{\section}
-        {\color{thmC}\normalfont\Large\bfseries}
+        {\color{titleC}\normalfont\Large\bfseries}
         {\S \thesection}
         {1em}
         {}
 
         \titleformat{\subsection}
-        {\color{thmC!90!pageC}\normalfont\large\bfseries}
+        {\color{titleC}\normalfont\large\bfseries}
         {\thesubsection}
         {1em}
         {}
 
-        \newcommand{\sectionbreak}{\clearpage}
+        % \newcommand{\sectionbreak}{\clearpage}
 
         \titlespacing*{\chapter}{0pt}{2em plus 1em minus .2em}{10em plus 2em}
         \titlespacing*{\section}{0pt}{2em plus 1em minus .2em}{2em plus .2em}
-        \titlespacing*{\subsection}{0pt}{4em plus .5em minus .2em}{1em plus .2em}
+        \titlespacing*{\subsection}{0pt}{1em plus .5em minus .2em}{1em plus .2em}
 
-        \setlrmarginsandblock{6em}{6em}{*}
+        \setlrmarginsandblock{8em}{6em}{*}
         \setulmarginsandblock{8em}{8em}{*}
         \checkandfixthelayout
     \fi
@@ -220,9 +228,12 @@
     \setotherlanguage{english}
     \RequirePackage[Latin, Bengali, Devanagari]{ucharclasses}
 \else   
-    \usepackage[inline]{enumitem}
-    \setlist[enumerate]{topsep=0pt, itemsep=0pt}
-    \setlist[itemize]{topsep=0pt, itemsep=0pt}
+    \ifahsan@beamer
+    \else
+        \usepackage[inline]{enumitem}
+        \setlist[enumerate]{topsep=0pt, itemsep=0pt}
+        \setlist[itemize]{topsep=0pt, itemsep=0pt}
+    \fi
 \fi
 
 
@@ -306,12 +317,24 @@
     \fi    
 \else
     \usepackage[T1]{fontenc}
-    \usepackage{inconsolata}
-
+    \usepackage[scaled=0.9]{inconsolata}
+    \ifahsansans
+        \renewcommand{\familydefault}{\sfdefault} \fontfamily{cmss}
+    \fi
     \newcommand{\Share}{\rmfamily}
     \newcommand{\Titillium}{\sffamily}
 \fi
 
+
+\ifahsansoul
+    \let\ul\undefined
+    \let\st\undefined
+    \usepackage{soul}
+
+    \setul{0.2ex}{0.1ex}
+    \colorlet{ulC}{fgC!70!white}
+    \setulcolor{ulC}
+\fi
 
 
 
@@ -320,16 +343,21 @@
 \ifahsanfancyhdr
     \usepackage{fancyhdr, setspace}
 
-    \makepagestyle{plain}
-    % \makeevenhead{plain}{\rightmark\leftmark}{}{}
-    \makeoddhead{plain}{
-        \fontsize{10}{12} \selectfont \color{fgC!60!pageC} \leftmark \
-        \bfseries\rightmark
-    }{}{\fontsize{10}{12} \selectfont \thepage}
+    % \makepagestyle{plain}
+    % % \makeevenhead{plain}{\rightmark\leftmark}{}{}
+    % \makeoddhead{plain}
+    % {\fontsize{10}{12} \selectfont \thepage}
+    % {}
+    % {\fontsize{10}{12} \selectfont \leftmark}
 
-    \renewcommand*{\sectionmark}[1]{\markboth{#1}{}}
-    \renewcommand*{\subsectionmark}[1]{\markright{#1}}
-    \pagestyle{plain}
+    % \makeevenhead{plain}
+    % {\fontsize{10}{12} \selectfont \rightmark}
+    % {}
+    % {\fontsize{10}{12} \selectfont \thepage}
+
+    % \renewcommand*{\sectionmark}[1]{\markboth{#1}{}}
+    % \renewcommand*{\subsectionmark}[1]{\markright{#1}}
+    % \pagestyle{plain}
 \fi
 
 
@@ -337,9 +365,17 @@
 \ifahsanthm
     \ifahsanfancythm
         \ifahsansecthm
-            \usepackage[secthm, fancythm]{tcbs} 
+            \ifahsanfancysoln
+                \usepackage[secthm, fancythm]{tcbs}
+            \else
+                \usepackage[secthm, nofancysoln, fancythm]{tcbs}
+            \fi
         \else
-            \usepackage[fancythm]{tcbs}
+            \ifahsanfancysoln
+                \usepackage[fancythm]{tcbs}
+            \else
+                \usepackage[fancythm, nofancysoln]{tcbs}
+            \fi
         \fi
         \else
         \usepackage{tcbs}
@@ -371,7 +407,7 @@
 
 
 \ifahsanaccessories
-    \usepackage{mathtools, float, multicol, subfig, pgf, tikz, pgfplots}
+    \usepackage{float, multicol, subfig, pgf, tikz, pgfplots}
     \pgfplotsset{compat=1.17}
 \fi
 
@@ -390,6 +426,8 @@
             \setcounter{tocdepth}{3}
             \setcounter{secnumdepth}{3}
             \alnumsectionlevels{1}{section, subsection, subsubsection, paragraph}
+            \renewcommand\cftsecafterpnum{\vskip8pt}
+            \renewcommand\cftsubsecafterpnum{\vskip0pt}
         \fi
     \fi
     \alnumsecstyle{aaaa}
@@ -435,6 +473,7 @@
 
 \ifahsanhref
     \usepackage{hyperref}
+    % \def\Hy@colorlink#1{\begingroup\fontshape{it}\selectfont}%
     \hypersetup{
         colorlinks=true,
         linkcolor=linkC,
@@ -448,6 +487,7 @@
 \ifahsan@beamer
     \usepackage[english]{babel}
     \usepackage{metalogo}
+    \usepackage{fontspec}
 
     \setsansfont{Andika New Basic}
     \setmainfont{Yanone Kaffeesatz}
@@ -474,7 +514,7 @@
         \end{frame} 
     }
 
-    \ahsansetupfalse
+    % \ahsansetupfalse
 \fi
 
 \ifahsanindex

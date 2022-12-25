@@ -14,12 +14,14 @@
 
 \setbeamertemplate{caption}{\insertcaption}
 
-\setbeamertemplate{itemize item}{$\ast$}
-\setbeamertemplate{itemize subitem}{$\ast$}
-\setbeamertemplate{itemize subsubitem}{$\ast$}
+\setbeamertemplate{itemize item}{$\blacksquare$}
+\setbeamertemplate{itemize subitem}{$\blacksquare$}
+\setbeamertemplate{itemize subsubitem}{$\blacksquare$}
 \setbeamertemplate{frametitle}{
+    \vspace{.5em}
     {\usebeamercolor[fg]{normal text} \mdseries >> }~\boldmath\insertframetitle%
-    \hfill\ifx\insertframesubtitle\@empty\else{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\fi
+    \hfill\ifx\insertframesubtitle\@empty
+    \else{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}\fi
 }
 \setbeamertemplate{frametitle continuation}[from second][\insertcontinuationtext]
 \setbeamertemplate{headline}
