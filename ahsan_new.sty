@@ -61,6 +61,8 @@
 \newif \ifahsanfancysoln   \ahsanfancysolnfalse
 \newif \ifahsanimpprob     \ahsanimpprobfalse
 \newif \ifahsansoul        \ahsansoulfalse
+\newif \ifahsannumdef      \ahsannumdeffalse
+\newif \ifahsanpagenotes   \ahsanpagenotesfalse
 
 
 \DeclareOption {noauthor}   {\ahsanauthorfalse}
@@ -90,6 +92,9 @@
 \DeclareOption {index}      {\ahsanindextrue}
 \DeclareOption {noindex}    {\ahsanindexfalse}
 \DeclareOption {soul}       {\ahsansoultrue}
+\DeclareOption {numdef}     {\ahsannumdeftrue}
+\DeclareOption {pagenotes}  {\ahsanpagenotestrue}
+
 
 
 \newif \ifnotheme         \nothemetrue
@@ -531,6 +536,13 @@
     \def\subsubsectionmark#1{\def\Subsubsectionname{#1}\Subsubsectionmark{#1}}
 \fi
 
+\ifahsanpagenotes
+    \usepackage{pagenote}
+    \renewcommand*{\notedivision}{\subsection*{\notesname\ to Section~\thesection}}
+    \renewcommand*{\pagenotesubhead}[2]{}
+    \makepagenote
+\fi
+
 \hypersetup{
     colorlinks = true,
     linkcolor  = linkC,
@@ -546,3 +558,8 @@
 }\kern-.40em \hbox{S\kern-.1667em\lower.5ex\hbox{A\hspace{-.5mm}}\kern-.125ex{N}}}
 
 %todo: page number on title pages
+
+
+%%% Footnote specs
+\usepackage[hang,flushmargin]{footmisc}
+\setlength{\footnotesep}{.8\baselineskip}

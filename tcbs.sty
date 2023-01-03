@@ -32,6 +32,9 @@
 
 \ifAhsanthm
     \usepackage{amsthm}
+    \ifahsanindex
+        \usepackage{mfirstuc}
+    \fi
 \fi
 
 
@@ -130,6 +133,7 @@
     headpunct={ \color{thmC}\textbf{---} },
     headfont=\itshape\rmfamily\bfseries\color{thmC},
     spaceabove=15pt,
+    spacebelow=-5pt,
     headpunct={--- },
     bodyfont=\color{solC},
     ]{solnDefStyle}
@@ -398,8 +402,8 @@
 
     \ifAhsanfancythm
         \ifAhsansecthm
-            \declaretheorem[style=problemstyle, numberwithin=section,
-            name=Problem]{problemBase}
+            \declaretheorem[style=problemstyle, numberwithin=section, name=Problem]{problemBase}
+            \declaretheorem[style=problemstyle, sibling=problemBase,  name=Problem]{ProblemBase}
             \declaretheorem[style=problemstyle, numberwithin=section,
             name=Example]{exampleBase}
         \else
@@ -442,18 +446,33 @@
             before skip=1.7\envskip,
         }
 
-        \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{definitionBase}
-        \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{impdefinitionBase}
+        \ifahsannumdef
+            \ifahsansecthm
+                \declaretheorem[style=definitionstyle, numberwithin=section, name=Definition]{definitionBase}
+            \else
+                \declaretheorem[style=definitionstyle, name=Definition]{definitionBase}
+            \fi
+            \declaretheorem[style=definitionstyle, sibling=definitionBase, name=Definition]{impdefinitionBase}
+        \else
+            \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{definitionBase}
+            \declaretheorem[style=definitionstyle, numbered=no, name=Definition]{impdefinitionBase}
+        \fi
         \tcolorboxenvironment{impdefinitionBase}{ defColors, defSpacing }
 
         \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure] {data_structure}
         \declaretheorem[style=definitionstyle, numbered=no, name=Algorithm]{algo}
         \declaretheorem[style=definitionstyle, numbered=no, name=Game]{game}
         \declaretheorem[style=definitionstyle, name=Construction]{construction}
-        % \declaretheorem[style=definitionstyle, sibling=theoremBase, name=Claim]{claim}
+        \declaretheorem[style=definitionstyle, sibling=theoremBase, name=Claim]{claim}
+        \declaretheorem[style=definitionstyle, numbered=no, name=Claim]{claim*}
 
 
         \ifahsanindex
+            \ifahsan@article
+                \newcommand{\indef}[1]{\index[def]{\Sectionname!\capitalisewords{#1}}\textbf{#1}}
+            \else
+                \newcommand{\indef}[1]{\index[def]{\Chaptername!\Sectionname!\capitalisewords{#1}}\textbf{#1}}
+            \fi
             \newenvironment{definition}[1][]{
                 \ifahsan@article
                     \begin{definitionBase}[#1]\index[def]{\Sectionname!#1}
@@ -502,6 +521,7 @@
                     \end{exampleBase}
                 }
         \else
+            \newcommand{\indef}[1]{\textbf{#1}}
             \newenvironment{definition}[1][]{
                 \begin{definitionBase}[#1]
             }{
@@ -601,6 +621,8 @@
         % \newenvironment{solution}{\paragraph{Solution:}}{\hfill$\square$ \vspace{1em}}
         \declaretheorem[style=solutionstyle, numbered=no, qed=\qedsymbol]{solution}
         \declaretheorem[style=solutionstyle, numbered=no, qed=\qedsymbol, name=Proof]{prooof}
+        \declaretheorem[style=solnDefStyle, numbered=no, name=Definition]{soldef}
+        \declaretheorem[style=solnDefStyle, numbered=no, name=Lemma]{sollem}
         \declaretheorem[style=remarkstyle, numbered=no, name=Remark]{remark}
         \declaretheorem[style=remarkstyle, numbered=no, name=Remark]{Remark}
         \newtheorem*{note}{Note}
@@ -800,6 +822,83 @@
             emphstyle={[2]\sffamily\small\color{defC}},
             emph={[3]Stack, Queue, Bag, PriorityQueue, UnionFind, uf},
             emphstyle={[3]\color{NordViolet}},
+        }
+
+        \lstdefinestyle{mydiff}{
+            style=numbers,
+            style=fonts,
+            style=colors,
+            identifierstyle=\singleUpperCase,
+            tabsize=2,
+            basewidth={0.6em,0.4em},
+            commentstyle=\color{fgC!60!pageC}\ttfamily,
+            keywordstyle=\color{NavyBlue},
+            morecomment=[l]{@},
+            emph={[3]},
+            emphstyle={[3]\color{Olive Green}},
+            emph={[5]},
+            emphstyle={[5]\color{NordBrightBlue}},
+            morecomment=[f][\bfseries\sffamily\color{NordBrightBlue}]{diff},
+            morecomment=[f][\color{gray}]{index},
+            morecomment=[f][\color{NordViolet}]{@@},
+            morecomment=[f][\color{NavyBlue}]{+},
+            morecomment=[f][\color{NordRed}]{-},
+        }
+
+        \lstdefinestyle{myassembly}{
+            style=numbers,
+            style=fonts,
+            style=colors,
+            identifierstyle=\singleUpperCase,
+            mathescape=true,
+            tabsize=2,
+            basewidth={0.6em,0.4em},
+            commentstyle=\color{fgC!60!pageC}\ttfamily,
+            morekeywords={mov, stmfd, ldr, str, bl, add, sub, ldmfd, b, cmp, bge},
+            keywordstyle=\color{NavyBlue},
+            morecomment=[l]{@},
+            emph={[3]r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, sp, fp, ip, lr},
+            emphstyle={[3]\color{Olive Green}},
+            emph={[4]picoPascal, data, byte, global, text, comm, pool},
+            emphstyle={[4]\color{NordMagenta}},
+            emph={[5]},
+            emphstyle={[5]\color{NordBrightBlue}},
+        }
+
+        \lstdefinestyle{mypascal}{
+            language=Pascal,
+            style=numbers,
+            style=fonts,
+            backgroundcolor=\color{defBgC!50!white},
+            frame=tb,
+            morestring=*[d]{"},
+            stringstyle=\color{Olive Green},
+            rulecolor=\color{defC},
+            identifierstyle=\singleUpperCase,
+            mathescape=true,
+            tabsize=2,
+            basewidth={0.6em,0.4em},
+            morecomment=[s]{(*}{*)},
+            commentstyle=\color{fgC!60!pageC}\ttfamily,
+            morekeywords={proc},
+            keywordstyle=\color{NavyBlue},
+            emph={[3]},
+            emphstyle={[3]\color{NordBrightBlue}},
+            emph={[4]integer, array, pointer, boolean, string},
+            emphstyle={[4]\color{NordViolet}},
+            % emph={[5]print_num, newline, print_char, print_string},
+            % emphstyle={[5]\color{NordBrightBlue}},
+            literate=%
+            {0}{{{\color{NordBrightBlue}0}}}1
+            {1}{{{\color{NordBrightBlue}1}}}1
+            {2}{{{\color{NordBrightBlue}2}}}1
+            {3}{{{\color{NordBrightBlue}3}}}1
+            {4}{{{\color{NordBrightBlue}4}}}1
+            {5}{{{\color{NordBrightBlue}5}}}1
+            {6}{{{\color{NordBrightBlue}6}}}1
+            {7}{{{\color{NordBrightBlue}7}}}1
+            {8}{{{\color{NordBrightBlue}8}}}1
+            {9}{{{\color{NordBrightBlue}9}}}1
         }
 
         \lstdefinestyle{myhaskell}{
@@ -1095,10 +1194,14 @@
     \usepackage{xpatch}
     \ifahsanfancythm
         \xpretocmd{\section}{\setcounter{problemBase}{0}}{}{}
+        \ifahsannumdef
+        \xpretocmd{\section}{\setcounter{definitionBase}{0}}{}{}
+        \fi
         \xpretocmd{\section}{\setcounter{theoremBase}{0}}{}{}
         \xpretocmd{\section}{\setcounter{lemmaBase}{0}}{}{}
         \xpretocmd{\section}{\setcounter{exercise}{0}}{}{}
     \fi
+    \numberwithin{equation}{section}
 \else
 \fi
 
