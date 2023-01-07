@@ -469,9 +469,10 @@
 
         \ifahsanindex
             \ifahsan@article
-                \newcommand{\indef}[1]{\index[def]{\Sectionname!\capitalisewords{#1}}\textbf{#1}}
+                % \usepackage{mfirstuc}
+                \newcommand{\indef}[1]{\index[def]{\Sectionname!#1}\textbf{#1}}
             \else
-                \newcommand{\indef}[1]{\index[def]{\Chaptername!\Sectionname!\capitalisewords{#1}}\textbf{#1}}
+                \newcommand{\indef}[1]{\index[def]{\Chaptername!\Sectionname!#1}\textbf{#1}}
             \fi
             \newenvironment{definition}[1][]{
                 \ifahsan@article
@@ -833,16 +834,50 @@
             basewidth={0.6em,0.4em},
             commentstyle=\color{fgC!60!pageC}\ttfamily,
             keywordstyle=\color{NavyBlue},
+            breaklines=true,
             morecomment=[l]{@},
             emph={[3]},
             emphstyle={[3]\color{Olive Green}},
             emph={[5]},
             emphstyle={[5]\color{NordBrightBlue}},
-            morecomment=[f][\bfseries\sffamily\color{NordBrightBlue}]{diff},
+            morecomment=[f][\bfseries\rmfamily]{diff},
             morecomment=[f][\color{gray}]{index},
             morecomment=[f][\color{NordViolet}]{@@},
             morecomment=[f][\color{NavyBlue}]{+},
             morecomment=[f][\color{NordRed}]{-},
+        }
+
+        \lstdefinestyle{myocaml}{
+            language=caml,
+            style=numbers,
+            style=fonts,
+            backgroundcolor=\color{defBgC!50!white},
+            frame=tb,
+            identifierstyle=\singleUpperCase,
+            tabsize=2,
+            stringstyle=\color{Olive Green},
+            basewidth={0.6em,0.4em},
+            commentstyle=\color{fgC!60!pageC}\ttfamily,
+            morekeywords={},
+            keywordstyle=\color{NavyBlue},
+            emph={[3]sem_error},
+            emphstyle={[3]\color{NordRed}},
+            emph={[4]check_stmt, check_expr, check_var, assign_type},
+            emphstyle={[4]\color{NavyBlue}},
+            emph={[5]fList, fType, fExpr, fBasic, fMeta, fStr},
+            emphstyle={[5]\color{NordViolet}},
+            literate=*
+                {[}{{\textcolor{fgC!40!pageC}{[}}}{1}
+                {]}{{\textcolor{fgC!40!pageC}{]}}}{1}
+                {<}{{\textcolor{NavyBlue}{<}}}{1}
+                {>}{{\textcolor{NavyBlue}{>}}}{1}
+                {->}{{\textcolor{NordBlue}{->}}}{2}
+                {::}{{\textcolor{NordRed}{::}}}{2}
+                {||}{{\textcolor{NordBlue}{||}}}{2}
+                {@}{{\textcolor{NordRed}{@}}}{1}
+                {;}{{\textcolor{fgC!60!pageC}{;}}}{1}
+                {\{}{{\textcolor{thmC}{\{}}}{1}
+                {\}}{{\textcolor{thmC}{\}}}}{1},
         }
 
         \lstdefinestyle{myassembly}{
@@ -871,6 +906,7 @@
             style=fonts,
             backgroundcolor=\color{defBgC!50!white},
             frame=tb,
+            escapeinside={[*}{*]},
             morestring=*[d]{"},
             stringstyle=\color{Olive Green},
             rulecolor=\color{defC},

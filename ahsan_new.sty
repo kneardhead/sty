@@ -65,6 +65,10 @@
 \newif \ifahsanpagenotes   \ahsanpagenotesfalse
 
 
+\newif \ifextraA \extraAfalse
+\newif \ifextraB \extraBfalse
+\newif \ifextraC \extraBfalse
+
 \DeclareOption {noauthor}   {\ahsanauthorfalse}
 \DeclareOption {nofig}      {\ahsanfigsfalse}
 \DeclareOption {nofont}     {\ahsanfontfalse}
@@ -94,6 +98,10 @@
 \DeclareOption {soul}       {\ahsansoultrue}
 \DeclareOption {numdef}     {\ahsannumdeftrue}
 \DeclareOption {pagenotes}  {\ahsanpagenotestrue}
+
+\DeclareOption {extraA}  {\extraAtrue}
+\DeclareOption {extraB}  {\extraBtrue\extraAtrue}
+\DeclareOption {extraC}  {\extraCtrue\extraBtrue\extraAtrue}
 
 
 
@@ -339,6 +347,8 @@
     \setul{0.2ex}{0.1ex}
     \colorlet{ulC}{fgC!70!white}
     \setulcolor{ulC}
+
+    \renewcommand{\imp}[1]{\ul{#1}}
 \fi
 
 
