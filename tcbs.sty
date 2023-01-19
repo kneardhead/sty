@@ -25,10 +25,8 @@
 
 \ProcessOptions\relax
 
-
 \newlength{\envskip}
 \setlength{\envskip}{12pt}
-
 
 \ifAhsanthm
     \usepackage{amsthm}
@@ -40,13 +38,12 @@
 
 \ifAhsanfancythm
     \usepackage{amsthm} % needed for nothm+fancythm
-    \usepackage{thmtools, listings, chngcntr}
+    \usepackage{thmtools, chngcntr}
     \usepackage[most]{tcolorbox}
     \usepackage{ifthen, xifthen}
-    \usepackage[framemethod=TikZ]{mdframed}
+    % \usepackage[framemethod=TikZ]{mdframed}
 
     \newcommand{\listhack}{$\empty$\vspace{-2em}}
-
 
     \ifAhsanbangla
         \declaretheoremstyle[
@@ -74,8 +71,8 @@
     headfont=\bfseries\color{thmC},
     headpunct={ \color{thmC}\textbf{---} },
     postheadspace={0pt},
-    spaceabove=10pt,
-    spacebelow=10pt,
+    spaceabove=.7\envskip,
+    spacebelow=.3\envskip,
     notebraces={(}{)},
     notefont=\color{thmC}\mdseries\normalfont,
     % bodyfont=\Titillium\selectfont,
@@ -85,8 +82,6 @@
     headfont=\bfseries\color{thmC},
     headpunct= ,
     postheadspace={0pt},
-    spaceabove=20pt,
-    spacebelow=15pt,
     % bodyfont=\Titillium\selectfont,
     ]{emptythmstyle}
 
@@ -115,8 +110,8 @@
     \declaretheoremstyle[
     headfont=\bfseries\color{defC},
     bodyfont=\mdseries,
-    spaceabove=1.2\envskip,
-    spacebelow=.9\envskip,
+    spaceabove=.7\envskip,
+    % spacebelow=0pt,
     headpunct={--- },
     ]{definitionstyle}
 
@@ -125,8 +120,8 @@
     notebraces={[}{]},
     notefont=\normalfont\sffamily,
     headpunct={. },
-    spaceabove=\envskip,
-    spacebelow=\envskip,
+    spaceabove=.6\envskip,
+    spacebelow=.9\envskip,
     ]{solutionstyle}
     
     \declaretheoremstyle[
@@ -148,15 +143,15 @@
 
     \declaretheoremstyle[
     headfont=\bfseries,
-    spaceabove=10pt,
-    spacebelow=15pt,
+    % spaceabove=.4\envskip,
+    spacebelow=.4\envskip,
     headpunct={. },
     ]{remarkstyle}
     
     \declaretheoremstyle[
     headfont=\bfseries,
-    spaceabove=20pt,
-    spacebelow=10pt,
+    spaceabove=1\envskip,
+    spacebelow=1.2\envskip,
     headpunct={. },
     ]{examplestyle}
 
@@ -205,7 +200,8 @@
                 tile, breakable, sharp corners, coltext=fgC, colback=thmBgC,
             },
             theoremOuterSpacing/.style={
-                before skip=#1\envskip, after skip=#1\envskip, 
+                before skip=#1\envskip+.2\envskip, 
+                after skip=#1\envskip+.2\envskip, 
             },
             theoremBorders/.style={
                 borderline west={.15em}{0pt}{thmC},
@@ -218,12 +214,12 @@
         }
 
         \tcolorboxenvironment{theoremBase}{ 
+            theoremColors, 
+            theoremBorders,
             theoremOuterSpacing=1.2,
             theoremInnerSpacing,
-            theoremBorders,
             % TODO: added for the mat book, remove afterwards
-            theoremFancyColors, 
-            top=.6\envskip, bottom=.6\envskip, left=.8em, right=.7em
+            % top=.6\envskip, bottom=.6\envskip, left=.8em, right=.7em
         }
         \tcolorboxenvironment{corollary}{ 
             theoremColors, 
@@ -234,7 +230,7 @@
         \tcolorboxenvironment{lemmaBase}{ 
             theoremColors, 
             theoremBorders,
-            theoremOuterSpacing=1.1,
+            theoremOuterSpacing=.6,
             theoremInnerSpacing 
         }
 
@@ -254,7 +250,7 @@
         }
         \tcolorboxenvironment{emptythm}{ 
             theoremFancyColors,
-            theoremOuterSpacing,     
+            theoremOuterSpacing=1.2,     
             theoremInnerSpacing,
             borderline west={.1em}{0pt}{thmC}, 
         }
@@ -404,13 +400,13 @@
         \ifAhsansecthm
             \declaretheorem[style=problemstyle, numberwithin=section, name=Problem]{problemBase}
             \declaretheorem[style=problemstyle, sibling=problemBase,  name=Problem]{ProblemBase}
-            \declaretheorem[style=problemstyle, numberwithin=section,
+            \declaretheorem[style=examplestyle, numberwithin=section,
             name=Example]{exampleBase}
         \else
             \declaretheorem[style=problemstyle, name=Problem]{problemBase}
             \declaretheorem[style=problemstyle, name=Problem]{ProblemBase}
             % TODO: changed for the mat book
-            \declaretheorem[style=problemstyle, name=Example]{exampleBase}
+            \declaretheorem[style=examplestyle, name=Example]{exampleBase}
         \fi
 
         \tcbset{
@@ -441,9 +437,13 @@
         
         \declaretheorem[style=problemstyle, numberwithin=problemBase, name=Generalization]{generalization}
         \tcolorboxenvironment{exampleBase}{
-            probColors, probSpacing, colback=white,
+            probColors, probSpacing, colback=white, blanker,
             before upper={\parskip.5\baselineskip \advance\parskip 0pt plus 2pt \vspace{-.5em}},
-            before skip=1.7\envskip,
+            bottom = 5pt,
+            before skip=1.5\envskip,
+            after skip=2\envskip,
+            borderline north={.05em}{-5pt}{thmC},
+            borderline south={.05em}{0pt}{thmC},
         }
 
         \ifahsannumdef
@@ -459,21 +459,15 @@
         \fi
         \tcolorboxenvironment{impdefinitionBase}{ defColors, defSpacing }
 
-        \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure] {data_structure}
-        \declaretheorem[style=definitionstyle, numbered=no, name=Algorithm]{algo}
-        \declaretheorem[style=definitionstyle, numbered=no, name=Game]{game}
-        \declaretheorem[style=definitionstyle, name=Construction]{construction}
+        % \declaretheorem[style=definitionstyle, numbered=no, name=Data Structure] {data_structure}
+        % \declaretheorem[style=definitionstyle, numbered=no, name=Algorithm]{algo}
+        % \declaretheorem[style=definitionstyle, numbered=no, name=Game]{game}
+        % \declaretheorem[style=definitionstyle, name=Construction]{construction}
         \declaretheorem[style=definitionstyle, sibling=theoremBase, name=Claim]{claim}
         \declaretheorem[style=definitionstyle, numbered=no, name=Claim]{claim*}
 
 
         \ifahsanindex
-            \ifahsan@article
-                % \usepackage{mfirstuc}
-                \newcommand{\indef}[1]{\index[def]{\Sectionname!#1}\textbf{#1}}
-            \else
-                \newcommand{\indef}[1]{\index[def]{\Chaptername!\Sectionname!#1}\textbf{#1}}
-            \fi
             \newenvironment{definition}[1][]{
                 \ifahsan@article
                     \begin{definitionBase}[#1]\index[def]{\Sectionname!#1}
@@ -627,6 +621,7 @@
         \declaretheorem[style=remarkstyle, numbered=no, name=Remark]{remark}
         \declaretheorem[style=remarkstyle, numbered=no, name=Remark]{Remark}
         \newtheorem*{note}{Note}
+        % \renewtheorem*{proof}{Proof}
         \newtheorem*{abuse*}{Abuse of Notation}
         \newtheorem*{example*}{Example}
     \fi
@@ -671,356 +666,6 @@
 
         \newcommand{\fade}[1]{\textcolor{fgC!80!pageC}{#1}}
 
-
-        \lstdefinestyle{numbers}{
-            numbers=left,
-            xleftmargin=10pt,
-            numbersep=5pt,
-            numberstyle=\footnotesize\ttfamily\color{fgC!60},
-            stepnumber=1,
-        }
-
-        \lstdefinestyle{fonts}{
-            basicstyle=\linespread{1}\small\ttfamily,
-            commentstyle=\color{fgC!70!pageC!80!thmC}\ttfamily,
-            stringstyle=\footnotesize\color{NordBrightBlue},
-            showstringspaces=false,
-            % breaklines=true,
-        }
-
-        \lstdefinestyle{colors}{
-            keywordstyle=\color{thmC}\bfseries,
-            backgroundcolor=\color{defBgC!50!white},
-            % texcsstyle=*\color{thmC},
-            frame=tb,
-            rulecolor=\color{defC},
-            literate=*
-                {(}{{\textcolor{fgC!40!pageC}{(}}}{1}
-                {)}{{\textcolor{fgC!40!pageC}{)}}}{1}
-                {[}{{\textcolor{fgC!40!pageC}{[}}}{1}
-                {]}{{\textcolor{fgC!40!pageC}{]}}}{1}
-                {;}{{\textcolor{fgC!60!pageC}{;}}}{1}
-                {=>}{{\textcolor{fgC!60!pageC}{=>}}}{2}
-                {\{}{{\textcolor{thmC}{\{}}}{1}
-                {\}}{{\textcolor{thmC}{\}}}}{1},
-        }
-
-        % adds coloring of ) to lstlisting
-        \patchcmd{\lsthk@SelectCharTable}{`)}{``}{}{}
-
-        \makeatletter
-        \newcommand*\idstyle{%
-            \expandafter\id@style\the\lst@token\relax
-        }
-        \def\id@style#1#2\relax{%
-            \ifcat#1\relax
-            \else
-                \ifnum`#1=\uccode`#1%
-                    \ifx#2\empty
-                    \else
-                        \idstylet{#2}%
-                    \fi
-                \fi
-            \fi
-        }
-        %todo: word starting with capital letter followed by two of the same lower case letterss
-        % i.e. Assume, Array produces umeAssume and ayArray.
-
-        \newcommand*\idstylet[1]{%
-            \id@stylet#1\relax%
-        }
-        \def\id@stylet#1#2\relax{%
-            \ifcat#1\relax\else
-                \ifnum`#1=\uccode`#1%
-                    \color{defC}
-                \fi
-            \fi
-        }
-
-        \newcommand*\singleUpperCase{%
-                \expandafter\id@singleUpperCase\the\lst@token\relax
-        }
-        \def\id@singleUpperCase#1#2\relax{%
-            \ifcat#1\relax
-            \else
-                \ifcat#1\string_%
-                    \ifnum`#1=\uccode`#1%
-                        \color{NordBrightBlue}%
-                    \fi%
-                \fi
-            \fi
-        }
-        \makeatother
-
-
-        \lstdefinestyle{mytex}{
-            language=[LaTeX]Tex,
-            style=numbers,
-            style=fonts,
-            style=colors,
-            morekeywords={RequirePackage,ProvidesPackage,NeedsTeXFormat},
-            emph={[2]prob, den, thm, lem, thmbox, denbox, color, fig, figdf, proof, solu},
-            emphstyle={[2]\color{thmC}},
-            emph={[3]enumerate},
-            emphstyle={[3]\color{NordRed}},
-        }
-
-        \lstdefinestyle{myjava}{
-            language=Java,
-            style=numbers,
-            style=colors,
-            style=fonts,
-            keywordstyle=\color{impC},
-            basewidth={0.6em,0.4em},
-            morekeywords={require},
-            emph={[2]var, val, true, false, null},
-            emphstyle={[2]\color{defC}},
-            emph={[3]int, Comparable},
-            emphstyle={[3]\color{NordBrightBlue}},
-            emph={[4]next, toString},
-            emphstyle={[4]\color{NordMagenta}},
-            escapeinside={(*}{*)},
-        }
-
-        \lstdefinestyle{myscala}{
-            language=Scala,
-            style=numbers,
-            style=colors,
-            style=fonts,
-            keywordstyle=\color{impC},
-            identifierstyle=\singleUpperCase,
-            basewidth={0.6em,0.4em},
-            morekeywords={require},
-            emph={[2]var, val, true, false, null},
-            emphstyle={[2]\color{defC}},
-            emph={[3]Int, Integer, Double, Array, String, Unit, Boolean, Set, List, A, Node, Tree, state, init, DTI, Abs},
-            emphstyle={[3]\color{NordBrightBlue}},
-            emph={[4]next, toString},
-            emphstyle={[4]\color{NordMagenta}},
-            escapeinside={(*}{*)},
-            mathescape=true,
-        }
-
-        \lstdefinelanguage{algo}{
-            sensitive=false,
-            morekeywords={for, return, true, false, datatype, function, to, if, else, foreach, while, begin, end, downto},
-            morecomment=[l]{//},
-            morecomment=[s]{/*}{*/},
-            morestring=[b]",
-            identifierstyle=\idstyle,
-        }
-
-        \lstdefinestyle{myalgo}{
-            language=algo,
-            style=numbers,
-            style=colors,
-            style=fonts,
-            mathescape=true,
-            commentstyle=\color{fgC!60!pageC}\ttfamily,
-            keywordstyle=\color{impC},
-            basewidth={0.6em,0.4em},
-            emph={[2]Input, Output, Task, Subproblems, Recursion, Runtime},
-            emphstyle={[2]\sffamily\small\color{defC}},
-            emph={[3]Stack, Queue, Bag, PriorityQueue, UnionFind, uf},
-            emphstyle={[3]\color{NordViolet}},
-        }
-
-        \lstdefinestyle{mydiff}{
-            style=numbers,
-            style=fonts,
-            style=colors,
-            identifierstyle=\singleUpperCase,
-            tabsize=2,
-            basewidth={0.6em,0.4em},
-            commentstyle=\color{fgC!60!pageC}\ttfamily,
-            keywordstyle=\color{NavyBlue},
-            breaklines=true,
-            morecomment=[l]{@},
-            emph={[3]},
-            emphstyle={[3]\color{Olive Green}},
-            emph={[5]},
-            emphstyle={[5]\color{NordBrightBlue}},
-            morecomment=[f][\bfseries\rmfamily]{diff},
-            morecomment=[f][\color{gray}]{index},
-            morecomment=[f][\color{NordViolet}]{@@},
-            morecomment=[f][\color{NavyBlue}]{+},
-            morecomment=[f][\color{NordRed}]{-},
-        }
-
-        \lstdefinestyle{myocaml}{
-            language=caml,
-            style=numbers,
-            style=fonts,
-            backgroundcolor=\color{defBgC!50!white},
-            frame=tb,
-            identifierstyle=\singleUpperCase,
-            tabsize=2,
-            stringstyle=\color{Olive Green},
-            basewidth={0.6em,0.4em},
-            commentstyle=\color{fgC!60!pageC}\ttfamily,
-            morekeywords={},
-            keywordstyle=\color{NavyBlue},
-            emph={[3]sem_error},
-            emphstyle={[3]\color{NordRed}},
-            emph={[4]check_stmt, check_expr, check_var, assign_type},
-            emphstyle={[4]\color{NavyBlue}},
-            emph={[5]fList, fType, fExpr, fBasic, fMeta, fStr},
-            emphstyle={[5]\color{NordViolet}},
-            literate=*
-                {[}{{\textcolor{fgC!40!pageC}{[}}}{1}
-                {]}{{\textcolor{fgC!40!pageC}{]}}}{1}
-                {<}{{\textcolor{NavyBlue}{<}}}{1}
-                {>}{{\textcolor{NavyBlue}{>}}}{1}
-                {->}{{\textcolor{NordBlue}{->}}}{2}
-                {::}{{\textcolor{NordRed}{::}}}{2}
-                {||}{{\textcolor{NordBlue}{||}}}{2}
-                {@}{{\textcolor{NordRed}{@}}}{1}
-                {;}{{\textcolor{fgC!60!pageC}{;}}}{1}
-                {\{}{{\textcolor{thmC}{\{}}}{1}
-                {\}}{{\textcolor{thmC}{\}}}}{1},
-        }
-
-        \lstdefinestyle{myassembly}{
-            style=numbers,
-            style=fonts,
-            style=colors,
-            identifierstyle=\singleUpperCase,
-            mathescape=true,
-            tabsize=2,
-            basewidth={0.6em,0.4em},
-            commentstyle=\color{fgC!60!pageC}\ttfamily,
-            morekeywords={mov, stmfd, ldr, str, bl, add, sub, ldmfd, b, cmp, bge},
-            keywordstyle=\color{NavyBlue},
-            morecomment=[l]{@},
-            emph={[3]r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, sp, fp, ip, lr},
-            emphstyle={[3]\color{Olive Green}},
-            emph={[4]picoPascal, data, byte, global, text, comm, pool},
-            emphstyle={[4]\color{NordMagenta}},
-            emph={[5]},
-            emphstyle={[5]\color{NordBrightBlue}},
-        }
-
-        \lstdefinestyle{mypascal}{
-            language=Pascal,
-            style=numbers,
-            style=fonts,
-            backgroundcolor=\color{defBgC!50!white},
-            frame=tb,
-            escapeinside={[*}{*]},
-            morestring=*[d]{"},
-            stringstyle=\color{Olive Green},
-            rulecolor=\color{defC},
-            identifierstyle=\singleUpperCase,
-            mathescape=true,
-            tabsize=2,
-            basewidth={0.6em,0.4em},
-            morecomment=[s]{(*}{*)},
-            commentstyle=\color{fgC!60!pageC}\ttfamily,
-            morekeywords={proc},
-            keywordstyle=\color{NavyBlue},
-            emph={[3]},
-            emphstyle={[3]\color{NordBrightBlue}},
-            emph={[4]integer, array, pointer, boolean, string},
-            emphstyle={[4]\color{NordViolet}},
-            % emph={[5]print_num, newline, print_char, print_string},
-            % emphstyle={[5]\color{NordBrightBlue}},
-            literate=%
-            {0}{{{\color{NordBrightBlue}0}}}1
-            {1}{{{\color{NordBrightBlue}1}}}1
-            {2}{{{\color{NordBrightBlue}2}}}1
-            {3}{{{\color{NordBrightBlue}3}}}1
-            {4}{{{\color{NordBrightBlue}4}}}1
-            {5}{{{\color{NordBrightBlue}5}}}1
-            {6}{{{\color{NordBrightBlue}6}}}1
-            {7}{{{\color{NordBrightBlue}7}}}1
-            {8}{{{\color{NordBrightBlue}8}}}1
-            {9}{{{\color{NordBrightBlue}9}}}1
-        }
-
-        \lstdefinestyle{myhaskell}{
-            language=Haskell,
-            style=numbers,
-            style=fonts,
-            style=colors,
-            identifierstyle=\singleUpperCase,
-            mathescape=true,
-            basewidth={0.6em,0.4em},
-            morekeywords={fold, unfold, scan, Parser, Expr},
-            commentstyle=\color{fgC!60!pageC}\ttfamily,
-            % keywordstyle=\color{NordBrightBlue},
-            moredelim=[s][\color{fgC!60!pageC}\Share\bfseries\small]{-\{}{-\}},
-            morecomment=[l]{--},
-            emph={[3]f, g},
-            emphstyle={[3]\color{NordBrightBlue}},
-            emph={[4]h, t},
-            emphstyle={[4]\color{defC}},
-            emph={[5]p, c, s},
-            emphstyle={[5]\color{thmC}},
-        }
-
-        \lstdefinestyle{mypy}{
-            language=Python,
-            style=numbers,
-            style=fonts,
-            style=colors,
-            morekeywords={def},
-            emph={[2]return},
-            emphstyle={[2]\color{thmC}},
-        }
-
-        \lstdefinestyle{mybash}{
-            language=bash,
-            style=numbers,
-            style=fonts,
-            style=colors,
-            morekeywords={sudo, echo},
-            emph={[2]pacman, pip, yay},
-            emphstyle={[2]\color{Cinnabar}},
-            emph={[3]Syu, conf}, 
-            emphstyle={[3]\color{RealGreen}},
-            emph={[4]etc, usr, home, bin},
-            emphstyle={[4]\color{HotPink}},
-            literate=
-                {->}{{\textcolor{SlateGray}{->}}}{1}
-                {>}{{\textcolor{SlateGray}{>}}}{1}
-                {/}{{\textcolor{SlateGray!60!LightGray}{/}}}{1},
-        }
-
-
-        \usepackage{caption}
-        % defines algorithm counter for chapter-level
-        \newcounter{nalg}[section] 
-        %defines appearance of the algorithm counter
-        \renewcommand{\thenalg}{\thesection.\arabic{nalg}} 
-        % defines a new caption label as Algorithm x.y
-        \DeclareCaptionLabelFormat{algocaption}{Algorithm \thenalg} 
-        \lstnewenvironment{algorithm}[1][]{   
-            \refstepcounter{nalg}
-            \captionsetup{labelformat=algocaption,labelsep=colon} 
-            \lstset{style=myalgo, caption={[\texttt{#1}]\textbf{#1}}}
-        }{}
-
-        \DeclareCaptionLabelFormat{scalacaption}{Scala \thenalg} 
-        \lstnewenvironment{scala}[1][]{   
-            \refstepcounter{nalg}
-            \captionsetup{labelformat=scalacaption,labelsep=colon} 
-            \lstset{style=myscala, caption={[\texttt{#1}]\textbf{#1}}}
-        }{}
-
-        \DeclareCaptionLabelFormat{javacaption}{Java \thenalg} 
-        \lstnewenvironment{java}[1][]{   
-            \refstepcounter{nalg}
-            \captionsetup{labelformat=javacaption,labelsep=colon} 
-            \lstset{style=myjava, caption={[\texttt{#1}]\textbf{#1}}}
-        }{}
-
-        \DeclareCaptionLabelFormat{haskellcaption}{Haskell \thenalg} 
-        \lstnewenvironment{haskell}[1][]{   
-            \refstepcounter{nalg}
-            \captionsetup{labelformat=haskellcaption,labelsep=colon} 
-            \lstset{style=myhaskell, caption={[\texttt{#1}]\textbf{#1}}}
-        }{}
-
         \newcommand\Section[1]{
             \addtocontents{lol}{ \protect\addvspace{2pt} }
             \addcontentsline{lol}{section}{ \textbf{#1} }
@@ -1034,13 +679,6 @@
         }
 
         \makeatletter
-        \AtBeginDocument{%
-        \renewcommand\lstlistoflistings{\bgroup
-          \let\contentsname\lstlistlistingname
-          \def\l@lstlisting##1##2{\@dottedtocline{1}{0em}{2em}{\small \texttt{##1}}{\small##2}\vspace{-.7em}}
-          \let\lst@temp\@starttoc \def\@starttoc##1{\lst@temp{lol}}%
-          \tableofcontents \egroup}
-        }
         \makeatother
     \fi
 
@@ -1179,11 +817,11 @@
             \end{Remark}
         }
 
-        \renewcommand{\proof}[1]{
-            \begin{prooof}
-                #1 
-            \end{prooof}
-        }
+        % \renewcommand{\proof}[1]{
+        %     \begin{prooof}
+        %         #1 
+        %     \end{prooof}
+        % }
         \newcommand{\impex}[1]{
             \tcboxmath[
                 colback=thmBgC, colframe=thmBgC, 

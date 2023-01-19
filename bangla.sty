@@ -1,0 +1,64 @@
+\ProvidesPackage{bangla}
+
+\usepackage{polyglossia}
+\setmainlanguage[numerals=Bengali]{bengali}
+\setotherlanguage{english}
+\RequirePackage[Latin, Bengali, Devanagari]{ucharclasses}
+
+\newfontfamily\bengalifont[
+Script=Bengali,
+Scale=MatchLowercase,
+WordSpace=1.1,
+AutoFakeSlant,
+AutoFakeBold=2.5
+]{Kalpurush}
+
+\newfontfamily\bengalifontsf[
+Script=Bengali,
+Scale=MatchLowercase,
+WordSpace=1.1,
+AutoFakeSlant,
+AutoFakeBold=2.5
+]{Kalpurush}
+
+\newfontfamily\bengalifonttt[
+Script=Bengali,
+Scale=0.8,
+WordSpace=1.2,
+AutoFakeSlant,
+AutoFakeBold
+]{Siyam Rupali}
+
+\newfontfamily\englishfontsf[
+Scale=MatchUppercase
+]{CMU Sans Serif}
+
+\newfontfamily\englishfonttt[
+Scale=MatchUppercase
+]{Share Tech Mono}
+
+\newfontfamily\englishfontrm[
+Scale=MatchUppercase
+]{CMU Serif}
+
+\ifahsansans
+    \newcommand\englishfont\englishfontsf
+\else
+    \newcommand\englishfont\englishfontrm
+\fi
+
+\newenvironment{latintt}{
+    \fontencoding{OT1}\englishfonttt\selectfont
+}\relax
+\setTransitionsFor{Bengali}{\begingroup\bengalifontsf}{\endgroup}
+% \newenvironment{latin}{\fontencoding{OT1}\englishfont\selectfont}\relax
+% \setTransitionsForLatin{\begin{latin}}{\end{latin}}
+
+% \newenvironment{latin}{\fontencoding{OT1}\ifx\f@family\ttfamily
+% \englishfonttt\else\englishfont\fi\selectfont}\relax
+% \setTransitionsForLatin{\begin{latin}}{\end{latin}}
+
+\newcommand{\Share}{\rmfamily}
+\newcommand{\Titillium}{\sffamily}
+
+

@@ -1,0 +1,32 @@
+\ProvidesPackage{beamer}
+
+\usepackage[english]{babel}
+\usepackage{metalogo}
+\usepackage{fontspec}
+
+\setsansfont{Andika New Basic}
+\setmainfont{Yanone Kaffeesatz}
+\setmonofont{Share Tech Mono}
+% \setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
+% \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
+% \setmainfont{CMU Serif}       [Scale=MatchLowercase]
+
+\ifdarkbluetheme 
+    \usetheme{NordDark} 
+\else
+    \usetheme{NordWhite} 
+\fi
+
+\AtBeginSection[]{ 
+    \begin{frame}[c,noframenumbering,plain]
+        \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]
+    \end{frame} 
+}
+
+\AtBeginSubsection[]{ 
+    \begin{frame}[c, noframenumbering,plain]
+        \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
+    \end{frame} 
+}
+
+% \ahsansetupfalse

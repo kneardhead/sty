@@ -148,9 +148,11 @@
 \fi
 
 
+\usepackage{nicefrac}
 \usepackage{amsmath} 
-\usepackage{amssymb, nicefrac}
+\usepackage{amssymb}
 \usepackage{macros}
+\usepackage{codestyle}
 
 \setlength\parindent{0pt}
 \setlength\parskip{10pt}
@@ -170,6 +172,9 @@
 \usepackage{titlesec}
 \fi
 
+\ifahsan@bangla
+    \usepackage{bangla}
+\fi
 
 
 \ifahsan@bangla
@@ -236,10 +241,6 @@
 
 % todo write new latexbangla
 \ifahsan@bangla
-    \usepackage{polyglossia}
-    \setmainlanguage[numerals=Bengali]{bengali}
-    \setotherlanguage{english}
-    \RequirePackage[Latin, Bengali, Devanagari]{ucharclasses}
 \else   
     \ifahsan@beamer
     \else
@@ -252,75 +253,23 @@
 
 \ifahsanfont
     \usepackage{fontspec}
-    \usepackage[T1]{fontenc}
+    \usepackage[OT1]{fontenc}
     \ifahsan@bangla
-        \newfontfamily\bengalifont[
-        Script=Bengali,
-        Scale=MatchLowercase,
-        WordSpace=1.1,
-        AutoFakeSlant,
-        AutoFakeBold=2.5
-        ]{Kalpurush}
-
-        \newfontfamily\bengalifontsf[
-        Script=Bengali,
-        Scale=MatchLowercase,
-        WordSpace=1.1,
-        AutoFakeSlant,
-        AutoFakeBold=2.5
-        ]{Kalpurush}
-        
-        \newfontfamily\bengalifonttt[
-        Script=Bengali,
-        Scale=0.8,
-        WordSpace=1.2,
-        AutoFakeSlant,
-        AutoFakeBold
-        ]{Siyam Rupali}
-
-        \newfontfamily\englishfontsf[
-        Scale=MatchUppercase
-        ]{CMU Sans Serif}
-
-        \newfontfamily\englishfonttt[
-        Scale=MatchUppercase
-        ]{Share Tech Mono}
-
-        \newfontfamily\englishfontrm[
-        Scale=MatchUppercase
-        ]{CMU Serif}
-
-        \ifahsansans
-            \newcommand\englishfont\englishfontsf
-        \else
-            \newcommand\englishfont\englishfontrm
-        \fi
-
-        \newenvironment{latintt}{
-            \fontencoding{OT1}\englishfonttt\selectfont
-        }\relax
-        \setTransitionsFor{Bengali}{\begingroup\bengalifontsf}{\endgroup}
-        % \newenvironment{latin}{\fontencoding{OT1}\englishfont\selectfont}\relax
-        % \setTransitionsForLatin{\begin{latin}}{\end{latin}}
-
-        % \newenvironment{latin}{\fontencoding{OT1}\ifx\f@family\ttfamily
-        % \englishfonttt\else\englishfont\fi\selectfont}\relax
-        % \setTransitionsForLatin{\begin{latin}}{\end{latin}}
-
-        \newcommand{\Share}{\rmfamily}
-        \newcommand{\Titillium}{\sffamily}
     \else
-        \setmonofont{Share Tech Mono} [Scale=MatchUppercase, Scale=.9]
         \newfontfamily\Share[Ligatures=TeX, Scale=MatchUppercase, WordSpace=.9]{Share}
         \newfontfamily\Titillium[Ligatures=TeX, Scale=.9]{Titillium Web}
 
-        \ifahsanmathsans \usepackage{sansmathfonts} \else \usepackage{mathptmx} \fi
+        \ifahsanmathsans \usepackage{sansmathfonts} \else \fi
 
         \ifahsansans
-            \renewcommand{\familydefault}{\sfdefault} \fontfamily{cmss}
+            \renewcommand{\familydefault}{\sfdefault} 
         \else
-            \fontfamily{cmr}
+            % \usepackage[lf]{venturis}
+            \usepackage{mathptmx} 
         \fi
+
+        % \setmonofont{Share Tech Mono} [Scale=MatchUppercase, Scale=.9]
+        \setmonofont{Courier Prime} [Scale=MatchUppercase, Scale=.9]
 
         \ifahsanshare
             \setsansfont{Share}[Scale=MatchUppercase]
@@ -329,7 +278,7 @@
 
     \fi    
 \else
-    \usepackage[T1]{fontenc}
+    \usepackage[OT1]{fontenc}
     \usepackage[scaled=0.9]{inconsolata}
     \ifahsansans
         \renewcommand{\familydefault}{\sfdefault} \fontfamily{cmss}
@@ -348,9 +297,16 @@
     \colorlet{ulC}{fgC!70!white}
     \setulcolor{ulC}
 
-    \renewcommand{\imp}[1]{\ul{#1}}
+    \sethlcolor{impBgC}
+    \renewcommand{\imp}[1]{\hl{#1}}
 \fi
 
+\ifahsan@article
+    % \usepackage{mfirstuc}
+    \newcommand{\indef}[1]{\index[def]{\Sectionname!#1}\imp{#1}}
+\else
+    \newcommand{\indef}[1]{\index[def]{\Chaptername!\Sectionname!#1}\imp{#1}}
+\fi
 
 
 
@@ -500,36 +456,7 @@
 
 
 \ifahsan@beamer
-    \usepackage[english]{babel}
-    \usepackage{metalogo}
-    \usepackage{fontspec}
-
-    \setsansfont{Andika New Basic}
-    \setmainfont{Yanone Kaffeesatz}
-    \setmonofont{Share Tech Mono}
-    % \setsansfont{CMU Sans Serif}  [Scale=MatchUppercase]
-    % \setmonofont{Share Tech Mono} [Scale=MatchLowercase]
-    % \setmainfont{CMU Serif}       [Scale=MatchLowercase]
-
-    \ifdarkbluetheme 
-        \usetheme{NordDark} 
-    \else
-        \usetheme{NordWhite} 
-    \fi
-
-    \AtBeginSection[]{ 
-        \begin{frame}[c,noframenumbering,plain]
-            \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]
-        \end{frame} 
-    }
-
-    \AtBeginSubsection[]{ 
-        \begin{frame}[c, noframenumbering,plain]
-            \tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]
-        \end{frame} 
-    }
-
-    % \ahsansetupfalse
+    \usepackage{beamer}
 \fi
 
 \ifahsanindex
@@ -569,6 +496,9 @@
 
 %todo: page number on title pages
 
+
+\usepackage{breqn}
+\renewcommand{\tfrac}{\genfrac{}{}{}1}
 
 %%% Footnote specs
 \usepackage[hang,flushmargin]{footmisc}
