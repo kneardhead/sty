@@ -15,6 +15,7 @@
 \newif\ifAhsanfancythm\Ahsanfancythmfalse
 \newif\ifAhsanfancysoln\Ahsanfancysolnfalse
 \newif\ifAhsanbangla\Ahsanbanglafalse
+\newif\ifexampleborder\exampleborderfalse
 
 
 \DeclareOption{nothm}{\Ahsanthmfalse}
@@ -442,8 +443,8 @@
             bottom = 5pt,
             before skip=1.5\envskip,
             after skip=2\envskip,
-            borderline north={.05em}{-5pt}{thmC},
-            borderline south={.05em}{0pt}{thmC},
+            % borderline north={.05em}{-5pt}{thmC},
+            % borderline south={.05em}{0pt}{thmC},
         }
 
         \ifahsannumdef

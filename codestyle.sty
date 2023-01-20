@@ -29,6 +29,7 @@
     stringstyle=\stringstyle,
     showstringspaces=false,
     breaklines=true,
+    belowskip=-.2\envskip
 }
 
 \lstdefinestyle{colors}{
@@ -130,20 +131,34 @@
     style=numbers,
     style=colors,
     style=fonts,
-    identifierstyle=\singleUpperCase{\identifierstyle},
+    identifierstyle=\singleUpperCase{\typestyle\color{thmC}},
     basewidth={0.6em,0.4em},
     morekeywords={require, var, val},
     emph={[2]true, false, null},
     emphstyle={[2]\conststyle},
-    emph={[3]
-        Int, Integer, Double, Array, String, Unit, Boolean, Set, List, A, Node, Tree,
-        state, init, DTI, Abs
-    },
-    emphstyle={[3]\typestyle},
+    % emph={[3]
+    %     Int, Integer, Double, Array, String, Unit, Boolean, Set, List, A, Node, Tree,
+    %     state, init, DTI, Abs
+    % },
+    % emphstyle={[3]\typestyle},
     emph={[4]next, toString},
     emphstyle={[4]\funcstyle},
     escapeinside={(*}{*)},
     mathescape=true,
+    tabsize=2,
+    literate=*
+        {!}{{\textbf{!}}}{1}
+        {?}{{\textbf{?}}}{1}
+        % {`}{{'}}{1}
+        {(}{{\textcolor{fgC!60!pageC}{(}}}{1}
+        {)}{{\textcolor{fgC!60!pageC}{)}}}{1}
+        {[}{{\textcolor{fgC!60!pageC}{[}}}{1}
+        {]}{{\textcolor{fgC!60!pageC}{]}}}{1}
+        {;}{{\textcolor{fgC!60!pageC}{;}}}{1}
+        {=>}{{\textcolor{fgC!60!pageC}{=>}}}{2}
+        {||}{{\textbf{||}}}{2}
+        {\{}{{\textcolor{thmC}{\{}}}{1}
+        {\}}{{\textcolor{thmC}{\}}}}{1},
 }
 
 \lstdefinestyle{myalgo}{
